@@ -21,7 +21,7 @@ $(NAME) : $(OBJ) $(LIBFT)
 
 clean: 
 	$(RM) $(OBJ)
-
+	make -C $(LIBDIR) clean
 fclean: clean 
 	$(RM) $(NAME)
 	make -C $(LIBDIR) fclean
