@@ -30,8 +30,7 @@ void	ft_expander(t_lex **lex)
 		if (is_word(tmp) && last && is_word(last) && last->tok != WRD && !ft_strncmp(last->data, "$", ft_strlen(last->data)))
 		{
 			delete_last_node(lex, last);
-			last = tmp;
-			continue;
+			// continue;
 		}
 		last = tmp;
 		if (tmp->tok == HER)

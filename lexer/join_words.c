@@ -9,7 +9,7 @@ void	delete_last_node(t_lex **lst, t_lex *node_to_del)
 	if (curr_node == node_to_del)
 	{
 		*lst = curr_node->next;
-		free(node_to_del->data);
+		// free(node_to_del->data);
 		free(node_to_del);
 		return;
 	}
