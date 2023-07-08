@@ -53,9 +53,14 @@ bool	lexer(char *cmd);
 void	check_token_type(char *cmd, int *idx, t_lex *token);
 void	ft_lex_add_back(t_lex **lex, t_lex *new);
 bool	is_token(char c);
+void	ft_expander(t_lex **lex);
 void	join_words(t_lex **lex);
 void	delete_last_node(t_lex **lst, t_lex *node_to_del);
 bool	is_word(t_lex	*node);
+char	*ft_strrcat(char *s, char c);
+
 void	remove_white_spaces(t_lex **lex);
 
 #endif
+
+// echo "$PATH" | << $PWD | echo '$'"$PATH"

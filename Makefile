@@ -7,7 +7,7 @@ LIBFT = $(LIBDIR)/libft.a
 
 RM = rm -f
 
-SRC = main.c lexer/lexer.c  lexer/lexer_utils.c lexer/join_words.c
+SRC = main.c lexer/lexer.c  lexer/lexer_utils.c lexer/join_words.c lexer/expander.c
 
 OBJ = $(SRC:.c=.o)
 

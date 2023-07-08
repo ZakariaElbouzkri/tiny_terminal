@@ -19,7 +19,7 @@ void	delete_last_node(t_lex **lst, t_lex *node_to_del)
 		curr_node = curr_node->next;
 	}
 	prev_node->next = curr_node->next;
-	free(node_to_del->data);
+	// free(node_to_del->data);
 	free(node_to_del);
 }
 

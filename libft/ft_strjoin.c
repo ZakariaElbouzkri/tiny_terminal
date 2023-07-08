@@ -6,7 +6,7 @@
 /*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 01:44:19 by asettar           #+#    #+#             */
-/*   Updated: 2022/10/14 00:59:55 by asettar          ###   ########.fr       */
+/*   Updated: 2023/07/08 04:54:16 by asettar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	int		i;
 
 	if (!s1 || !s2)
-		return (NULL);
+		return (char*)(s1);
 	str = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (!str)
 		return (NULL);

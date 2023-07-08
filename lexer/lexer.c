@@ -82,7 +82,7 @@ bool	lexer(char *cmd)
 		
 		// printf("%s, %d \n", token->data, i);
 	}
-	// ft_expander(lex);
+	ft_expander(&lex);
 	// join_words(&lex);
 	display_lexer(lex);
 	return (0);
