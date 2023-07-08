@@ -52,7 +52,9 @@ void	prompt(t_env **env)
 		if (lexer(cmd))
 		{
 			ft_putstr_fd("syn_err\n", 2);
+
 		}
+		add_history(cmd);
 		
 	}
 }

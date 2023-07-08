@@ -79,9 +79,11 @@ bool	lexer(char *cmd)
 		token->next = NULL;
 		check_token_type(cmd, &i, token);
 		ft_lex_add_back(&lex, token);
+		
 		// printf("%s, %d \n", token->data, i);
 	}
-	join_words(&lex);
+	// ft_expander(lex);
+	// join_words(&lex);
 	display_lexer(lex);
 	return (0);
 }

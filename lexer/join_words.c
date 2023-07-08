@@ -23,10 +23,6 @@ void	delete_last_node(t_lex **lst, t_lex *node_to_del)
 	free(node_to_del);
 }
 
-bool	is_word(t_lex	*node)
-{
-	return (node->tok == WRD || node->tok == SQU || node->tok == DQU);
-}
 void	remove_white_spaces(t_lex **lex)
 {
 	t_lex	*tmp;
@@ -64,6 +60,5 @@ void	join_words(t_lex **lex)
 		last = tmp;
 		tmp = tmp->next;
 	}
-	tmp = *lex;
 	remove_white_spaces(lex);
 }

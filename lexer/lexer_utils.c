@@ -17,3 +17,8 @@ bool	is_token(char c)
 	return (c == '>' || c == '<' || c == '|'
 		|| c == '\'' || c == '\"' || ft_isspace(c));
 }
+
+bool	is_word(t_lex	*node)
+{
+	return (node->tok == WRD || node->tok == SQU || node->tok == DQU);
+}
