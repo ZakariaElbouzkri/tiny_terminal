@@ -1,0 +1,19 @@
+#include "../minishell.h"
+
+void	ft_lex_add_back(t_lex **lex, t_lex *new)
+{	
+	if (!lex || !new)
+		return ;
+	if (*lex == NULL)
+	{
+		*lex = new;
+		return ;
+	}
+	ft_lex_add_back(&(*lex)->next, new);
+}
+
+bool	is_token(char c)
+{
+	return (c == '>' || c == '<' || c == '|'
+		|| c == '\'' || c == '\"' || ft_isspace(c));
+}
