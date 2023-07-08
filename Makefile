@@ -1,13 +1,13 @@
 NAME = minishell
 
-CC = cc -Wall -Wextra -Werror -fsanitize=address
+CC = cc -Wall -Wextra -Werror
 
 LIBDIR = ./libft/
 LIBFT = $(LIBDIR)/libft.a
 
 RM = rm -f
 
-SRC = main.c 
+SRC = main.c lexer/lexer.c  lexer/lexer_utils.c lexer/join_words.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -17,7 +17,7 @@ $(LIBFT) :
 	make -C $(LIBDIR)
 
 $(NAME) : $(OBJ) $(LIBFT)
-	$(CC) $^ -o $@
+	$(CC) -lreadline $^ -o $@
 
 clean: 
 	$(RM) $(OBJ)

@@ -39,14 +39,16 @@ void	display_env(t_env *env)
 	display_env(env->next);
 }
 
-void	prompt(t_env *env)
+void	prompt(t_env **env)
 {
 	char	*cmd;
-
+	(void)(env);
 	while (true)
 	{
 		cmd = readline("minishell$ ");
 		cmd = ft_strtrim(cmd, " \n\t\v\r");
+		if (!ft_strncmp("exit", cmd, 4))
+			exit(0);
 		if (lexer(cmd))
 		{
 			ft_putstr_fd("syn_err\n", 2);
@@ -63,6 +65,6 @@ int	main(int ac, char **av, char** envp)
 
 	env = NULL;
 	parse_env(envp, &env);
-	display_env(env);
+	// display_env(env);
 	prompt(&env);
 }

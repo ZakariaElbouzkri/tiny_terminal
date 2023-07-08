@@ -6,7 +6,7 @@
 /*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 21:24:29 by asettar           #+#    #+#             */
-/*   Updated: 2023/02/20 02:48:00 by asettar          ###   ########.fr       */
+/*   Updated: 2023/07/08 01:12:11 by asettar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int		ft_isdigit(int c);
 int		ft_isalnum(int c);
 int		ft_isascii(int n);
 int		ft_isprint(int c);
+int		ft_isspace(char c);
 size_t	ft_strlen(const char *s);
 int		ft_toupper(int c);
 int		ft_tolower(int c);
