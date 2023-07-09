@@ -107,6 +107,6 @@ bool	lexer(char *cmd, t_env *env)
 	// display_lexer(lex);
 	display_cmd(cmds);
 	free_lex(&lex);
-	free_cmd(cmds);
+	// free_cmd(cmds);
 	return (0);
 }

@@ -70,6 +70,10 @@ void	ft_redir_add_back(t_redir **red, t_redir *new);
 void	display_cmd(t_cmd *cmd);
 void	join_words2(t_lex **lex);
 
+// 
+
+void	join_words2(t_lex **lex);
+
 #endif
 
 // echo "$PATH" | << $PWD | echo '$'"$PATH"
