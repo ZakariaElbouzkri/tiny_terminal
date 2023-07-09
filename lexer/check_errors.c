@@ -13,7 +13,7 @@ bool	check_errors(t_lex *lex)
 	{
 		if (is_redir(lex))
 		{
-			if (!lex->next || is_word(lex->next))
+			if (!lex->next || !is_word(lex->next))
 				return (1);
 		}
 		else if (lex->tok == PIP)
