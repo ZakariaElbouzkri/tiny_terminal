@@ -42,8 +42,7 @@ typedef	struct s_redir
 
 typedef	struct	s_cmd
 {
-	char	*cmd;
-	char	**args;
+	t_list	*args;
 	t_redir	*redir;
 	int		fd[2];
 	struct	s_cmd	*next;
@@ -62,6 +61,14 @@ char	*ft_strrcat(char *s, char c);
 void	remove_white_spaces(t_lex **lex);
 bool	check_errors(t_lex *lex);
 bool	is_redir(t_lex *node);
+void	construct_cmds(t_cmd **cmd, t_lex **lst);
+void	ft_cmd_add_back(t_cmd **cmd, t_cmd *new);
+void	create_new_cmd(t_cmd **cmd, t_cmd **last, bool *new_cmd);
+void	change_last_args(t_lex *lex, t_cmd *last);
+void	change_last_redir(t_lex **lst, t_cmd *last);
+void	ft_redir_add_back(t_redir **red, t_redir *new);
+void	display_cmd(t_cmd *cmd);
+void	join_words2(t_lex **lex);
 
 #endif
 

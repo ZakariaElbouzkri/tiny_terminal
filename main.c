@@ -39,6 +39,27 @@ void	display_env(t_env *env)
 	display_env(env->next);
 }
 
+bool	check_qutes(char *cmd)
+{
+	int		i;
+	char	c;
+
+	i = -1;
+	while (cmd[++i])
+	{
+		if (cmd[i] == '\'' || cmd[i] == '\"')
+		{
+			c = cmd[i++];
+			while (cmd[i] && cmd[i] != c)
+				i++;
+			if (cmd[i] != c)
+				return (false);
+		}
+		if (!cmd[i])
+			break;
+	}
+	return (true);
+}
 
 void	prompt(t_env **env)
 {
@@ -52,7 +73,7 @@ void	prompt(t_env **env)
 		cmd = ft_strtrim(cmd, " \n\t\v\r");
 		if (cmd && !ft_strncmp("exit", cmd, 4))
 			exit(0);
-		if ((cmd && *cmd) && lexer(cmd, *env))
+		if ((cmd && *cmd) && (!check_qutes(cmd) || lexer(cmd, *env)))
 		{
 			ft_putstr_fd("syn_err\n", 2);
 		}
