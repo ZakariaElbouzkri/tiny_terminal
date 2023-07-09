@@ -77,6 +77,30 @@ void	free_lex(t_lex	**lex)
 	*lex = NULL;
 }
 
+void	free_cmd(t_cmd	**cmd)
+{
+	t_redir	*red;
+	t_redir	*tmp;
+
+	if (!cmd || !*cmd)
+		return ;
+	free_cmd(&(*cmd)->next);
+	if ((*cmd)->args)
+		ft_lstclear(&(*cmd)->args, free);
+	red = (*cmd)->redir;
+	if (red)
+	{
+		while (red)
+		{
+			tmp = red;
+			free(red->file);
+			free(red);
+			red = tmp->next;
+		}
+	}
+	free(*cmd);
+	*cmd = NULL;
+}
 
 bool	lexer(char *cmd, t_env *env)
 {
@@ -107,6 +131,6 @@ bool	lexer(char *cmd, t_env *env)
 	// display_lexer(lex);
 	display_cmd(cmds);
 	free_lex(&lex);
-	// free_cmd(cmds);
+	free_cmd(&cmds);     // just to check leaks remove later
 	return (0);
 }
