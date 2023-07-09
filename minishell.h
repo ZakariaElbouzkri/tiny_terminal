@@ -63,6 +63,10 @@ void	remove_white_spaces(t_lex **lex);
 bool	check_errors(t_lex *lex);
 bool	is_redir(t_lex *node);
 
+// 
+
+void	join_words2(t_lex **lex);
+
 #endif
 
 // echo "$PATH" | << $PWD | echo '$'"$PATH"

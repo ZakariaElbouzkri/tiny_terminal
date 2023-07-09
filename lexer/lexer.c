@@ -93,14 +93,15 @@ bool	lexer(char *cmd)
 		token->tok = WRD;
 		check_token_type(cmd, &i, token);
 		ft_lex_add_back(&lex, token);
-		
+
 		// printf("%s, %d \n", token->data, i);
 	}
-	// display_lexer(lex);
+	display_lexer(lex);
 	ft_expander(&lex);
-	// printf("::::::\n");
-	// display_lexer(lex);
-	join_words(&lex);
+	printf("::::::\n");
+	// join_words(&lex);
+	join_words2(&lex);
+	display_lexer(lex);
 	if (check_errors(lex))
 		return (free_lex(&lex), 1);
 	free_lex(&lex);
