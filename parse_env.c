@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_env.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/09 11:52:53 by asettar           #+#    #+#             */
+/*   Updated: 2023/07/09 11:52:54 by asettar          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void	ft_env_add_back(t_env **env, t_env *node)
@@ -21,7 +33,6 @@ void	parse_env(char **envp, t_env **env)
 	i = -1;
 	while (envp[++i])
 	{
-
 		idx = ft_strchr(envp[i], '=') - envp[i];
 		node = malloc(sizeof(t_env));
 		node->name = ft_substr(envp[i], 0, idx);
@@ -44,8 +55,8 @@ void	free_env(t_env	**env)
 
 void	display_env(t_env *env)
 {
-	if(!env)
-		return;
+	if (!env)
+		return ;
 	printf("%s = %s\n", env->name, env->value);
 	display_env(env->next);
 }
