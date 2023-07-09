@@ -54,9 +54,10 @@ void	join_words(t_lex **lex)
 	{
 		if (last && is_word(tmp) && is_word(last))
 		{
+			// last->data = ft_strjoin(last->data, )
 			tmp->data = ft_strjoin(last->data, tmp->data);
+			free(tmp->data);
 			tmp->tok = SQU;
-			// printf("|||%s \n", last->data);
 			delete_last_node(lex, last);
 		}
 		last = tmp;
@@ -66,4 +67,38 @@ void	join_words(t_lex **lex)
 	remove_white_spaces(lex);
 	// display_lexer(*lex);
 
+}
+
+void	lex_del_one(t_lex **lex, t_lex	*node)
+{
+	if (!lex || !*lex)
+		return ;
+	if ((*lex) == node)
+	{
+		node = (*lex)->next;
+		free((*lex)->data);
+		free(*lex);
+		*lex = node;
+		return ;
+	}
+	lex_del_one(&(*lex)->next, node);
+}
+
+void	join_words2(t_lex **lex)
+{
+	t_lex	*itr;
+
+	itr = *lex;
+	while (itr)
+	{
+		if (itr->next && (is_word(itr) && is_word(itr->next)))
+		{
+			itr->data = ft_strjoin(itr->data, itr->next->data);
+			if (itr->tok != WRD || itr->next->tok != WRD)
+				itr->tok = SQU;
+			lex_del_one(lex, itr->next);
+		}
+		if (itr)
+			itr = itr->next;
+	}
 }
