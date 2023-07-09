@@ -28,3 +28,27 @@ bool	is_redir(t_lex *node)
 	return (node->tok == APP || node->tok == HER
 		|| node->tok == OUT || node->tok == INP);
 }
+
+void	display_cmd(t_cmd *cmd)
+{
+	char	*tok[9] = {"WRD", "SPA", "DQU", "SQU", "INP", "OUT", "HER", "APP", "PIP"};
+	if(!cmd)
+		return ;
+	while (cmd)
+	{
+		printf("\nCOMMAND:--------------------------\n");
+		t_list *lst = cmd->args;
+		printf("  args: ");
+		while (lst){
+			printf("%s ", lst->content);
+			lst=lst->next;
+		}
+		printf("\n  redirs:\n");
+		t_redir *ls = cmd->redir;
+		while (ls){
+			printf("    type = %s  || file = %s\n", tok[ls->type], ls->file);
+			ls = ls->next;
+		}
+		cmd = cmd->next;
+	}
+}

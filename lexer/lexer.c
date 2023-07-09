@@ -66,7 +66,6 @@ void	check_token_type(char *cmd, int *idx, t_lex *token)
 		get_data(cmd, idx, token);
 }
 
-
 void	free_lex(t_lex	**lex)
 {
 	if (!lex || !*lex)
@@ -78,12 +77,13 @@ void	free_lex(t_lex	**lex)
 	*lex = NULL;
 }
 
+
 bool	lexer(char *cmd, t_env *env)
 {
 	int		i;
 	t_lex	*lex;
 	t_lex	*token;
-	// t_cmd	cmds;
+	t_cmd	*cmds;
 	i = -1;
 	lex = NULL;
 	while (cmd[++i])
@@ -93,17 +93,20 @@ bool	lexer(char *cmd, t_env *env)
 		token->tok = WRD;
 		check_token_type(cmd, &i, token);
 		ft_lex_add_back(&lex, token);
-		
 		// printf("%s, %d \n", token->data, i);
 	}
 	// display_lexer(lex);
 	ft_expander(&lex, env);
 	// printf("::::::\n");
 	join_words(&lex);
+	display_lexer(lex);
 	if (check_errors(lex))
 		return (free_lex(&lex), 1);
-	// // construct_cmds(lex, &cmd);
-	display_lexer(lex);
+	cmds = NULL;
+	construct_cmds(&cmds, &lex);
+	// display_lexer(lex);
+	display_cmd(cmds);
 	free_lex(&lex);
+	free_cmd(cmds);
 	return (0);
 }
