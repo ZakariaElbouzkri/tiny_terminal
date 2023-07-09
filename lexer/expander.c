@@ -16,7 +16,22 @@ char	*ft_strrcat(char *s, char c)
 	return (ret);
 }
 
-void	ft_expander(t_lex **lex)
+char	*get_env(char *s, t_env *env)
+{
+	while (env)
+	{
+		if (s && env->name && ft_strlen(env->name) == ft_strlen(s) && !ft_strncmp(s, env->name, ft_strlen(env->name)))
+		{
+			free(s);
+			return (env->value);
+		}
+		env = env->next;
+	}
+	free(s);
+	return (NULL);
+}
+
+void	ft_expander(t_lex **lex, t_env *env)
 {
 	char	*s;
 	int		i;
@@ -52,12 +67,13 @@ void	ft_expander(t_lex **lex)
 						s = ft_strrcat(s, '$');
 					else
 					{
-						s = ft_strjoin(s, getenv(ft_substr(tmp->data, i + 1, idx - i - 1)));
+						s = ft_strjoin(s, get_env(ft_substr(tmp->data, i + 1, idx - i - 1), env));
 
 					}
 					i = idx - 1;
 				}
 			}
+			free(tmp->data);
 			tmp->data = s;
 			tmp = tmp->next;
 		}

@@ -50,11 +50,11 @@ typedef	struct	s_cmd
 }	t_cmd;
 
 void	display_lexer(t_lex *lex);
-bool	lexer(char *cmd);
+bool	lexer(char *cmd, t_env *env);
 void	check_token_type(char *cmd, int *idx, t_lex *token);
 void	ft_lex_add_back(t_lex **lex, t_lex *new);
 bool	is_token(char c);
-void	ft_expander(t_lex **lex);
+void	ft_expander(t_lex **lex, t_env *env);
 void	join_words(t_lex **lex);
 void	delete_last_node(t_lex **lst, t_lex *node_to_del);
 bool	is_word(t_lex	*node);
