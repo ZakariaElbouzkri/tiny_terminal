@@ -56,13 +56,14 @@ void	join_words(t_lex **lex)
 		{
 			tmp->data = ft_strjoin(last->data, tmp->data);
 			tmp->tok = SQU;
+			// printf("|||%s \n", last->data);
 			delete_last_node(lex, last);
 		}
 		last = tmp;
 		tmp = tmp->next;
 	}
 	// display_lexer(*lex);
-	// remove_white_spaces(lex);
+	remove_white_spaces(lex);
 	// display_lexer(*lex);
 
 }

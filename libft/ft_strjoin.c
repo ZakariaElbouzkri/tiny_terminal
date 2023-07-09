@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 01:44:19 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/09 02:55:33 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/09 03:54:00 by asettar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ char	*ft_strjoin(char *s1, char *s2)
 	if (!str)
 		return (NULL);
 	i = 0;
-	while (*s1)
+	while (*(s1 + i))
 	{
-		*(str + i) = *s1++;
+		*(str + i) = *(s1 + i);
 		i++;
 	}
 	while (*s2)
