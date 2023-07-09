@@ -1,13 +1,13 @@
 NAME = minishell
 
-CC = cc -Wall -Wextra -Werror
+CC = cc -Wall -Wextra -Werror -g
 
 LIBDIR = ./libft/
 LIBFT = $(LIBDIR)/libft.a
 
 RM = rm -f
 
-SRC = main.c lexer/lexer.c  lexer/lexer_utils.c lexer/join_words.c lexer/expander.c
+SRC = main.c lexer/lexer.c  lexer/lexer_utils.c lexer/join_words.c lexer/expander.c lexer/check_errors.c
 
 OBJ = $(SRC:.c=.o)
 

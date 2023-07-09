@@ -65,6 +65,7 @@ void	check_token_type(char *cmd, int *idx, t_lex *token)
 		get_data(cmd, idx, token);
 }
 
+
 bool	lexer(char *cmd)
 {
 	int		i;
@@ -82,8 +83,13 @@ bool	lexer(char *cmd)
 		
 		// printf("%s, %d \n", token->data, i);
 	}
+	// display_lexer(lex);
 	ft_expander(&lex);
-	// join_words(&lex);
+	printf("::::::\n");
+	join_words(&lex);
 	display_lexer(lex);
+	// if (check_errors(lex))
+	// 	return (1);
+	free(lex);
 	return (0);
 }

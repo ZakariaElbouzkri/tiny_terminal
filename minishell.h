@@ -49,6 +49,7 @@ typedef	struct	s_cmd
 	struct	s_cmd	*next;
 }	t_cmd;
 
+void	display_lexer(t_lex *lex);
 bool	lexer(char *cmd);
 void	check_token_type(char *cmd, int *idx, t_lex *token);
 void	ft_lex_add_back(t_lex **lex, t_lex *new);
@@ -58,8 +59,9 @@ void	join_words(t_lex **lex);
 void	delete_last_node(t_lex **lst, t_lex *node_to_del);
 bool	is_word(t_lex	*node);
 char	*ft_strrcat(char *s, char c);
-
 void	remove_white_spaces(t_lex **lex);
+bool	check_errors(t_lex *lex);
+bool	is_redir(t_lex *node);
 
 #endif
 
