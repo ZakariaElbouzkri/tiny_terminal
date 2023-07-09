@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/09 11:53:40 by asettar           #+#    #+#             */
+/*   Updated: 2023/07/09 11:55:33 by asettar          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 bool	check_qutes(char *cmd)
@@ -17,7 +29,7 @@ bool	check_qutes(char *cmd)
 				return (false);
 		}
 		if (!cmd[i])
-			break;
+			break ;
 	}
 	return (true);
 }
@@ -40,15 +52,19 @@ void	prompt(t_env **env)
 		free(cmd);
 	}
 }
-void leaks(){system("leaks minishell");}
 
-int	main(int ac, char **av, char** envp)
+void	leaks(void)
 {
-	(void)av;
-	(void)ac;
-	t_env	*env;
-	atexit(leaks);
+	system("leaks minishell");
+}
 
+int	main(int ac, char **av, char **envp)
+{
+	t_env	*env;
+
+	(void)ac;
+	(void)av;
+	atexit(leaks);
 	env = NULL;
 	parse_env(envp, &env);
 	prompt(&env);
