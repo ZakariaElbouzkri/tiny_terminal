@@ -2,11 +2,11 @@
 
 void	display_lexer(t_lex *lex)    
 {
-	char	*tok[10] = {"WRD", "SPA", "DQU", "SQU", "INP", "OUT", "HER", "APP", "PIP", NULL};
+	char	*tok[9] = {"WRD", "SPA", "DQU", "SQU", "INP", "OUT", "HER", "APP", "PIP"};
 	while (lex)
 	{
 		printf("__________________________\n");
-		printf("type : %s\n", tok[lex->tok]);
+			printf("type : %s\n", tok[lex->tok]);
 		if(lex->tok == WRD || lex->tok == SQU || lex->tok == DQU)
 			printf("data : %s\n", lex->data);
 		else
@@ -32,6 +32,7 @@ void	get_data(char *cmd, int *idx, t_lex *token)
 		while (cmd[i] && !is_token(cmd[i]))
 			i++;
 		token->data = ft_substr(cmd, *idx, i - *idx);
+		token->tok = WRD;
 		i--;
 	}
 	*idx = i;
@@ -66,6 +67,17 @@ void	check_token_type(char *cmd, int *idx, t_lex *token)
 }
 
 
+void	free_lex(t_lex	**lex)
+{
+	if (!lex || !*lex)
+		return ;
+	free_lex(&(*lex)->next);
+	if (is_word(*lex))
+		free((*lex)->data);
+	free(*lex);
+	*lex = NULL;
+}
+
 bool	lexer(char *cmd)
 {
 	int		i;
@@ -78,6 +90,7 @@ bool	lexer(char *cmd)
 	{
 		token = (t_lex *)malloc(sizeof(t_lex));
 		token->next = NULL;
+		token->tok = WRD;
 		check_token_type(cmd, &i, token);
 		ft_lex_add_back(&lex, token);
 		
@@ -86,10 +99,10 @@ bool	lexer(char *cmd)
 	// display_lexer(lex);
 	ft_expander(&lex);
 	printf("::::::\n");
-	join_words(&lex);
 	display_lexer(lex);
-	// if (check_errors(lex))
-	// 	return (1);
-	free(lex);
+	join_words(&lex);
+	if (check_errors(lex))
+		return (free_lex(&lex), 1);
+	free_lex(&lex);
 	return (0);
 }

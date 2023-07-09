@@ -9,7 +9,7 @@ void	delete_last_node(t_lex **lst, t_lex *node_to_del)
 	if (curr_node == node_to_del)
 	{
 		*lst = curr_node->next;
-		free(node_to_del->data);
+		// free(node_to_del->data);
 		free(node_to_del);
 		return;
 	}
@@ -19,7 +19,7 @@ void	delete_last_node(t_lex **lst, t_lex *node_to_del)
 		curr_node = curr_node->next;
 	}
 	prev_node->next = curr_node->next;
-	free(node_to_del->data);
+	// free(node_to_del->data);
 	free(node_to_del);
 }
 
@@ -62,7 +62,7 @@ void	join_words(t_lex **lex)
 		tmp = tmp->next;
 	}
 	// display_lexer(*lex);
-	remove_white_spaces(lex);
+	// remove_white_spaces(lex);
 	// display_lexer(*lex);
 
 }

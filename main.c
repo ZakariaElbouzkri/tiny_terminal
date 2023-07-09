@@ -50,16 +50,27 @@ void	prompt(t_env **env)
 		if (!cmd)
 			exit(0);
 		cmd = ft_strtrim(cmd, " \n\t\v\r");
-		if (!ft_strncmp("exit", cmd, 4))
+		if (cmd && !ft_strncmp("exit", cmd, 4))
 			exit(0);
-		if (lexer(cmd))
+		if ((cmd && *cmd) && lexer(cmd))
 		{
 			ft_putstr_fd("syn_err\n", 2);
-
 		}
 		add_history(cmd);
-		
+		free(cmd);
 	}
+}
+void leaks(){system("leaks minishell");}
+
+void	free_env(t_env	**env)
+{
+	if (!env || !*env)
+		return ;
+	free_env(&(*env)->next);
+	free((*env)->name);
+	free((*env)->value);
+	free(*env);
+	*env = NULL;
 }
 
 int	main(int ac, char **av, char** envp)
@@ -67,9 +78,11 @@ int	main(int ac, char **av, char** envp)
 	(void)av;
 	(void)ac;
 	t_env	*env;
+	atexit(leaks);
 
 	env = NULL;
 	parse_env(envp, &env);
 	// display_env(env);
 	prompt(&env);
+	free_env(&env);
 }
