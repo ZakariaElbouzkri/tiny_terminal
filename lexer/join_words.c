@@ -54,34 +54,20 @@ void	join_words(t_lex **lex)
 	{
 		if (last && is_word(tmp) && is_word(last))
 		{
-// <<<<<<< HEAD÷÷
 			char *s = tmp->data;
-// =======
-			// last->data = ft_strjoin(last->data, )
-// >>>>>>> 665e99be42f6d619a61bccf44f7deec4a565bfdb
 			tmp->data = ft_strjoin(last->data, tmp->data);
 			free(tmp->data);
 			tmp->tok = SQU;
-// <<<<<<< HEAD
 			free(s);
-			// printf("|||%s \n", last->data);
-// =======
-// >>>>>>> 665e99be42f6d619a61bccf44f7deec4a565bfdb
 			delete_last_node(lex, last);
 		}
 		last = tmp;
 		tmp = tmp->next;
 	}
-	// display_lexer(*lex);
 	remove_white_spaces(lex);
-	// display_lexer(*lex);
 
 }
 
-// <<<<<<< HEAD
-
-// ls a
-// =======
 void	lex_del_one(t_lex **lex, t_lex	*node)
 {
 	if (!lex || !*lex)
@@ -115,4 +101,3 @@ void	join_words2(t_lex **lex)
 			itr = itr->next;
 	}
 }
-// >>>>>>> 665e99be42f6d619a61bccf44f7deec4a565bfdb
