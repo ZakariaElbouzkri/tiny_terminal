@@ -42,7 +42,7 @@ void	change_last_args(t_lex *lex, t_cmd *last)
 	t_list *node;
 
 	node = (t_list *)malloc(sizeof(node));
-	node->content = lex->data;
+	node->content = ft_strdup(lex->data);
 	node->next = NULL;
 	ft_lstadd_back(&last->args, node);
 }

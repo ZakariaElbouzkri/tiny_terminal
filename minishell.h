@@ -67,6 +67,7 @@ void	create_new_cmd(t_cmd **cmd, t_cmd **last, bool *new_cmd);
 void	change_last_args(t_lex *lex, t_cmd *last);
 void	change_last_redir(t_lex **lst, t_cmd *last);
 void	ft_redir_add_back(t_redir **red, t_redir *new);
+void	free_cmd(t_cmd	**cmd);
 void	display_cmd(t_cmd *cmd);
 void	join_words2(t_lex **lex);
 
