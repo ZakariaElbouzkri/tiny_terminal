@@ -52,7 +52,7 @@ void	prompt(t_env **env)
 		cmd = ft_strtrim(cmd, " \n\t\v\r");
 		if (cmd && !ft_strncmp("exit", cmd, 4))
 			exit(0);
-		if ((cmd && *cmd) && lexer(cmd))
+		if ((cmd && *cmd) && lexer(cmd, *env))
 		{
 			ft_putstr_fd("syn_err\n", 2);
 		}

@@ -78,12 +78,12 @@ void	free_lex(t_lex	**lex)
 	*lex = NULL;
 }
 
-bool	lexer(char *cmd)
+bool	lexer(char *cmd, t_env *env)
 {
 	int		i;
 	t_lex	*lex;
 	t_lex	*token;
-
+	// t_cmd	cmds;
 	i = -1;
 	lex = NULL;
 	while (cmd[++i])
@@ -97,12 +97,13 @@ bool	lexer(char *cmd)
 		// printf("%s, %d \n", token->data, i);
 	}
 	// display_lexer(lex);
-	ft_expander(&lex);
+	ft_expander(&lex, env);
 	// printf("::::::\n");
-	// display_lexer(lex);
 	join_words(&lex);
 	if (check_errors(lex))
 		return (free_lex(&lex), 1);
+	// // construct_cmds(lex, &cmd);
+	display_lexer(lex);
 	free_lex(&lex);
 	return (0);
 }

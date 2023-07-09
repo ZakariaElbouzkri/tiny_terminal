@@ -54,8 +54,10 @@ void	join_words(t_lex **lex)
 	{
 		if (last && is_word(tmp) && is_word(last))
 		{
+			char *s = tmp->data;
 			tmp->data = ft_strjoin(last->data, tmp->data);
 			tmp->tok = SQU;
+			free(s);
 			// printf("|||%s \n", last->data);
 			delete_last_node(lex, last);
 		}
@@ -67,3 +69,6 @@ void	join_words(t_lex **lex)
 	// display_lexer(*lex);
 
 }
+
+
+// ls a
