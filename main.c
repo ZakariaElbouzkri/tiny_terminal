@@ -39,6 +39,7 @@ void	display_env(t_env *env)
 	display_env(env->next);
 }
 
+
 void	prompt(t_env **env)
 {
 	char	*cmd;
@@ -46,6 +47,8 @@ void	prompt(t_env **env)
 	while (true)
 	{
 		cmd = readline("minishell$ ");
+		if (!cmd)
+			exit(0);
 		cmd = ft_strtrim(cmd, " \n\t\v\r");
 		if (!ft_strncmp("exit", cmd, 4))
 			exit(0);

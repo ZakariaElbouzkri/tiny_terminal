@@ -22,3 +22,9 @@ bool	is_word(t_lex	*node)
 {
 	return (node->tok == WRD || node->tok == SQU || node->tok == DQU);
 }
+
+bool	is_redir(t_lex *node)
+{
+	return (node->tok == APP || node->tok == HER
+		|| node->tok == OUT || node->tok == INP);
+}

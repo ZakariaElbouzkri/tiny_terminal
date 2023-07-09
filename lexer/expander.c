@@ -1,5 +1,6 @@
 #include "../minishell.h"
 
+// after herdoc if $ after a singlequote or double he got deleted (the $)
 char	*ft_strrcat(char *s, char c)
 {
 	char *ret;
@@ -27,11 +28,6 @@ void	ft_expander(t_lex **lex)
 	last = NULL;
 	while (tmp)
 	{
-		if (is_word(tmp) && last && is_word(last) && last->tok != WRD && !ft_strncmp(last->data, "$", ft_strlen(last->data)))
-		{
-			delete_last_node(lex, last);
-			// continue;
-		}
 		last = tmp;
 		if (tmp->tok == HER)
 		{
@@ -56,7 +52,6 @@ void	ft_expander(t_lex **lex)
 						s = ft_strrcat(s, '$');
 					else
 					{
-						printf("%s::%s\n", ft_substr(tmp->data, i + 1, idx - i - 1), s);
 						s = ft_strjoin(s, getenv(ft_substr(tmp->data, i + 1, idx - i - 1)));
 
 					}
@@ -64,11 +59,9 @@ void	ft_expander(t_lex **lex)
 				}
 			}
 			tmp->data = s;
-			free(s);
 			tmp = tmp->next;
 		}
 		else
 			tmp = tmp->next;
 	}
 }
-// $$
