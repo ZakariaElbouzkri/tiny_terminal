@@ -98,8 +98,8 @@ bool	lexer(char *cmd)
 	}
 	// display_lexer(lex);
 	ft_expander(&lex);
-	printf("::::::\n");
-	display_lexer(lex);
+	// printf("::::::\n");
+	// display_lexer(lex);
 	join_words(&lex);
 	if (check_errors(lex))
 		return (free_lex(&lex), 1);
