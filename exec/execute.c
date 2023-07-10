@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 21:32:42 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/10 22:45:33 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/10 22:46:46 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	**parse_path(t_env *env)
 	if (!path)
 		return (NULL);
 	spl_pth = ft_split(path, ':');
-	if (!spl_pth && !*spl_pth)
+	if (!spl_pth || !*spl_pth)
 		return (NULL);
 	idx = -1;
 	while (spl_pth[++idx])
