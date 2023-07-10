@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lexer_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/10 02:36:46 by asettar           #+#    #+#             */
+/*   Updated: 2023/07/10 03:02:56 by asettar          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minishell.h"
 
 void	ft_lex_add_back(t_lex **lex, t_lex *new)
@@ -10,6 +22,18 @@ void	ft_lex_add_back(t_lex **lex, t_lex *new)
 		return ;
 	}
 	ft_lex_add_back(&(*lex)->next, new);
+}
+
+void	ft_cmd_add_back(t_cmd **cmd, t_cmd *new)
+{	
+	if (!cmd || !new)
+		return ;
+	if (*cmd == NULL)
+	{
+		*cmd = new;
+		return ;
+	}
+	ft_cmd_add_back(&(*cmd)->next, new);
 }
 
 bool	is_token(char c)
@@ -50,5 +74,20 @@ void	display_cmd(t_cmd *cmd)
 			ls = ls->next;
 		}
 		cmd = cmd->next;
+	}
+}
+
+void	display_lexer(t_lex *lex)    
+{
+	char	*tok[9] = {"WRD", "SPA", "DQU", "SQU", "INP", "OUT", "HER", "APP", "PIP"};
+	while (lex)
+	{
+		printf("__________________________\n");
+			printf("type : %s\n", tok[lex->tok]);
+		if(lex->tok == WRD || lex->tok == SQU || lex->tok == DQU)
+			printf("data : %s\n", lex->data);
+		else
+			printf("data : (null)\n");
+		lex = lex->next;
 	}
 }
