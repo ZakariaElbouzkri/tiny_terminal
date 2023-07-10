@@ -119,10 +119,10 @@ bool	lexer(char *cmd, t_env *env)
 		ft_lex_add_back(&lex, token);
 		// printf("%s, %d \n", token->data, i);
 	}
-	// display_lexer(lex);
+	display_lexer(lex);
 	ft_expander(&lex, env);
 	// printf("::::::\n");
-	join_words(&lex);
+	join_words2(&lex);
 	display_lexer(lex);
 	if (check_errors(lex))
 		return (free_lex(&lex), 1);

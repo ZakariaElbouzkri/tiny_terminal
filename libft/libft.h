@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 21:24:29 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/09 02:56:10 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/10 02:25:42 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 
 typedef struct s_list
 {
-	void			*content;
+	void		*content;
 	struct s_list	*next;
 }					t_list;
 
