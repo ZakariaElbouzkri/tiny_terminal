@@ -96,8 +96,10 @@ void	join_words2(t_lex **lex)
 			if (itr->tok != WRD || itr->next->tok != WRD)
 				itr->tok = SQU;
 			lex_del_one(lex, itr->next);
+			continue;
 		}
 		if (itr)
 			itr = itr->next;
 	}
+	remove_white_spaces(lex);
 }
