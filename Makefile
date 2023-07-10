@@ -8,7 +8,8 @@ LIBFT = $(LIBDIR)/libft.a
 RM = rm -f
 
 SRC = main.c parse_env.c lexer/lexer.c  lexer/lexer_utils.c lexer/join_words.c lexer/expander.c \
-		lexer/check_errors.c lexer/cmd_construct.c
+		lexer/check_errors.c lexer/cmd_construct.c \
+		exec/execute.c 
 
 OBJ = $(SRC:.c=.o)
 
