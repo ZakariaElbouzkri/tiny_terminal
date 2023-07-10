@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:31:55 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/10 03:01:58 by asettar          ###   ########.fr       */
+/*   Updated: 2023/07/10 22:10:59 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,6 @@ bool	lexer(char *cmd, t_env *env)
 	free_lex(&lex);
 	display_lexer(lex);
 	display_cmd(cmds);
-	// execute(cmds, env);
+	execute(cmds, env);
 	return (free_cmd(&cmds), 0);
 }

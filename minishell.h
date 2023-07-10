@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:53:59 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/10 02:58:34 by asettar          ###   ########.fr       */
+/*   Updated: 2023/07/10 22:43:38 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,12 @@ void	ft_redir_add_back(t_redir **red, t_redir *new);
 void	free_cmd(t_cmd	**cmd);
 void	display_cmd(t_cmd *cmd);
 void	join_words2(t_lex **lex);
+char	*get_env(char *s, t_env *env);
+
+
+void	execute(t_cmd	*cmd, t_env *env);
+
+// utils
+void	free_dubptr(char **ptr);
 
 #endif
