@@ -48,6 +48,10 @@ typedef	struct	s_cmd
 	struct	s_cmd	*next;
 }	t_cmd;
 
+void	parse_env(char **envp, t_env **env);
+void	ft_env_add_back(t_env **env, t_env *node);
+void	free_env(t_env	**env);
+void	display_env(t_env *env);
 void	display_lexer(t_lex *lex);
 bool	lexer(char *cmd, t_env *env);
 void	check_token_type(char *cmd, int *idx, t_lex *token);
