@@ -1,19 +1,16 @@
-#include "../minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lexer.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/10 02:31:55 by asettar           #+#    #+#             */
+/*   Updated: 2023/07/10 03:01:58 by asettar          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void	display_lexer(t_lex *lex)    
-{
-	char	*tok[9] = {"WRD", "SPA", "DQU", "SQU", "INP", "OUT", "HER", "APP", "PIP"};
-	while (lex)
-	{
-		printf("__________________________\n");
-			printf("type : %s\n", tok[lex->tok]);
-		if(lex->tok == WRD || lex->tok == SQU || lex->tok == DQU)
-			printf("data : %s\n", lex->data);
-		else
-			printf("data : (null)\n");
-		lex = lex->next;
-	}
-}
+#include "../minishell.h"
 
 void	get_data(char *cmd, int *idx, t_lex *token)
 {
@@ -38,32 +35,32 @@ void	get_data(char *cmd, int *idx, t_lex *token)
 	*idx = i;
 }
 
-void	check_token_type(char *cmd, int *idx, t_lex *token)
+void	check_token_type(char *cmd, int *idx, t_lex *tk)
 {
 	int	i;
 
 	i = *idx;
 	if (cmd[i] == '|')
-		token->tok = PIP;
+		tk->tok = PIP;
 	else if (ft_isspace(cmd[i]))
 	{
 		while (cmd[i] && ft_isspace(cmd[i]))
 			i++;
 		*idx = i - 1;
-		token->tok = SPA;
+		tk->tok = SPA;
 	}
 	else if (cmd[i] == '<')
 	{
 		*idx += (cmd[i] == cmd[i + 1]);
-		token->tok = (HER * (cmd[i] == cmd[i + 1]) + INP * (cmd[i] != cmd[i + 1]));
+		tk->tok = (HER * (cmd[i] == cmd[i + 1]) + INP * (cmd[i] != cmd[i + 1]));
 	}
 	else if (cmd[i] == '>')
 	{
 		*idx += (cmd[i] == cmd[i + 1]);
-		token->tok = (APP * (cmd[i] == cmd[i + 1]) + OUT * (cmd[i] != cmd[i + 1]));
+		tk->tok = (APP * (cmd[i] == cmd[i + 1]) + OUT * (cmd[i] != cmd[i + 1]));
 	}
 	else
-		get_data(cmd, idx, token);
+		get_data(cmd, idx, tk);
 }
 
 void	free_lex(t_lex	**lex)
@@ -108,6 +105,7 @@ bool	lexer(char *cmd, t_env *env)
 	t_lex	*lex;
 	t_lex	*token;
 	t_cmd	*cmds;
+
 	i = -1;
 	lex = NULL;
 	while (cmd[++i])
@@ -117,20 +115,17 @@ bool	lexer(char *cmd, t_env *env)
 		token->tok = WRD;
 		check_token_type(cmd, &i, token);
 		ft_lex_add_back(&lex, token);
-		// printf("%s, %d \n", token->data, i);
 	}
-	display_lexer(lex);
 	ft_expander(&lex, env);
-	// printf("::::::\n");
 	join_words2(&lex);
 	display_lexer(lex);
 	if (check_errors(lex))
 		return (free_lex(&lex), 1);
 	cmds = NULL;
 	construct_cmds(&cmds, &lex);
-	// display_lexer(lex);
-	display_cmd(cmds);
 	free_lex(&lex);
-	free_cmd(&cmds);     // just to check leaks remove later
-	return (0);
+	display_lexer(lex);
+	display_cmd(cmds);
+	// execute(cmds, env);
+	return (free_cmd(&cmds), 0);
 }

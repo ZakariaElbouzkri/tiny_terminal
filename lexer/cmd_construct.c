@@ -1,16 +1,16 @@
-#include "../minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cmd_construct.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/07/10 02:43:05 by asettar           #+#    #+#             */
+/*   Updated: 2023/07/10 02:45:00 by asettar          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void	ft_cmd_add_back(t_cmd **cmd, t_cmd *new)
-{	
-	if (!cmd || !new)
-		return ;
-	if (*cmd == NULL)
-	{
-		*cmd = new;
-		return ;
-	}
-	ft_cmd_add_back(&(*cmd)->next, new);
-}
+#include "../minishell.h"
 
 void	ft_redir_add_back(t_redir **red, t_redir *new)
 {	
@@ -27,7 +27,7 @@ void	ft_redir_add_back(t_redir **red, t_redir *new)
 void	create_new_cmd(t_cmd **cmd, t_cmd **last, bool *new_cmd)
 {
 	t_cmd	*new;
-	
+
 	new = (t_cmd *)malloc(sizeof(t_cmd));
 	new->args = NULL;
 	new->redir = NULL;
@@ -39,7 +39,7 @@ void	create_new_cmd(t_cmd **cmd, t_cmd **last, bool *new_cmd)
 
 void	change_last_args(t_lex *lex, t_cmd *last)
 {
-	t_list *node;
+	t_list	*node;
 
 	node = (t_list *)malloc(sizeof(node));
 	node->content = ft_strdup(lex->data);
@@ -50,8 +50,8 @@ void	change_last_args(t_lex *lex, t_cmd *last)
 void	change_last_redir(t_lex **lst, t_cmd *last)
 {
 	t_lex	*lex;
-	t_redir *red;
-	
+	t_redir	*red;
+
 	lex = *lst;
 	while (lex && is_redir(lex))
 	{
