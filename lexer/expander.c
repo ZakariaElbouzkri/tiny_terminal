@@ -72,6 +72,8 @@ void	ft_expander(t_lex **lex, t_env *env)
 					}
 					i = idx - 1;
 				}
+				else
+					s = ft_strrcat(s, tmp->data[i]);
 			}
 			free(tmp->data);
 			tmp->data = s;
