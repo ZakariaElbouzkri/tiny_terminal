@@ -6,7 +6,7 @@
 /*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:31:55 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/10 03:01:58 by asettar          ###   ########.fr       */
+/*   Updated: 2023/07/11 09:10:09 by asettar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	free_cmd(t_cmd	**cmd)
 	*cmd = NULL;
 }
 
-bool	lexer(char *cmd, t_env *env)
+bool	lexer(char *cmd, t_env **env)
 {
 	int		i;
 	t_lex	*lex;
@@ -116,7 +116,7 @@ bool	lexer(char *cmd, t_env *env)
 		check_token_type(cmd, &i, token);
 		ft_lex_add_back(&lex, token);
 	}
-	ft_expander(&lex, env);
+	ft_expander(&lex, *env);
 	join_words2(&lex);
 	display_lexer(lex);
 	if (check_errors(lex))
@@ -126,6 +126,12 @@ bool	lexer(char *cmd, t_env *env)
 	free_lex(&lex);
 	display_lexer(lex);
 	display_cmd(cmds);
+	// echo_cmds(cmds->args);
 	// execute(cmds, env);
+	export(cmds, env);
+	printf("||||||||||||||||||||||||||||\n");
+	// print_env(*env);
+	// pwd(env);
+	
 	return (free_cmd(&cmds), 0);
 }

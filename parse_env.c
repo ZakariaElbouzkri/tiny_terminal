@@ -6,7 +6,7 @@
 /*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 11:52:53 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/09 11:52:54 by asettar          ###   ########.fr       */
+/*   Updated: 2023/07/11 03:10:33 by asettar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	parse_env(char **envp, t_env **env)
 		node = malloc(sizeof(t_env));
 		node->name = ft_substr(envp[i], 0, idx);
 		node->value = ft_substr(envp[i], idx + 1, ft_strlen(envp[i]) - idx - 1);
+		node->flag = 0;
 		node->next = NULL;
 		ft_env_add_back(env, node);
 	}

@@ -6,7 +6,7 @@
 /*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:53:59 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/10 02:58:34 by asettar          ###   ########.fr       */
+/*   Updated: 2023/07/11 08:41:21 by asettar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 typedef struct s_env
 {
 	char			*name;
+	int				flag;
 	char			*value;
 	struct s_env	*next;
 }	t_env;
@@ -71,7 +72,7 @@ void	ft_env_add_back(t_env **env, t_env *node);
 void	free_env(t_env	**env);
 void	display_env(t_env *env);
 void	display_lexer(t_lex *lex);
-bool	lexer(char *cmd, t_env *env);
+bool	lexer(char *cmd, t_env **env);
 void	check_token_type(char *cmd, int *idx, t_lex *token);
 void	ft_lex_add_back(t_lex **lex, t_lex *new);
 bool	is_token(char c);
@@ -93,5 +94,14 @@ void	ft_redir_add_back(t_redir **red, t_redir *new);
 void	free_cmd(t_cmd	**cmd);
 void	display_cmd(t_cmd *cmd);
 void	join_words2(t_lex **lex);
+void	echo_cmds(t_list *args);
+bool	check_n_flag(char *s);
+void	pwd(t_env *env);
+void	print_env(t_env *env);
+
+void	export(t_cmd *cmd, t_env **env);
+void	print_export(t_env *env);
+bool	valid_identifer(char *s, int i);
+void	export_args(t_list *args, t_env **env);
 
 #endif

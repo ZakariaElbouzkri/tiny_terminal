@@ -6,7 +6,7 @@
 /*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 21:24:29 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/10 02:59:22 by asettar          ###   ########.fr       */
+/*   Updated: 2023/07/11 08:34:49 by asettar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,5 +94,6 @@ void	ft_print_num(long n, int *len);
 int		abs(int a);
 int		max(int a, int b);
 int		min(int a, int b);
+int		ft_strichr(const char *s, int c);
 
 #endif
