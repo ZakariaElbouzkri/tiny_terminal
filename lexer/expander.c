@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:46:18 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/10 03:02:16 by asettar          ###   ########.fr       */
+/*   Updated: 2023/07/10 22:19:21 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,13 @@ char	*get_env(char *s, t_env *env)
 			&& !ft_strncmp(s, env->name, ft_strlen(env->name)))
 		{
 			free(s);
+			s = NULL;
 			return (env->value);
 		}
 		env = env->next;
 	}
 	free(s);
+	s = NULL;
 	return (NULL);
 }
 
