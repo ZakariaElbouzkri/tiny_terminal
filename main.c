@@ -6,7 +6,7 @@
 /*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 11:53:40 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/09 11:55:33 by asettar          ###   ########.fr       */
+/*   Updated: 2023/07/11 09:32:28 by asettar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	prompt(t_env **env)
 		cmd = ft_strtrim(cmd, " \n\t\v\r");
 		if (cmd && !ft_strncmp("exit", cmd, 4))
 			exit(0);
-		if ((cmd && *cmd) && (!check_qutes(cmd) || lexer(cmd, *env)))
+		if ((cmd && *cmd) && (!check_qutes(cmd) || lexer(cmd, env)))
 			ft_putstr_fd("syn_err\n", 2);
 		add_history(cmd);
 		free(cmd);

@@ -6,7 +6,7 @@
 /*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 21:21:40 by asettar           #+#    #+#             */
-/*   Updated: 2022/10/13 21:37:09 by asettar          ###   ########.fr       */
+/*   Updated: 2023/07/11 09:16:56 by asettar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*ft_strdup(const char *s1)
 	int		i;
 
 	i = 0;
+	if (!s1)
+		return (NULL);
 	s2 = (char *)malloc(ft_strlen(s1) + 1);
 	if (!s2)
 		return (NULL);
