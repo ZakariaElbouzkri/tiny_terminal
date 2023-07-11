@@ -57,7 +57,6 @@ void	pwd(t_env *env)
 		env = env->next;
 	}
 }
-
 // export a : crete 
 void	print_env(t_env *env)
 {
