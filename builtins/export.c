@@ -4,6 +4,7 @@ void	sort_env(t_env *env)
 {
 	t_env	*tmp;
 	char	*s;
+	// char	*ss;
 
 	while (env)
 	{
@@ -15,6 +16,9 @@ void	sort_env(t_env *env)
 				s = env->name;
 				env->name = tmp->name;
 				tmp->name = s;
+				s = env->value;
+				env->value = tmp->value;
+				tmp->value = s;
 			}
 			tmp = tmp->next;
 		}
