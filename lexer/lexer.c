@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:31:55 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/12 05:55:00 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/12 22:39:05 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,11 +127,12 @@ bool	lexer(char *cmd, t_env **env)
 	// display_lexer(lex);
 	display_cmd(cmds);
 	// echo_cmds(cmds->args);
-	// export(cmds, env);
+	// execute(cmds, env);
+	export(cmds, env);
 	// printf("||||||||||||||||||||||||||||\n");
 	// print_env(*env);
 	// pwd(env);
 	
-	execute(cmds, env);
+	// execute(cmds, env);
 	return (free_cmd(&cmds), 0);
 }
