@@ -6,7 +6,7 @@
 /*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:53:59 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/11 09:39:16 by asettar          ###   ########.fr       */
+/*   Updated: 2023/07/12 05:15:16 by asettar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,5 +103,7 @@ void	export(t_cmd *cmd, t_env **env);
 void	print_export(t_env *env);
 bool	valid_identifer(char *s, int i);
 void	export_args(t_list *args, t_env **env);
-
+t_env	*env_find(char *s, t_env *env);
+void	cd(t_cmd *cmd, t_env *env);
+void	go_to_home(t_env *env);
 #endif
