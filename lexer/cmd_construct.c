@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_construct.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:43:05 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/10 02:45:00 by asettar          ###   ########.fr       */
+/*   Updated: 2023/07/12 05:22:47 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	change_last_redir(t_lex **lst, t_cmd *last)
 {
 	t_lex	*lex;
 	t_redir	*red;
+	static	int	pos;
 
 	lex = *lst;
 	while (lex && is_redir(lex))
@@ -58,6 +59,10 @@ void	change_last_redir(t_lex **lst, t_cmd *last)
 		red = (t_redir *)malloc(sizeof(t_redir));
 		red->type = lex->tok;
 		red->file = ft_strdup(lex->next->data);
+		red->flag = 0;
+		red->pos = pos++;
+		if (lex->next->tok == WRD)
+			red->flag = 1;
 		red->next = NULL;
 		ft_redir_add_back(&last->redir, red);
 		*lst = lex->next;

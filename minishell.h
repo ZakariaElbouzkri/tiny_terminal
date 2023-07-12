@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:53:59 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/11 09:39:16 by asettar          ###   ########.fr       */
+/*   Updated: 2023/07/12 05:49:40 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ typedef struct s_redir
 {
 	t_tok			type;
 	char			*file;
+	int				flag;
+	int				pos;
 	struct s_redir	*next;
 }	t_redir;
 
@@ -64,6 +66,8 @@ typedef struct s_cmd
 	t_list			*args;
 	t_redir			*redir;
 	int				fd[2];
+	int				inp;
+	int				out;
 	struct s_cmd	*next;
 }	t_cmd;
 
@@ -103,5 +107,13 @@ void	export(t_cmd *cmd, t_env **env);
 void	print_export(t_env *env);
 bool	valid_identifer(char *s, int i);
 void	export_args(t_list *args, t_env **env);
+char	*get_env(char *s, t_env *env);
+
+
+// execution:
+void	init_redirections(t_cmd *cmd, t_env *env);
+void	execute(t_cmd	*cmd, t_env **env);
+
+
 
 #endif
