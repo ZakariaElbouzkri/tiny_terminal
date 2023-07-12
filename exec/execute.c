@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 21:32:42 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/10 22:46:46 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/12 05:49:53 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,13 @@ char	**parse_path(t_env *env)
 	return (spl_pth);
 }
 
-void	execute(t_cmd	*cmd, t_env *env)
+
+
+void	execute(t_cmd	*cmd, t_env **env)
 {
 	char	**path;
 
 	(void)cmd;
-	path = parse_path(env);
+	(void)path;
+	init_redirections(cmd, *env);
 }

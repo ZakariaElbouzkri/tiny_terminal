@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 11:53:40 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/11 09:38:51 by asettar          ###   ########.fr       */
+/*   Updated: 2023/07/12 05:59:08 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ void	prompt(t_env **env)
 	}
 }
 
-void	leaks(void)
-{
-	system("leaks minishell");
-}
+// void	leaks(void)
+// {
+// 	system("leaks minishell");
+// }
 
 int	main(int ac, char **av, char **envp)
 {
@@ -64,7 +64,7 @@ int	main(int ac, char **av, char **envp)
 
 	(void)ac;
 	(void)av;
-	atexit(leaks);
+	// atexit(leaks);
 	env = NULL;
 	parse_env(envp, &env);
 	prompt(&env);
