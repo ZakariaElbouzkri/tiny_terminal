@@ -23,43 +23,6 @@ t_env	*env_find(char *s, t_env *env)
 	return (env_find(s, env->next));
 }
 
-
-// void	check_value(char *s, t_env **env)
-// {
-// 	int idx;
-// 	char *before;
-// 	char *after;
-
-// 	idx = ft_strichr(s, '=');
-// 	before = ft_substr(s, 0, idx - (s[idx - 1] == '+'));
-// 	after = ft_substr(s, idx + 1, ft_strlen(s) - idx - 1);
-// 	t_env *env_node = env_find(before, *env);
-// 	if (env_node && ft_strchr(s, '='))
-// 	{
-// 		if (s[idx - 1] == '+')
-// 			env_node->value = ft_strjoin(env_node->value, after);
-// 		else
-// 			env_node->value = after;
-// 	}
-// 	else if (!env_node)
-// 	{
-// 		env_node = (t_env *)malloc(sizeof(t_env));
-// 		if (ft_strchr(s, '='))
-// 		{
-// 			env_node->name = before;
-// 			env_node->value = after;
-// 		}
-// 		else
-// 		{
-// 			env_node->name = ft_strdup(s);
-// 			env_node->value = NULL;
-// 		}
-// 		env_node->next = NULL;
-// 		env_node->flag = (ft_strchr(s, '=') == NULL);
-// 		ft_env_add_back(env, env_node);
-// 	}
-// }
-
 t_env	*ft_create_env_node(char *s, char *before, char *after)
 {
 	t_env	*env_node;
@@ -75,8 +38,8 @@ t_env	*ft_create_env_node(char *s, char *before, char *after)
 		env_node->name = ft_strdup(s);
 		env_node->value = NULL;
 	}
+	env_node->flag = 0;
 	env_node->next = NULL;
-	env_node->flag = (ft_strchr(s, '=') == NULL);
 	return (env_node);
 }
 
@@ -96,6 +59,8 @@ void	check_env_args(char *before, char *after, char *s, t_env **env)
 			free(env_node->value);
 			env_node->value = ft_strdup(after);
 		}
+			
+		env_node->flag = 0;
 	}
 	else if (!env_node)
 	{
@@ -127,10 +92,16 @@ void	export_args(t_list *args, t_env **env)
 			idx = ft_strichr(s, '=');
 			before = ft_substr(s, 0, idx - (s[idx - 1] == '+'));
 			after = ft_substr(s, idx + 1, ft_strlen(s) - idx - 1);
-			// printf(":::%s || %s:::\n", before, after);
+			// if (after)
+				printf(":::%s || %s:::\n", before, after);
+			// else
+			// 	printf(":::%s || :::\n", before);
 			check_env_args(before, after, s, env);
 		}
 		args = args->next;
 	}
 }
+
+// ab
+// 3 , 2 - 3 - 1 = 
 
