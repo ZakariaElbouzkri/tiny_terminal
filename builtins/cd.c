@@ -1,6 +1,6 @@
 #include "../minishell.h"
 
-//int chdir(const char *path);
+// int chdir(const char *path);
 // path begins with a '/'
 // return 0 for succes -1 for error and set errno
 

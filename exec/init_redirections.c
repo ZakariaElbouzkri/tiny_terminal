@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 05:32:33 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/12 06:18:03 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/12 23:38:36 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,13 @@ void	create_herdoc(t_redir *redir, t_env *env)
 		while (1)
 		{
 			line = readline("herdoc $> ");
-			if (!line || !ft_strncmp(line, redir->file, ft_strlen(redir->file)))
+			if (!line)
 				exit(0);
+			if (!ft_strcmp(line, redir->file))
+			{
+				free(line);
+				exit(0);
+			}
 			line = ft_her_expander(line, redir->flag, env);
 			write(fd[1], line, ft_strlen(line));
 			write(fd[1], "\n", 1);
@@ -102,33 +107,29 @@ void	init_in_out(int *inp, int *out, t_redir *redir, t_env *env)
 	}
 }
 
-int	count_her(t_redir *redir)
+int	count_her(t_cmd *cmd, t_redir *redir)
 {
-	int count;
-
 	if (!redir)
-		return (0);
-	count = 0;
-	while (redir)
 	{
-		if (redir->type == HER)
-			count++;
-		redir = redir->next;
+		if (!cmd->next)
+			return (0);	
+		return (count_her(cmd->next, cmd->next->redir));
 	}
-	return (count);
+	return (redir->type == HER) + count_her(cmd, redir->next);
 }
 
 void	init_redirections(t_cmd *cmd, t_env *env)
 {
+	printf("her count :%d\n", count_her(cmd, cmd->redir));
+	if (count_her(cmd, cmd->redir) >= 17)
+	{
+		free_cmd(&cmd);
+		free_env(&env);
+		ft_putstr_fd("bash: maximum here-document count exceeded\n", 2);
+		exit(EXIT_FAILURE);
+	}
 	while (cmd)
 	{
-		if (count_her(cmd->redir) == 18)
-		{
-			free_cmd(&cmd);
-			free_env(&env);
-			ft_putstr_fd("bash: maximum here-document count exceeded", 2);
-			exit(EXIT_FAILURE);
-		}
 		if (cmd->redir)
 			init_in_out(&cmd->inp, &cmd->out, cmd->redir, env);
 		cmd = cmd->next;
