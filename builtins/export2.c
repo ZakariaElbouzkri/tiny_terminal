@@ -67,8 +67,8 @@ t_env	*ft_create_env_node(char *s, char *before, char *after)
 	env_node = (t_env *)malloc(sizeof(t_env));
 	if (ft_strchr(s, '='))
 	{
-		env_node->name = before;
-		env_node->value = after;
+		env_node->name = ft_strdup(before);
+		env_node->value = ft_strdup(after);
 	}
 	else
 	{
@@ -92,13 +92,18 @@ void	check_env_args(char *before, char *after, char *s, t_env **env)
 		if (s[idx - 1] == '+')
 			env_node->value = ft_strjoin(env_node->value, after);
 		else
-			env_node->value = after;
+		{
+			free(env_node->value);
+			env_node->value = ft_strdup(after);
+		}
 	}
 	else if (!env_node)
 	{
 		env_node = ft_create_env_node(s, before, after);
 		ft_env_add_back(env, env_node);
 	}
+	free(before);
+	free(after);
 }
 void	export_args(t_list *args, t_env **env)
 {
