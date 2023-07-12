@@ -44,9 +44,13 @@ void	print_export(t_env *env)
 	{
 		ft_putstr_fd("declare -x ", 1);
 		ft_putstr_fd(node->name, 1);
-		ft_putstr_fd("=\"", 1);
-		ft_putstr_fd(node->value, 1);
-		ft_putstr_fd("\"\n", 1);
+		if (node->value)
+		{
+			ft_putstr_fd("=\"", 1);
+			ft_putstr_fd(node->value, 1);
+			ft_putstr_fd("\"", 1);
+		}
+		ft_putstr_fd("\n", 1);
 		node = node->next;
 	}
 	free_env(&sorted_env);
