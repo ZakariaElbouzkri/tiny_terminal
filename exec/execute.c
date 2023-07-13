@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 21:32:42 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/12 22:39:15 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/13 22:15:14 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,34 +29,52 @@ void	free_dubptr(char **ptr)
 	ptr = NULL;
 }
 
-char	**parse_path(t_env *env)
+int	count_her(t_cmd *cmd, t_redir *redir)
 {
-	char	*path;
-	char	**spl_pth;
-	int		idx;
-
-	path = get_env(ft_strdup("PATH"), env);
-	if (!path)
-		return (NULL);
-	spl_pth = ft_split(path, ':');
-	if (!spl_pth || !*spl_pth)
-		return (NULL);
-	idx = -1;
-	while (spl_pth[++idx])
+	if (!redir)
 	{
-		if (spl_pth[idx][ft_strlen(spl_pth[idx]) - 1] != '/')
-			spl_pth[idx] = ft_strjoin(spl_pth[idx], "/");
+		if (!cmd->next)
+			return (0);	
+		return (count_her(cmd->next, cmd->next->redir));
 	}
-	return (spl_pth);
+	return (redir->type == HER) + count_her(cmd, redir->next);
 }
 
+void	clear_and_exit(t_cmd **cmd, t_env **env)
+{
+	free_cmd(cmd);
+	free_env(env);
+	ft_putstr_fd("minishell: maximum here-document count exceeded\n", 2);
+	exit(EXIT_FAILURE);
+}
 
-
-void	execute(t_cmd	*cmd, t_env **env)
+void	execute(t_cmd	**cmd, t_env **env)
 {
 	char	**path;
+	// char	*line;
 
-	(void)cmd;
 	(void)path;
-	init_redirections(cmd, *env);
+	if (count_her(*cmd, (*cmd)->redir) >= 17)
+		clear_and_exit(cmd, env);
+	exec_herdocs(*cmd, *env);
+	exec_commands(cmd, env);
+
+	// itr = *cmd;
+	// while (itr)
+	// {
+	// 	if (itr->her_fd != -1)
+	// 	{
+	// 		while (1)
+	// 		{
+	// 			line = get_next_line(itr->her_fd);
+	// 			if (!line)
+	// 				break;
+	// 			printf("%s", line);
+	// 			free(line);
+	// 			line = NULL;
+	// 		}
+	// 		close(itr->her_fd);
+	// 	}
+	// 	itr = itr->next;
+	// }
 }

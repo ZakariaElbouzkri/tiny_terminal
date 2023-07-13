@@ -1,12 +1,17 @@
+#include <unistd.h>
+#include <stdio.h>
 #include "minishell.h"
+#include <string.h>
 
-// int main()
-// {
-// 	int fd = open("a",  O_CREAT | O_WRONLY | O_TRUNC);
-// 	if (fd < 0)
-// 	{
-// 		perror("bash: a");
-// 		exit(0);
-// 	}
-// 	// ft_putstr_fd("ach", fd);
-// }
+char	*ft_readline(char *prompt)
+{
+	ft_printf("%s", prompt);
+	return (get_next_line(0));
+}
+
+
+int main()
+{
+	char *line = ft_readline("minishell$ ");
+	printf("%s", line);
+}
