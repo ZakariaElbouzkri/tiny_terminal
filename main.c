@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 11:53:40 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/12 05:59:08 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/13 21:38:13 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	prompt(t_env **env)
 
 	while (true)
 	{
-		cmd = readline("minishell$ ");
+		cmd = readline("\033[0;33mminishell$ \033[0m");
 		if (!cmd)
 			exit(0);
 		cmd = ft_strtrim(cmd, " \n\t\v\r");
