@@ -1,8 +1,5 @@
 #include "../minishell.h"
 
-// APP >>  : write (O_CREAT | O_WRONLY | O_APP)
-// >  : overwrite (O_CREAT | O_WRONLY | O_TRUNC)
-
 bool check_n_flag(char *s)
 {
 	int i;
