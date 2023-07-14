@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:31:55 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/12 22:49:29 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/13 22:14:00 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,8 @@ bool	lexer(char *cmd, t_env **env)
 	construct_cmds(&cmds, &lex);
 	free_lex(&lex);
 	display_cmd(cmds); //TODO: remove
-	printf("\n_______Parsing Done:__________\n");
-	execute(cmds, env);
-	return (free_cmd(&cmds), 0);
+	// printf("\n_______Parsing Done:__________\n");
+	execute(&cmds, env);
+	free_cmd(&cmds);
+	return (0);
 }

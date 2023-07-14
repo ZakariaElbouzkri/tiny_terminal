@@ -6,7 +6,7 @@
 /*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:53:59 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/13 04:10:24 by asettar          ###   ########.fr       */
+/*   Updated: 2023/07/14 03:02:12 by asettar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,12 @@ typedef struct s_redir
 typedef struct s_cmd
 {
 	t_list			*args;
+	char			**cmd;
 	t_redir			*redir;
 	int				fd[2];
 	int				inp;
+	int				her_fd;
+	int				her_pos;
 	int				out;
 	struct s_cmd	*next;
 }	t_cmd;
@@ -113,6 +116,13 @@ void	go_to_home(t_env *env);
 
 char	*get_env(char *s, t_env *env);
 void	init_redirections(t_cmd *cmd, t_env *env);
-void	execute(t_cmd	*cmd, t_env **env);
 void	sigint_handler();
+void	execute(t_cmd	**cmd, t_env **env);
+void	ft_perror(char *err);
+int		count_her(t_cmd *cmd, t_redir *redir);
+void	exec_herdocs(t_cmd	*cmd, t_env *env);
+void	exec_commands(t_cmd **cmd, t_env **env);
+char	**get_path(t_env *env);
+char	*find_cmd(char *cmd, char **path);
+
 #endif
