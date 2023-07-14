@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 21:32:42 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/15 00:10:47 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/15 00:51:41 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	exec_redirs(t_cmd *cmd)
 		while (red)
 		{
 			if (red->type == INP || red->type == OUT || red->type == APP)
-				if (open_and_save(red->file, red->type, &red->fd))
+				if (!open_and_save(red->file, red->type, &red->fd))
 				{
 					cmd->triger = -1;
 					break;
@@ -97,6 +97,8 @@ void	exec_redirs(t_cmd *cmd)
 		cmd = cmd->next;
 	}
 }
+
+
 
 void	get_input_output(t_cmd *cmd)
 {
@@ -147,21 +149,4 @@ void	execute(t_cmd	**cmd, t_env **env)
 	exec_redirs(*cmd);
 	get_input_output(*cmd);
 	exec_commands(cmd, env);
-	// t_cmd *itr = *cmd;
-	// while (itr)
-	// {
-	// 	if (itr->her_fd != -1)
-	// 	{
-	// 		while (1)
-	// 		{
-	// 			line = get_next_line(itr->her_fd);
-	// 			if (!line)
-	// 				break;
-	// 			printf("%s", line);
-	// 			free(line);
-	// 		}
-	// 		close(itr->her_fd);
-	// 	}
-	// 	itr = itr->next;
-	// }
 }
