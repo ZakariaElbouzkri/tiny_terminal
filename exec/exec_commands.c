@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 22:15:47 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/13 23:14:47 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/14 04:19:52 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,44 +21,26 @@ void	ft_puterr(char *err, char *s)
 	exit(EXIT_FAILURE);
 }
 
-void	convert_cmd_list(t_cmd *cmd)
+void	extract_args(t_cmd *cmd)
 {
-	int i;
+	t_list	*itr;
+	int		i;
 
 	while (cmd)
 	{
-		cmd->cmd = NULL;
 		if (cmd->args)
 		{
+			itr = cmd->args;
+			cmd->cmd = (char **)malloc(sizeof(char *) * (ft_lstsize(itr) + 1));
 			i = 0;
-			cmd->cmd = ft_calloc(sizeof(char *), ft_lstsize(cmd->args) + 1);
-			while (cmd->args)
+			while (itr)
 			{
-				cmd->cmd[i++] = cmd->args->content;
-				cmd->args = cmd->args;
+				cmd->cmd[i++] = itr->content;
+				itr = itr->next;
 			}
 		}
 		cmd = cmd->next;
 	}
-}
-
-char	**get_path(t_env *env)
-{
-	char	**path;
-	char	*p;
-	int		idx;
-
-	p = get_env("PATH", env);
-	if (!p)
-		return (NULL);
-	path = ft_split(p, ':');
-	idx = -1;
-	while (path && path[++idx])
-	{
-		if (path[idx][ft_strlen(path[idx]) - 1] != '/')
-			path[idx] = ft_strjoin(path[idx], "/");
-	}
-	return (path);
 }
 
 char	*find_cmd(char *cmd, char **path)
@@ -80,78 +62,29 @@ char	*find_cmd(char *cmd, char **path)
 	return (free(cmd), NULL);
 }
 
-int	t_env_size(t_env *env)
+void	clean_all(char **path, char **envp)
 {
-	if (env)
-		return (0);
-	return (env->flag != 2) + t_env_size(env->next);
-}
-
-char	**convert_env_list(t_env *env)
-{
-	int		idx;
-	int		len;
-	char	**envp;
-	char	*var;
-
-
-	len = t_env_size(env);
-	envp = ft_calloc(sizeof(char *), len + 1);
-	idx = -1;
-	while (env)
-	{
-		if (env->flag != 2)
-		{
-			var = ft_strjoin(ft_strdup(env->value), "=");
-			envp[++idx] =  ft_strjoin(var, env->value);
-		}
-		env = env->next;
-	}
-	return (envp);
+	free_dubptr(path);
+	free_dubptr(envp);
 }
 
 void	exec_commands(t_cmd **cmd, t_env **env)
 {
-	int		fd[2];
-	int		pid;
-	char	**path;
-	char	**envp;
+	t_exec	exec;
 
-	convert_cmd_list(*cmd);
-	envp = convert_env_list(*env);
-	path = get_path(*env);
-	while (*cmd)
-	{
-		if ((*cmd)->next)
-		{
-			if (pipe(fd) == -1)
-				ft_perror("minishell:");
-			pid = fork();
-			if (pid == -1)
-				ft_perror("minishell:");
-			if (!pid)
-			{
-				if ((*cmd)->next)
-				{
-					dup2(fd[1], 1);
-					close(fd[0]);
-					close(fd[1]);
-				}
-				(*cmd)->cmd[0] = find_cmd((*cmd)->cmd[0], path);
-				if (!((*cmd)->cmd[0]))
-					ft_puterr("command not found\n", (*cmd)->cmd[0]);
-				execve((*cmd)->cmd[0], (*cmd)->cmd, envp);
-				ft_perror("minishell: ");
-			}
-			if ((*cmd)->next)
-			{
-				close(fd[1]);
-				dup2(fd[0], 0);
-				close(fd[0]);
-			}
-		}
-	}
-	int status;
+	ft_memset(&exec, 0, sizeof(t_exec));
+	exec.path = get_path(*env);
+	exec.envp = extract_envp(*env);
+	exec.env = env;
+	exec.cmd = cmd;
+	extract_args(*cmd);
+	// t_cmd	*itr;
 
-	waitpid(-1, &status, 0);
+	// itr = *cmd;
+	// while (itr)
+	// {
+		
+	// }
+	// exec_pipes(&exec);
+	clean_all(exec.path, exec.envp);
 }

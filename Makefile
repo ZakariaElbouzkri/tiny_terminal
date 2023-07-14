@@ -22,7 +22,8 @@ SRC = libft/abs.c libft/ft_atoi.c libft/ft_bzero.c libft/ft_calloc.c libft/ft_is
 	main.c parse_env.c pipex.c \
 	builtins/cd.c builtins/echo.c builtins/env.c builtins/export.c builtins/export2.c builtins/pwd.c builtins/unset.c \
 	exec/exec_commands.c exec/exec_herdocs.c exec/execute.c exec/init_redirections.c \
-	lexer/check_errors.c lexer/cmd_construct.c lexer/expander.c lexer/join_words.c lexer/lexer.c lexer/lexer_utils.c 
+	lexer/check_errors.c lexer/cmd_construct.c lexer/expander.c lexer/join_words.c lexer/lexer.c lexer/lexer_utils.c \
+	exec/exec_utils.c exec/exec_pipes.c
 
 
 OBJ = $(SRC:.c=.o)

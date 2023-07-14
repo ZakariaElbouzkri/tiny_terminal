@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 11:52:53 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/11 03:10:33 by asettar          ###   ########.fr       */
+/*   Updated: 2023/07/14 03:35:26 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,6 @@ void	display_env(t_env *env)
 {
 	if (!env)
 		return ;
-	printf("%s = %s\n", env->name, env->value);
+	printf("%s=%s\n", env->name, env->value);
 	display_env(env->next);
 }

@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:53:59 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/13 23:16:03 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/14 03:54:55 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,15 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 }	t_cmd;
 
+typedef	struct s_exec
+{
+	char	**path;
+	char	**envp;
+	t_cmd	**cmd;
+	t_env	**env;
+} t_exec;
+
+
 void	parse_env(char **envp, t_env **env);
 void	ft_env_add_back(t_env **env, t_env *node);
 void	free_env(t_env	**env);
@@ -124,5 +133,9 @@ void	exec_herdocs(t_cmd	*cmd, t_env *env);
 void	exec_commands(t_cmd **cmd, t_env **env);
 char	**get_path(t_env *env);
 char	*find_cmd(char *cmd, char **path);
+void	free_dubptr(char **ptr);
+
+char	**get_path(t_env *env);
+char	**extract_envp(t_env *env);
 
 #endif

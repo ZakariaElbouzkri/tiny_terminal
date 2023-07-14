@@ -1,25 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   exec_pipes.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/12 22:58:00 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/14 03:08:20 by zel-bouz         ###   ########.fr       */
+/*   Created: 2023/07/14 04:12:12 by zel-bouz          #+#    #+#             */
+/*   Updated: 2023/07/14 04:13:43 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../minishell.h"
 
-int	ft_strcmp(char *s1, char *s2)
+void	exec_pipes(t_exec *exec)
 {
-	if (!s1 || !s2)
-		return (1);
-	while ((*s1 == *s2) && *s1 && *s2)
-	{
-		s1++;
-		s2++;
-	}
-	return (*s1 - *s2);
+	(void)exec;
 }
