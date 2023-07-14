@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:53:59 by asettar           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2023/07/14 03:54:55 by zel-bouz         ###   ########.fr       */
+=======
+/*   Updated: 2023/07/14 03:02:12 by asettar          ###   ########.fr       */
+>>>>>>> f57b91597f00df24d5f4eb716f0edfd157e17c4b
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,10 +128,10 @@ void	cd(t_cmd *cmd, t_env *env);
 void	go_to_home(t_env *env);
 
 char	*get_env(char *s, t_env *env);
+void	init_redirections(t_cmd *cmd, t_env *env);
+void	sigint_handler();
 void	execute(t_cmd	**cmd, t_env **env);
-
 void	ft_perror(char *err);
-
 int		count_her(t_cmd *cmd, t_redir *redir);
 void	exec_herdocs(t_cmd	*cmd, t_env *env);
 void	exec_commands(t_cmd **cmd, t_env **env);
