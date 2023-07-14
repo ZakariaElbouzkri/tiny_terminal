@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:53:59 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/12 22:42:47 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/13 04:10:24 by asettar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,5 +114,5 @@ void	go_to_home(t_env *env);
 char	*get_env(char *s, t_env *env);
 void	init_redirections(t_cmd *cmd, t_env *env);
 void	execute(t_cmd	*cmd, t_env **env);
-
+void	sigint_handler();
 #endif

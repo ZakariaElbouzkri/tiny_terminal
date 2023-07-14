@@ -7,11 +7,6 @@ void	print_env(t_env *env)
 	if (!env->value)
 		return (print_env(env->next));
 	if (!env->flag)
-	{
-		ft_putstr_fd(env->name, 1);
-		ft_putchar_fd('=', 1);
-		ft_putstr_fd(env->value, 1);
-		ft_putchar_fd('\n', 1);
-	}
+		printf("%s=%s\n", env->name, env->value);
 	print_env(env->next);
 }

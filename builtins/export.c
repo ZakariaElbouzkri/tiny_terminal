@@ -4,14 +4,13 @@ void	sort_env(t_env *env)
 {
 	t_env	*tmp;
 	char	*s;
-	// char	*ss;
 
 	while (env)
 	{
 		tmp = env->next;
 		while (tmp)
 		{
-			if (ft_strncmp(env->name, tmp->name, max(ft_strlen(env->name), ft_strlen(tmp->name))) > 0)
+			if (ft_strncmp(env->name, tmp->name, ft_strlen(tmp->name) + 1) > 0)
 			{
 				s = env->name;
 				env->name = tmp->name;
@@ -48,14 +47,9 @@ void	print_export(t_env *env)
 	{
 		if (!node->flag)
 		{
-			ft_putstr_fd("declare -x ", 1);
-			ft_putstr_fd(node->name, 1);
+			printf("declare -x %s", node->name);
 			if (node->value)
-			{
-				ft_putstr_fd("=\"", 1);
-				ft_putstr_fd(node->value, 1);
-				ft_putstr_fd("\"", 1);
-			}
+				printf("=\"%s\"", node->value);
 			ft_putstr_fd("\n", 1);
 		}
 		node = node->next;
