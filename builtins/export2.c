@@ -74,9 +74,9 @@ void	check_env_args(char *before, char *after, char *s, t_env **env)
 void	export_args(t_list *args, t_env **env)
 {
 	char	*s;
-	int idx;
-	char *before;
-	char *after;
+	int		idx;
+	char	*before;
+	char	*after;
 	
 	while (args)
 	{
@@ -92,10 +92,7 @@ void	export_args(t_list *args, t_env **env)
 			idx = ft_strichr(s, '=');
 			before = ft_substr(s, 0, idx - (s[idx - 1] == '+'));
 			after = ft_substr(s, idx + 1, ft_strlen(s) - idx - 1);
-			// if (after)
-				printf(":::%s || %s:::\n", before, after);
-			// else
-			// 	printf(":::%s || :::\n", before);
+			// printf(":::%s || %s:::\n", before, after);
 			check_env_args(before, after, s, env);
 		}
 		args = args->next;
