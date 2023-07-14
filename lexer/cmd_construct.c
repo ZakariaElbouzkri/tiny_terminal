@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:43:05 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/14 23:26:43 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/15 00:51:06 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ void	create_new_cmd(t_cmd **cmd, t_cmd **last, bool *new_cmd)
 	t_cmd	*new;
 
 	new = (t_cmd *)malloc(sizeof(t_cmd));
-	new->args = NULL;
-	new->redir = NULL;
-	new->next = NULL;
+	ft_memset(new, 0, sizeof(t_cmd));
+	new->inp = NO_INP;
+	new->out = NO_OUT;
 	*new_cmd = false;
 	ft_cmd_add_back(cmd, new);
 	*last = new;
@@ -51,7 +51,6 @@ void	change_last_redir(t_lex **lst, t_cmd *last)
 {
 	t_lex	*lex;
 	t_redir	*red;
-	static	int	pos;
 
 	lex = *lst;
 	while (lex && is_redir(lex))
@@ -59,11 +58,8 @@ void	change_last_redir(t_lex **lst, t_cmd *last)
 		red = (t_redir *)malloc(sizeof(t_redir));
 		red->type = lex->tok;
 		red->file = ft_strdup(lex->next->data);
-		red->flag = 0;
-		red->fd = -3;
-		red->pos = pos++;
-		if (lex->next->tok == WRD)
-			red->flag = 1;
+		red->flag = (lex->next->tok == WRD);
+		red->fd = NO_INP;
 		red->next = NULL;
 		ft_redir_add_back(&last->redir, red);
 		*lst = lex->next;

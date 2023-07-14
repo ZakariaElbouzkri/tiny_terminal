@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:53:59 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/14 23:51:20 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/15 00:32:37 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ typedef struct s_redir
 	t_tok			type;
 	char			*file;
 	int				flag;
-	int				pos;
 	int				fd;
 	struct s_redir	*next;
 }	t_redir;

@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 04:16:48 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/14 23:28:31 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/15 00:40:52 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	create_herdoc(t_redir *redir, t_env *env)
 	if (pipe(fd) == -1)
 	{
 		perror("minishell: ");
-		exit(EXIT_FAILURE);
+		return (-1);
 	}
 	while (1)
 	{
@@ -96,7 +96,14 @@ void	exec_herdocs(t_cmd	*cmd, t_env *env)
 		while (itr)
 		{
 			if (itr->type == HER)
+			{
 				itr->fd = create_herdoc(itr, env);
+				if (itr->fd == -1)
+				{
+					cmd->triger = -1;
+					break;
+				}
+			}
 			itr = itr->next;
 		}
 		cmd = cmd->next;
