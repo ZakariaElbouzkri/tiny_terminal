@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:53:59 by asettar           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/07/14 03:54:55 by zel-bouz         ###   ########.fr       */
-=======
-/*   Updated: 2023/07/14 03:02:12 by asettar          ###   ########.fr       */
->>>>>>> f57b91597f00df24d5f4eb716f0edfd157e17c4b
+/*   Updated: 2023/07/14 23:51:20 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +23,8 @@
 # include <readline/readline.h>
 # include "libft/libft.h"
 
+#define NO_INP -3
+#define NO_OUT -3
 typedef struct s_env
 {
 	char			*name;
@@ -62,6 +60,7 @@ typedef struct s_redir
 	char			*file;
 	int				flag;
 	int				pos;
+	int				fd;
 	struct s_redir	*next;
 }	t_redir;
 
@@ -72,9 +71,8 @@ typedef struct s_cmd
 	t_redir			*redir;
 	int				fd[2];
 	int				inp;
-	int				her_fd;
-	int				her_pos;
 	int				out;
+	int				triger;
 	struct s_cmd	*next;
 }	t_cmd;
 
@@ -141,5 +139,6 @@ void	free_dubptr(char **ptr);
 
 char	**get_path(t_env *env);
 char	**extract_envp(t_env *env);
+void	exec_pipes(t_exec *exec);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:43:05 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/12 05:22:47 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/14 23:26:43 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	change_last_redir(t_lex **lst, t_cmd *last)
 		red->type = lex->tok;
 		red->file = ft_strdup(lex->next->data);
 		red->flag = 0;
+		red->fd = -3;
 		red->pos = pos++;
 		if (lex->next->tok == WRD)
 			red->flag = 1;
