@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 04:16:48 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/13 21:33:14 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/14 03:21:15 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ char	*ft_readline(char *prompt)
 
 	ft_printf("%s", prompt);
 	line = get_next_line(0);
+	if (line)
+		line[ft_strlen(line) - 1] = '\0';
 	return (line);
 }
 
@@ -67,36 +69,42 @@ int	create_herdoc(t_redir *redir, t_env *env)
 	{
 		line = readline("\033[0;36mherdoc $> \033[0m");
 		if (!line || !ft_strcmp(line, redir->file))
-			return (free(line), close(fd[1]), fd[0]);
+		{
+			free(line);
+			line = NULL;
+			return (close(fd[1]), fd[0]);
+		}
 		line = ft_her_expander(line, redir->flag, env);
 		write(fd[1], line, ft_strlen(line));
 		write(fd[1], "\n", 1);
 		free(line);
 	}
-	return (close(fd[1]), fd[0]);
+	return (free(line), close(fd[1]), fd[0]);
 }
 
 
 void	exec_herdocs(t_cmd	*cmd, t_env *env)
 {
 	int		tmp_fd;
+	t_redir	*itr;
 
 	while (cmd)
 	{
 		cmd->her_fd = -1;
 		cmd->her_pos = -1;
 		tmp_fd = -1;
-		while (cmd->redir)
+		itr = cmd->redir;
+		while (itr)
 		{
-			if (cmd->redir->type == HER)
+			if (itr->type == HER)
 			{
-				cmd->her_pos = cmd->redir->pos;
-				tmp_fd = create_herdoc(cmd->redir, env);
+				cmd->her_pos = itr->pos;
+				tmp_fd = create_herdoc(itr, env);
 				if (cmd->her_fd != -1)
 					close(cmd->her_fd);
 				cmd->her_fd = tmp_fd;
 			}
-			cmd->redir = cmd->redir->next;
+			itr = itr->next;
 		}
 		cmd = cmd->next;
 	}

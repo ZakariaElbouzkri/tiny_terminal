@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:31:55 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/13 22:14:00 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/14 03:20:51 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void	free_lex(t_lex	**lex)
 	free(*lex);
 	*lex = NULL;
 }
+
 
 void	free_cmd(t_cmd	**cmd)
 {

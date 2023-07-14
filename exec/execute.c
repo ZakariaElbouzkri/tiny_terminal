@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 21:32:42 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/13 22:15:14 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/14 03:26:00 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,7 @@ void	execute(t_cmd	**cmd, t_env **env)
 		clear_and_exit(cmd, env);
 	exec_herdocs(*cmd, *env);
 	exec_commands(cmd, env);
-
-	// itr = *cmd;
+	// t_cmd *itr = *cmd;
 	// while (itr)
 	// {
 	// 	if (itr->her_fd != -1)
@@ -71,7 +70,6 @@ void	execute(t_cmd	**cmd, t_env **env)
 	// 				break;
 	// 			printf("%s", line);
 	// 			free(line);
-	// 			line = NULL;
 	// 		}
 	// 		close(itr->her_fd);
 	// 	}
