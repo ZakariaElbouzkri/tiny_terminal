@@ -4,7 +4,7 @@ CC = cc -Wall -Wextra -Werror -g
 
 RM = rm -f
 
-RDL = -lreadline -L/Users/zel-bouz/.brew/opt/readline/lib/ -lhistory
+RDL = -lreadline -L/Users/zel-bouz/.brew/opt/readline/lib/ -lhistory -I/Users/zel-bouz/.brew/opt/readline/include
 
 INC = minishell.h libft/libft.h 
 
@@ -31,7 +31,7 @@ OBJ = $(SRC:.c=.o)
 all : $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(RDL) -I/Users/zel-bouz/.brew/opt/readline/include $^ -o $@
+	$(CC) $(RDL) $^ -o $@
 
 %.o : %.c $(INC)
 	$(CC) -c $< -o $@

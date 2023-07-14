@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 04:16:48 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/14 03:21:15 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/14 23:28:31 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,10 @@ int	create_herdoc(t_redir *redir, t_env *env)
 	char	*line;
 
 	if (pipe(fd) == -1)
-		ft_perror("minishell: ");
+	{
+		perror("minishell: ");
+		exit(EXIT_FAILURE);
+	}
 	while (1)
 	{
 		line = readline("\033[0;36mherdoc $> \033[0m");
@@ -85,25 +88,15 @@ int	create_herdoc(t_redir *redir, t_env *env)
 
 void	exec_herdocs(t_cmd	*cmd, t_env *env)
 {
-	int		tmp_fd;
 	t_redir	*itr;
 
 	while (cmd)
 	{
-		cmd->her_fd = -1;
-		cmd->her_pos = -1;
-		tmp_fd = -1;
 		itr = cmd->redir;
 		while (itr)
 		{
 			if (itr->type == HER)
-			{
-				cmd->her_pos = itr->pos;
-				tmp_fd = create_herdoc(itr, env);
-				if (cmd->her_fd != -1)
-					close(cmd->her_fd);
-				cmd->her_fd = tmp_fd;
-			}
+				itr->fd = create_herdoc(itr, env);
 			itr = itr->next;
 		}
 		cmd = cmd->next;
