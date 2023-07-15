@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 22:15:47 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/15 20:58:27 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/15 21:48:39 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ void	fget(int fd)
 		printf("%s", line);
 	}
 }
+
+
 
 void	exec_commands(t_cmd **cmd, t_env **env)
 {

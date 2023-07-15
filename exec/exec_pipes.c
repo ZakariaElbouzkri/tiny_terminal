@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 04:12:12 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/15 20:51:43 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/15 21:48:42 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,17 +86,60 @@ void	exec_cmd(t_cmd	*cmd, t_exec *exec)
 	perror("minishell: ");
 }
 
+// void	exec_pipes(t_exec *exec)
+// {
+// 	int		fd[2];
+// 	pid_t	pid;
+// 	t_cmd	*cmd;
+// 	int		status;
+
+// 	cmd = *exec->cmd;
+// 	while (cmd)
+// 	{
+// 		if (cmd->next && pipe(fd) == -1)
+// 			ft_perror("minishell: ");
+// 		pid = fork();
+// 		if (pid == -1)
+// 			ft_perror("minishell: ");
+// 		if (pid == 0)
+// 		{
+// 			if (cmd->next)
+// 			{
+// 				dup2(fd[1], 1);
+// 				close(fd[0]);
+// 				close(fd[1]);
+// 			}
+// 			exec_cmd(cmd, exec);
+// 		}
+// 		if (cmd->out != NO_OUT)
+// 			close(cmd->out);
+// 		if (cmd->inp != NO_INP)
+// 			close(cmd->inp);
+// 		if (cmd->next)
+// 		{
+// 			dup2(fd[0], 0);
+// 			close(fd[0]);
+// 			close(fd[1]);
+// 		}
+// 		if (!cmd->next)
+// 			close(0);
+// 		cmd = cmd->next;
+// 	}
+// 	while ((pid = waitpid(-1, &status, 0)) > 0) {
+		
+//     }
+// }
+
 void	exec_pipes(t_exec *exec)
 {
-	int		fd[2];
-	pid_t	pid;
 	t_cmd	*cmd;
 	int		status;
+	pid_t	pid;
 
 	cmd = *exec->cmd;
 	while (cmd)
 	{
-		if (cmd->next && pipe(fd) == -1)
+		if (cmd->next && pipe(cmd->fd) == -1)
 			ft_perror("minishell: ");
 		pid = fork();
 		if (pid == -1)
@@ -105,23 +148,24 @@ void	exec_pipes(t_exec *exec)
 		{
 			if (cmd->next)
 			{
-				dup2(fd[1], 1);
-				close(fd[0]);
-				close(fd[1]);
+				dup2(cmd->fd[1], 1);
+				close(cmd->fd[0]);
+				close(cmd->fd[1]);
 			}
 			exec_cmd(cmd, exec);
 		}
-		
 		if (cmd->out != NO_OUT)
 			close(cmd->out);
 		if (cmd->inp != NO_INP)
 			close(cmd->inp);
 		if (cmd->next)
 		{
-			dup2(fd[0], 0);
-			close(fd[0]);
-			close(fd[1]);
+			dup2(cmd->fd[0], 0);
+			close(cmd->fd[0]);
+			close(cmd->fd[1]);
 		}
+		if(cmd->next == NULL)
+			close(0);
 		cmd = cmd->next;
 	}
 	while ((pid = waitpid(-1, &status, 0)) > 0) {

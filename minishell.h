@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:53:59 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/15 06:51:13 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/15 21:47:21 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,5 +141,6 @@ char	**get_path(t_env *env);
 char	**extract_envp(t_env *env);
 void	exec_pipes(t_exec *exec);
 void	ft_put_error(int n, ...);
+void	exec_cmd(t_cmd	*cmd, t_exec *exec);
 
 #endif
