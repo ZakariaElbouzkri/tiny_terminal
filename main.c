@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 11:53:40 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/13 21:38:13 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/15 20:55:36 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,23 +40,19 @@ void	prompt(t_env **env)
 
 	while (true)
 	{
-		cmd = readline("\033[0;33mminishell$ \033[0m");
+		cmd = readline("\033[0;33m➜  minishell$ \033[0m");
 		if (!cmd)
-			exit(0);
+			return (free(cmd));
 		cmd = ft_strtrim(cmd, " \n\t\v\r");
 		if (cmd && !ft_strncmp("exit", cmd, 4))
-			exit(0);
+			return (free(cmd));
 		if ((cmd && *cmd) && (!check_qutes(cmd) || lexer(cmd, env)))
-			ft_putstr_fd("syn_err\n", 2);
+			ft_put_error(1, " syntax error");
 		add_history(cmd);
 		free(cmd);
 	}
 }
 
-// void	leaks(void)
-// {
-// 	system("leaks minishell");
-// }
 
 int	main(int ac, char **av, char **envp)
 {
@@ -64,9 +60,9 @@ int	main(int ac, char **av, char **envp)
 
 	(void)ac;
 	(void)av;
-	// atexit(leaks);
 	env = NULL;
 	parse_env(envp, &env);
+	// display_env(env);
 	prompt(&env);
 	free_env(&env);
 }
