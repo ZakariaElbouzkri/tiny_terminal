@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:46:18 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/14 03:40:34 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/15 21:57:21 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ char	*ft_strrcat(char *s, char c)
 
 char	*get_env(char *s, t_env *env)
 {
+	if (!env)
+		return (free(s), NULL);
 	while (env)
 	{
 		if (!env->flag && !ft_strcmp(s, env->name))
