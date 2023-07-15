@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 04:12:12 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/15 04:00:59 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/15 04:42:26 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,10 @@ void	exec_cmd(t_cmd	*cmd, t_exec *exec)
 {
 	if (cmd->triger == -1)
 		exit(127);
+	if (*(char *)cmd->args->content == 0)
+		exit(0);
 	if (!command_exist(&cmd->cmd[0], exec->path))
 		err_cmd_404(cmd->cmd[0]);
-	// if (cmd->cmd)
-	// {
-	// 	printf("cmd: _____\n");
-	// 	for (int i=0; cmd->cmd[i]; i++)
-	// 		printf("%s\n", cmd->cmd[i]);
-	// }
 	if (cmd->inp != NO_INP)
 	{
 		dup2(cmd->inp, 0);
@@ -100,7 +96,7 @@ void	exec_pipes(t_exec *exec)
 	cmd = *exec->cmd;
 	while (cmd)
 	{
-		if (pipe(fd) == -1)
+		if (cmd->next && pipe(fd) == -1)
 			ft_perror("minishell: ");
 		pid = fork();
 		if (pid == -1)
@@ -115,15 +111,16 @@ void	exec_pipes(t_exec *exec)
 			}
 			exec_cmd(cmd, exec);
 		}
+		
 		if (cmd->out != NO_OUT)
 			close(cmd->out);
 		if (cmd->inp != NO_INP)
 			close(cmd->inp);
 		if (cmd->next)
 		{
-			close(fd[1]);
 			dup2(fd[0], 0);
 			close(fd[0]);
+			close(fd[1]);
 		}
 		cmd = cmd->next;
 	}

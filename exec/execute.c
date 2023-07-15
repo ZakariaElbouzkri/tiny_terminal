@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 21:32:42 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/15 00:51:41 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/15 04:54:21 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,11 @@ bool	open_and_close(char *file, t_tok t)
 
 bool	open_and_save(char *file, t_tok t, int *fd)
 {
-
+	if (!*file || ft_strchr(file, ' '))
+	{
+		ft_putstr_fd("minishell: ambiguous redirect\n", 2);
+		return (false);
+	}
 	*fd = open(file, O_RDWR|(t == APP || t == OUT) * O_CREAT|
 		(t == OUT) * O_TRUNC|(t == APP) * O_APPEND, 0777);
 	if (*fd == -1)
@@ -137,16 +141,27 @@ void	get_input_output(t_cmd *cmd)
 	get_input_output(cmd->next);
 }
 
+// void	save_std_io(int *in_cp, int *out_cp)
+// {
+// 	in_cp = dup(0);
+// 	in_cp = dup(1);
+// }
+
 void	execute(t_cmd	**cmd, t_env **env)
 {
-	char	**path;
-	// char	*line;
+	int		in_cp;
+	int		out_cp;
 
-	(void)path;
+	in_cp = dup(0);
+	out_cp = dup(1);
 	if (count_her(*cmd, (*cmd)->redir) >= 17)
 		clear_and_exit(cmd, env);
 	exec_herdocs(*cmd, *env);
 	exec_redirs(*cmd);
 	get_input_output(*cmd);
 	exec_commands(cmd, env);
+	dup2(in_cp, 0);
+	dup2(out_cp, 1);
+	close(in_cp);
+	close(out_cp);
 }
