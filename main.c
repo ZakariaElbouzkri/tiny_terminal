@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 11:53:40 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/15 20:55:36 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/15 23:10:35 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,9 @@ void	prompt(t_env **env)
 	while (true)
 	{
 		cmd = readline("\033[0;33m➜  minishell$ \033[0m");
-		if (!cmd)
-			return (free(cmd));
 		cmd = ft_strtrim(cmd, " \n\t\v\r");
-		if (cmd && !ft_strncmp("exit", cmd, 4))
-			return (free(cmd));
+		if (!cmd || !ft_strncmp("exit", cmd, 4))
+			return (ft_putstr_fd("exit\n", 1), free(cmd));
 		if ((cmd && *cmd) && (!check_qutes(cmd) || lexer(cmd, env)))
 			ft_put_error(1, " syntax error");
 		add_history(cmd);
