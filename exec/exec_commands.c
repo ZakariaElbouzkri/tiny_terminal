@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 22:15:47 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/15 00:58:05 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/15 03:24:36 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,30 +73,30 @@ void	exec_commands(t_cmd **cmd, t_env **env)
 	exec.env = env;
 	exec.cmd = cmd;
 	extract_args(*cmd);
-	t_cmd	*itr;
+	// t_cmd	*itr;
 
-	itr = *cmd;
-	while (itr)
-	{
-		printf("_____________________________\n");
-		if (itr->cmd)
-		{
-			printf("pre command: %s\n", itr->cmd[0]);
-			printf("args: ");
-			for (int i=1; itr->cmd[i]; i++)
-				printf("%s", itr->cmd[i]);
-			printf("\n");
-		}
-		printf("input fd: %d\n", itr->inp);
-		printf("output fd: %d\n", itr->out);
-		printf("input content: \n");
-		fget(itr->inp);
-		if (itr->inp > 0)
-			close(itr->inp);
-		if (itr->out > 0)
-			close(itr->out);
-		itr = itr->next;
-	}
-	// exec_pipes(&exec);
+	// itr = *cmd;
+	// while (itr)
+	// {
+	// 	printf("_____________________________\n");
+	// 	if (itr->cmd)
+	// 	{
+	// 		printf("pre command: %s\n", itr->cmd[0]);
+	// 		printf("args: ");
+	// 		for (int i=1; itr->cmd[i]; i++)
+	// 			printf("%s", itr->cmd[i]);
+	// 		printf("\n");
+	// 	}
+	// 	printf("input fd: %d\n", itr->inp);
+	// 	printf("output fd: %d\n", itr->out);
+	// 	if (itr->inp > 0)
+	// 		fget(itr->inp);
+	// 	if (itr->inp > 0)
+	// 		close(itr->inp);
+	// 	if (itr->out > 0)
+	// 		close(itr->out);
+	// 	itr = itr->next;
+	// }
+	exec_pipes(&exec);
 	clean_all(exec.path, exec.envp);
 }

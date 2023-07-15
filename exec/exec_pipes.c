@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 04:12:12 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/15 00:45:54 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/15 04:00:59 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*find_cmd(char *cmd, char **path)
 		p = ft_strjoin(ft_strdup(path[idx]), cmd);
 		if (!access(p, X_OK))
 			return (free(cmd), p);
-		free(p);
+		// free(p);
 		p = NULL;
 	}
 	return (NULL);
@@ -40,27 +40,59 @@ void	err_cmd_404(char *cmd)
 	exit(1);
 }
 
+bool	command_exist(char **cmd, char **path)
+{
+	char	*p;
+	int		idx;
+
+	p  = NULL;
+	idx = -1;
+	if (!access(*cmd, X_OK))
+		return (true);
+	while (path[++idx])
+	{
+		p = ft_strjoin(ft_strdup(path[idx]), *cmd);
+		if (!access(p, X_OK))
+		{
+			free(*cmd);
+			*cmd = p;
+			return (true);
+		}
+		free(p);
+		p = NULL;
+	}
+	return (false);
+}
+
 void	exec_cmd(t_cmd	*cmd, t_exec *exec)
 {
-	char	*command;
-
-	if (!cmd->args)
-		exit(0);
-	command = cmd->cmd[0];
-	cmd->cmd[0] = find_cmd(cmd->cmd[0], exec->path);
-	if (!cmd->cmd[0])
-		err_cmd_404(command);
-	printf("cmd: %s\n", cmd->cmd[0]);
-	printf("args: \n");
-	for (int i = 1; cmd->cmd[i]; i++)
+	if (cmd->triger == -1)
+		exit(127);
+	if (!command_exist(&cmd->cmd[0], exec->path))
+		err_cmd_404(cmd->cmd[0]);
+	// if (cmd->cmd)
+	// {
+	// 	printf("cmd: _____\n");
+	// 	for (int i=0; cmd->cmd[i]; i++)
+	// 		printf("%s\n", cmd->cmd[i]);
+	// }
+	if (cmd->inp != NO_INP)
 	{
-		printf("\t%s\n", cmd->cmd[i]);
+		dup2(cmd->inp, 0);
+		close(cmd->inp);
 	}
-	exit(0);
+	if (cmd->out != NO_OUT)
+	{
+		dup2(cmd->out, 1);
+		close(cmd->out);
+	}
+	execve(cmd->cmd[0], cmd->cmd, exec->envp);
+	perror("minishell: ");
 }
 
 void	exec_pipes(t_exec *exec)
 {
+	int		fd[2];
 	pid_t	pid;
 	t_cmd	*cmd;
 	int		status;
@@ -68,20 +100,34 @@ void	exec_pipes(t_exec *exec)
 	cmd = *exec->cmd;
 	while (cmd)
 	{
+		if (pipe(fd) == -1)
+			ft_perror("minishell: ");
 		pid = fork();
 		if (pid == -1)
 			ft_perror("minishell: ");
 		if (pid == 0)
+		{
+			if (cmd->next)
+			{
+				dup2(fd[1], 1);
+				close(fd[0]);
+				close(fd[1]);
+			}
 			exec_cmd(cmd, exec);
+		}
+		if (cmd->out != NO_OUT)
+			close(cmd->out);
+		if (cmd->inp != NO_INP)
+			close(cmd->inp);
+		if (cmd->next)
+		{
+			close(fd[1]);
+			dup2(fd[0], 0);
+			close(fd[0]);
+		}
 		cmd = cmd->next;
 	}
 	while ((pid = waitpid(-1, &status, 0)) > 0) {
-        // if (WIFEXITED(status)) {
-        //     printf("Child process %d exited with status %d\n", pid, WEXITSTATUS(status));
-        // } else {
-        //     printf("Child process %d terminated abnormally\n", pid);
-        // }
+		
     }
-	// printf("___done:_____\n");
-	(void)exec;
 }
