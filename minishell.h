@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:53:59 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/15 00:32:37 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/15 06:51:13 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 # include "libft/libft.h"
+#include <errno.h>
 
 #define NO_INP -3
 #define NO_OUT -3
@@ -139,5 +140,6 @@ void	free_dubptr(char **ptr);
 char	**get_path(t_env *env);
 char	**extract_envp(t_env *env);
 void	exec_pipes(t_exec *exec);
+void	ft_put_error(int n, ...);
 
 #endif
