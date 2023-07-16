@@ -6,7 +6,7 @@
 /*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 04:12:12 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/16 06:10:46 by asettar          ###   ########.fr       */
+/*   Updated: 2023/07/16 07:11:10 by asettar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,13 @@ bool	is_builtin(char *s)
 	if (!ft_strcmp("pwd", s) || !ft_strcmp("export", s) || !ft_strcmp("unset", s)
 		|| !ft_strcmp("echo", s) || !ft_strcmp("env", s) || !ft_strcmp("cd", s) || !ft_strcmp("exit", s))
 			return (1);
-	return (0);	
+	return (0);
 }
 
 void	exec_builtins(t_exec *exec, int p)
 {
-	// if (!ft_strcmp("cd", (*exec->cmd)->cmd[0]))
-	// 	ft_cd(exec, p);
+	if (!ft_strcmp("cd", (*exec->cmd)->cmd[0]))
+		ft_cd(exec, p);
 	if (!ft_strcmp("pwd", (*exec->cmd)->cmd[0]))
 		ft_pwd(exec, p);
 	if (!ft_strcmp("export", (*exec->cmd)->cmd[0]))

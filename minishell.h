@@ -6,7 +6,7 @@
 /*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:53:59 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/16 06:01:46 by asettar          ###   ########.fr       */
+/*   Updated: 2023/07/16 07:12:00 by asettar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,8 @@ void	ft_unset(t_exec *exec, int p);
 void	ft_env(t_exec *exec, int p);
 void	ft_pwd(t_exec *exec, int p);
 void	ft_exit(t_exec *exec);
+void	ft_cd(t_exec *exec, int p);
+
 
 char	*get_env(char *s, t_env *env);
 void	init_redirections(t_cmd *cmd, t_env *env);
