@@ -4,7 +4,7 @@ CC = cc -Wall -Wextra -Werror -g
 
 RM = rm -f
 
-RDL = -lreadline -L/Users/zel-bouz/.brew/opt/readline/lib/ -lhistory -I/Users/zel-bouz/.brew/opt/readline/include
+RDL = -lreadline -L/Users/asettar/.brew/opt/readline/lib/ -lhistory -I/Users/asettar/.brew/opt/readline/include
 
 INC = minishell.h libft/libft.h 
 
@@ -21,7 +21,7 @@ SRC = libft/abs.c libft/ft_atoi.c libft/ft_bzero.c libft/ft_calloc.c libft/ft_is
 	libft/get_next_line.c libft/get_next_line_utils.c libft/mandatory_utils.c libft/max.c libft/min.c \
 	main.c parse_env.c \
 	builtins/cd.c builtins/echo.c builtins/env.c builtins/export.c builtins/export2.c builtins/pwd.c builtins/unset.c \
-	exec/exec_commands.c exec/exec_herdocs.c exec/execute.c exec/init_redirections.c \
+	builtins/exit.c exec/exec_commands.c exec/exec_herdocs.c exec/execute.c exec/init_redirections.c \
 	lexer/check_errors.c lexer/cmd_construct.c lexer/expander.c lexer/join_words.c lexer/lexer.c lexer/lexer_utils.c \
 	exec/exec_utils.c exec/exec_pipes.c ft_put_error.c 
 
