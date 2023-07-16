@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:53:59 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/15 23:00:30 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/16 01:39:10 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@
 
 #define NO_INP -3
 #define NO_OUT -3
+
+
+int g_status;
+
 typedef struct s_env
 {
 	char			*name;
@@ -112,18 +116,17 @@ void	ft_redir_add_back(t_redir **red, t_redir *new);
 void	free_cmd(t_cmd	**cmd);
 void	display_cmd(t_cmd *cmd);
 void	join_words2(t_lex **lex);
-void	echo_cmds(t_list *args);
-bool	check_n_flag(char *s);
-void	pwd(t_env *env);
-void	print_env(t_env *env);
 
-void	export(t_cmd *cmd, t_env **env);
-void	print_export(t_env *env);
 bool	valid_identifer(char *s, int i);
-void	export_args(t_list *args, t_env **env);
+
 t_env	*env_find(char *s, t_env *env);
-void	cd(t_cmd *cmd, t_env *env);
-void	go_to_home(t_env *env);
+
+// buitins :
+void	ft_export(t_exec *exec, int p);
+void	export_args(t_list *args, t_env **env, int p);
+void	ft_unset(t_exec *exec, int p);
+void	ft_env(t_exec *exec, int p);
+void	ft_pwd(t_exec *exec, int p);
 
 char	*get_env(char *s, t_env *env);
 void	init_redirections(t_cmd *cmd, t_env *env);
@@ -142,5 +145,6 @@ char	**extract_envp(t_env *env);
 void	exec_pipes(t_exec *exec);
 void	ft_put_error(int n, ...);
 void	exec_cmd(t_cmd	*cmd, t_exec *exec);
+
 
 #endif

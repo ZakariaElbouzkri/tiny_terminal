@@ -45,22 +45,22 @@ void	print_export(t_env *env)
 	node = sorted_env;
 	while (node)
 	{
-		if (!node->flag)
-		{
-			printf("declare -x %s", node->name);
-			if (node->value)
-				printf("=\"%s\"", node->value);
-			ft_putstr_fd("\n", 1);
-		}
+		printf("declare -x %s", node->name);
+		if (node->value)
+			printf("=\"%s\"", node->value);
+		printf("\n");
 		node = node->next;
 	}
 	free_env(&sorted_env);
 }
 
-void	export(t_cmd *cmd, t_env **env)
+void	ft_export(t_exec *exec, int p)
 {
+	t_cmd	*cmd;
+
+	cmd = *exec->cmd;
 	if (!cmd->args->next)
-		print_export(*env);
+		print_export(*exec->env);
 	else
-		export_args(cmd->args->next, env);
+		export_args(cmd->args->next, exec->env, p);
 }
