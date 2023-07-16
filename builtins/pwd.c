@@ -15,10 +15,17 @@
 void	ft_pwd(t_exec *exec, int p)
 {
 	char	*path;
+	t_env	*env;
 
-	(void)exec;
-	path = getcwd(NULL, 0);
-	if (!path)
+	exec->env = ;
+	if (path)
+	{
+		path = getcwd(NULL, 0);
+		ft_putstr_fd(path, 1);
+		ft_putstr_fd("\n", 1);
+		free(path);
+	}
+	else
 	{
 		ft_put_error(2, "pwd", strerror(errno));
 		g_status = 1;
@@ -26,9 +33,6 @@ void	ft_pwd(t_exec *exec, int p)
 			exit(1);
 	}
 	// printf("%s\n", path);
-	ft_putstr_fd(path, 1);
-	ft_putstr_fd("\n", 1);
-	free(path);
 	if (!p)
 		exit(0);
 }
