@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:53:59 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/16 01:39:10 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/16 06:24:20 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,11 +122,11 @@ bool	valid_identifer(char *s, int i);
 t_env	*env_find(char *s, t_env *env);
 
 // buitins :
-void	ft_export(t_exec *exec, int p);
-void	export_args(t_list *args, t_env **env, int p);
-void	ft_unset(t_exec *exec, int p);
-void	ft_env(t_exec *exec, int p);
-void	ft_pwd(t_exec *exec, int p);
+int		ft_export(t_exec *exec);
+int		export_args(t_list *args, t_env **env);
+int		ft_unset(t_exec *exec);
+int		ft_pwd(t_exec *exec);
+int	ft_env(t_exec *exec);
 
 char	*get_env(char *s, t_env *env);
 void	init_redirections(t_cmd *cmd, t_env *env);

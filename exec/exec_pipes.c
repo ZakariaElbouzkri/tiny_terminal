@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 04:12:12 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/16 01:33:49 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/16 06:24:32 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,18 +74,22 @@ bool	is_builtin(char *s)
 	return (0);	
 }
 
-void	exec_builtins(t_exec *exec, int p)
+int	exec_builtins(t_exec *exec)
 {
+	int	status;
+
+	status = 0;
 	// if (!ft_strcmp("cd", (*exec->cmd)->cmd[0]))
-	// 	ft_cd(exec, p);
+	// 	status = ft_cd(exec, p);
 	if (!ft_strcmp("pwd", (*exec->cmd)->cmd[0]))
-		ft_pwd(exec, p);
-	if (!ft_strcmp("export", (*exec->cmd)->cmd[0]))
-		ft_export(exec, p);
+		status = ft_pwd(exec);
+	else if (!ft_strcmp("export", (*exec->cmd)->cmd[0]))
+		status = ft_export(exec);
 	else if (!ft_strcmp("unset", (*exec->cmd)->cmd[0]))
-		ft_unset(exec, p);
+		status = ft_unset(exec);
 	else if (!ft_strcmp("env", (*exec->cmd)->cmd[0]))
-		ft_env(exec, p);
+		status = ft_env(exec);
+	return (status);
 }
 
 void	exec_cmd(t_cmd	*cmd, t_exec *exec)
@@ -107,7 +111,7 @@ void	exec_cmd(t_cmd	*cmd, t_exec *exec)
 		close(cmd->out);
 	}
 	if (is_builtin(cmd->cmd[0]))
-		exec_builtins(exec, 0);
+		exit(exec_builtins(exec));
 	else
 	{
 		execve(cmd->cmd[0], cmd->cmd, exec->envp);
@@ -124,7 +128,7 @@ void	exec_pipes(t_exec *exec)
 	cmd = *exec->cmd;
 	if (!cmd->next && is_builtin(cmd->cmd[0]))
 	{
-		exec_builtins(exec, 1); // in main
+		exec_builtins(exec); // in main
 		cmd = cmd->next;
 	}
 	while (cmd)

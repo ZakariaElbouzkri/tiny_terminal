@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 00:46:07 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/16 01:16:26 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/16 06:21:17 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ bool valid_identifier_unset(char *s)
 	}
 	return (1);
 }
-void	ft_unset(t_exec *exec, int p)
+int	ft_unset(t_exec *exec)
 {
 	t_env *node;
 	char	*s;
@@ -61,6 +61,5 @@ void	ft_unset(t_exec *exec, int p)
 			ft_env_delete(exec->env, node);
 		args = args->next;
 	}
-	if (!p)
-		exit (1);
+	return (g_status);
 }

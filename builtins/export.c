@@ -54,7 +54,7 @@ void	print_export(t_env *env)
 	free_env(&sorted_env);
 }
 
-void	ft_export(t_exec *exec, int p)
+int	ft_export(t_exec *exec)
 {
 	t_cmd	*cmd;
 
@@ -62,5 +62,6 @@ void	ft_export(t_exec *exec, int p)
 	if (!cmd->args->next)
 		print_export(*exec->env);
 	else
-		export_args(cmd->args->next, exec->env, p);
+		g_status = export_args(cmd->args->next, exec->env);
+	return (g_status);
 }

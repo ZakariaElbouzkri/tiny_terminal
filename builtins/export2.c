@@ -78,7 +78,7 @@ void	check_env_args(char *s, t_env **env)
 	free(before);
 	free(after);
 }
-void	export_args(t_list *args, t_env **env, int p)
+int	export_args(t_list *args, t_env **env)
 {
 	char	*s;
 
@@ -95,8 +95,7 @@ void	export_args(t_list *args, t_env **env, int p)
 			check_env_args(s, env);
 		args = args->next;
 	}
-	if (!p)
-		exit(g_status);
+	return (g_status);
 }
 
 // ab
