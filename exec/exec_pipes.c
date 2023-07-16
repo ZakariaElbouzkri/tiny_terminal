@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 04:12:12 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/15 22:01:46 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/16 01:33:49 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,35 @@ bool	command_exist(char **cmd, char **path)
 	return (false);
 }
 
+bool	is_builtin(char *s)
+{
+	if (!ft_strcmp("pwd", s) || !ft_strcmp("export", s) || !ft_strcmp("unset", s)
+		|| !ft_strcmp("echo", s) || !ft_strcmp("env", s) || !ft_strcmp("cd", s))
+			return (1);
+	return (0);	
+}
+
+void	exec_builtins(t_exec *exec, int p)
+{
+	// if (!ft_strcmp("cd", (*exec->cmd)->cmd[0]))
+	// 	ft_cd(exec, p);
+	if (!ft_strcmp("pwd", (*exec->cmd)->cmd[0]))
+		ft_pwd(exec, p);
+	if (!ft_strcmp("export", (*exec->cmd)->cmd[0]))
+		ft_export(exec, p);
+	else if (!ft_strcmp("unset", (*exec->cmd)->cmd[0]))
+		ft_unset(exec, p);
+	else if (!ft_strcmp("env", (*exec->cmd)->cmd[0]))
+		ft_env(exec, p);
+}
+
 void	exec_cmd(t_cmd	*cmd, t_exec *exec)
 {
 	if (cmd->triger == -1)
 		exit(127);
 	if (*(char *)cmd->args->content == 0)
 		exit(0);
-	if (!command_exist(&cmd->cmd[0], exec->path))
+	if (!is_builtin(cmd->cmd[0]) && !command_exist(&cmd->cmd[0], exec->path))
 		err_cmd_404(cmd->cmd[0]);
 	if (cmd->inp != NO_INP)
 	{
@@ -84,8 +106,13 @@ void	exec_cmd(t_cmd	*cmd, t_exec *exec)
 		dup2(cmd->out, 1);
 		close(cmd->out);
 	}
-	execve(cmd->cmd[0], cmd->cmd, exec->envp);
-	perror("minishell: ");
+	if (is_builtin(cmd->cmd[0]))
+		exec_builtins(exec, 0);
+	else
+	{
+		execve(cmd->cmd[0], cmd->cmd, exec->envp);
+		perror("minishell: ");
+	}
 }
 
 void	exec_pipes(t_exec *exec)
@@ -95,6 +122,11 @@ void	exec_pipes(t_exec *exec)
 	pid_t	pid;
 
 	cmd = *exec->cmd;
+	if (!cmd->next && is_builtin(cmd->cmd[0]))
+	{
+		exec_builtins(exec, 1); // in main
+		cmd = cmd->next;
+	}
 	while (cmd)
 	{
 		if (cmd->next && pipe(cmd->fd) == -1)
