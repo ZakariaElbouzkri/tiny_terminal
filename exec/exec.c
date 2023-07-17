@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 01:47:51 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/17 05:41:56 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/17 22:56:00 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	exec_child(t_exec *exec, t_cmd	*node)
 {
 	if (node->triger == -1)
 		clear_and_exit_with_status(exec, 127);
-	if (!node->cmd || !node->cmd[0])
+	if (!node->cmd || !*node->cmd[0])
 		clear_and_exit_with_status(exec, 0);
 	if (node->inp != NO_INP)
 	{
