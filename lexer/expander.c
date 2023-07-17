@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:46:18 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/17 23:04:24 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/18 00:00:58 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,21 +27,11 @@ char	*ft_strrcat(char *s, char c)
 	return (ret);
 }
 
-char	*exit_status(char *s)
-{
-	char	*ex;
-
-	ex = ft_itoa(g_status);
-	ex = ft_strjoin(ex, &s[1]);
-	return (free(s), ex);
-}
 
 char	*get_env(char *s, t_env *env)
 {
 	if (!env)
 		return (free(s), NULL);
-	if (*s == '?')
-		return (exit_status(s));
 	while (env)
 	{
 		if (!ft_strcmp(s, env->name))
@@ -55,11 +45,27 @@ char	*get_env(char *s, t_env *env)
 	return (NULL);
 }
 
+void	ft_join_value(t_lex *tmp, char **s, int *i, t_env *env)
+{
+	int idx;
+
+	idx = *i + 1;
+	while (tmp->data[idx] && tmp->data[idx] != '$')
+			idx++;
+	if (idx == *i + 1)
+		*s = ft_strrcat(*s, '$');
+	else
+		*s = ft_strjoin(*s,
+				get_env(ft_substr(tmp->data, *i + 1, idx - (*i) - 1), env));
+	*i = idx - 1;
+	tmp->expanded = true;
+}
+
 void	replace_dolar(t_lex *tmp, t_env *env)
 {
 	int		i;
-	int		idx;
 	char	*s;
+	char	*ex;
 
 	i = -1;
 	s = ft_strdup("");
@@ -67,15 +73,15 @@ void	replace_dolar(t_lex *tmp, t_env *env)
 	{
 		if (tmp->data[i] == '$')
 		{
-			idx = i + 1;
-			while (tmp->data[idx] && tmp->data[idx] != '$')
-				idx++;
-			if (idx == i + 1)
-				s = ft_strrcat(s, '$');
+			if (tmp->data[i+1] == '?')
+			{
+				ex = ft_itoa(g_status);
+				s = ft_strjoin(s, ex);
+				i++;
+				free(ex);
+			}
 			else
-				s = ft_strjoin(s,
-						get_env(ft_substr(tmp->data, i + 1, idx - i - 1), env));
-			i = idx - 1;
+				ft_join_value(tmp, &s, &i, env);
 		}
 		else
 			s = ft_strrcat(s, tmp->data[i]);
