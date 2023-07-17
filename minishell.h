@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:53:59 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/17 03:20:42 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/17 03:25:46 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 # include <string.h>
 # include <sys/wait.h>
 # include <stdbool.h>
-# include <readline/readline.h>
-# include <readline/history.h>
+#include "readline/readline.h"
+#include "readline/history.h"
 # include "libft/libft.h"
 #include <sys/errno.h>
 
