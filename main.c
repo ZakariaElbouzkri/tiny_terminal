@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 11:53:40 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/17 04:07:35 by asettar          ###   ########.fr       */
+/*   Updated: 2023/07/17 05:00:59 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ bool	check_qutes(char *cmd)
 		if (!cmd[i])
 			break ;
 	}
-	g_status = 1;
 	return (true);
 }
 
