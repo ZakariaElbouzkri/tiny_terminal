@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 04:16:48 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/15 00:40:52 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/17 01:45:38 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	create_herdoc(t_redir *redir, t_env *env)
 	}
 	while (1)
 	{
-		line = readline("\033[0;36mherdoc $> \033[0m");
+		line = readline("herdoc $> \033[0m");
 		if (!line || !ft_strcmp(line, redir->file))
 		{
 			free(line);
@@ -84,7 +84,6 @@ int	create_herdoc(t_redir *redir, t_env *env)
 	}
 	return (free(line), close(fd[1]), fd[0]);
 }
-
 
 void	exec_herdocs(t_cmd	*cmd, t_env *env)
 {
