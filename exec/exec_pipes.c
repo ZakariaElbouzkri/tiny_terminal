@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 04:12:12 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/17 03:18:48 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/17 03:27:09 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,9 @@ bool	command_exist(char **cmd, char **path)
 bool	is_builtin(char *s)
 {
 	if (!ft_strcmp("pwd", s) || !ft_strcmp("export", s) || !ft_strcmp("unset", s)
-		|| !ft_strcmp("echo", s) || !ft_strcmp("env", s) || !ft_strcmp("cd", s))
+		|| !ft_strcmp("echo", s) || !ft_strcmp("env", s) || !ft_strcmp("cd", s) || !ft_strcmp("exit", s))
 			return (1);
-	return (0);	
+	return (0);
 }
 
 // void	exec_cmd(t_cmd	*cmd, t_exec *exec)
