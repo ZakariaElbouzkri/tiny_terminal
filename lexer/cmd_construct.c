@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_construct.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:43:05 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/17 23:40:51 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/18 00:26:05 by asettar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,28 @@ void	create_new_cmd(t_cmd **cmd, t_cmd **last, bool *new_cmd)
 
 void	change_last_args(t_lex *lex, t_cmd *last)
 {
-	t_list	*node;
+	int	i;
+	int	start;
+	char	*arg;
 
-	node = (t_list *)malloc(sizeof(node));
-	node->content = ft_strdup(lex->data);
-	node->next = NULL;
-	ft_lstadd_back(&last->args, node);
+	if (lex->expanded)
+	{
+		i = 0;
+		while (lex->data[i])
+		{
+			start = i;
+			while (lex->data[i] && !ft_isspace(lex->data[i]))
+				i++;
+			arg = ft_substr(lex->data, start, i - start);
+			if (arg && *arg)
+				ft_lstadd_back(&last->args, ft_lstnew(arg));
+			while (lex->data[i] && ft_isspace(lex->data[i]))
+				i++;
+		}
+	}
+	else
+		ft_lstadd_back(&last->args, ft_lstnew(ft_strdup(lex->data)));
+		
 }
 
 void	change_last_redir(t_lex **lst, t_cmd *last)
