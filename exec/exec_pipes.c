@@ -6,39 +6,39 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 04:12:12 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/16 06:24:32 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/17 03:18:48 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*find_cmd(char *cmd, char **path)
-{
-	int		idx;
-	char 	*p;
+// char	*find_cmd(char *cmd, char **path)
+// {
+// 	int		idx;
+// 	char 	*p;
 
-	idx = -1;
-	if (!access(cmd, X_OK))
-		return (cmd);
-	while (path[++idx])
-	{
-		p = ft_strjoin(ft_strdup(path[idx]), cmd);
-		if (!access(p, X_OK))
-			return (free(cmd), p);
-		// free(p);
-		p = NULL;
-	}
-	return (NULL);
-}
+// 	idx = -1;
+// 	if (!access(cmd, X_OK))
+// 		return (cmd);
+// 	while (path[++idx])
+// 	{
+// 		p = ft_strjoin(ft_strdup(path[idx]), cmd);
+// 		if (!access(p, X_OK))
+// 			return (free(cmd), p);
+// 		// free(p);
+// 		p = NULL;
+// 	}
+// 	return (NULL);
+// }
 
-void	err_cmd_404(char *cmd)
-{
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(cmd, 2);
-	ft_putstr_fd(": command not found", 2);
-	ft_putstr_fd("\n", 2);
-	exit(1);
-}
+// void	err_cmd_404(char *cmd)
+// {
+// 	ft_putstr_fd("minishell: ", 2);
+// 	ft_putstr_fd(cmd, 2);
+// 	ft_putstr_fd(": command not found", 2);
+// 	ft_putstr_fd("\n", 2);
+// 	exit(1);
+// }
 
 bool	command_exist(char **cmd, char **path)
 {
@@ -58,7 +58,7 @@ bool	command_exist(char **cmd, char **path)
 		{
 			free(*cmd);
 			*cmd = p;
-			return (true);
+			return (free_dubptr(path), true);
 		}
 		free(p);
 		p = NULL;
@@ -74,95 +74,78 @@ bool	is_builtin(char *s)
 	return (0);	
 }
 
-int	exec_builtins(t_exec *exec)
-{
-	int	status;
+// void	exec_cmd(t_cmd	*cmd, t_exec *exec)
+// {
+// 	if (cmd->triger == -1)
+// 		exit(127);
+// 	if (*(char *)cmd->args->content == 0)
+// 		exit(0);
+// 	if (!is_builtin(cmd->cmd[0]) && !command_exist(&cmd->cmd[0], exec->path))
+// 		err_cmd_404(cmd->cmd[0]);
+// 	if (cmd->inp != NO_INP)
+// 	{
+// 		dup2(cmd->inp, 0);
+// 		close(cmd->inp);
+// 	}
+// 	if (cmd->out != NO_OUT)
+// 	{
+// 		dup2(cmd->out, 1);
+// 		close(cmd->out);
+// 	}
+// 	if (is_builtin(cmd->cmd[0]))
+// 		exit(exec_builtins(exec));
+// 	else
+// 	{
+// 		execve(cmd->cmd[0], cmd->cmd, exec->envp);
+// 		perror("minishell: ");
+// 	}
+// }
 
-	status = 0;
-	// if (!ft_strcmp("cd", (*exec->cmd)->cmd[0]))
-	// 	status = ft_cd(exec, p);
-	if (!ft_strcmp("pwd", (*exec->cmd)->cmd[0]))
-		status = ft_pwd(exec);
-	else if (!ft_strcmp("export", (*exec->cmd)->cmd[0]))
-		status = ft_export(exec);
-	else if (!ft_strcmp("unset", (*exec->cmd)->cmd[0]))
-		status = ft_unset(exec);
-	else if (!ft_strcmp("env", (*exec->cmd)->cmd[0]))
-		status = ft_env(exec);
-	return (status);
-}
+// void	exec_pipes(t_exec *exec)
+// {
+// 	t_cmd	*cmd;
+// 	int		status;
+// 	pid_t	pid;
 
-void	exec_cmd(t_cmd	*cmd, t_exec *exec)
-{
-	if (cmd->triger == -1)
-		exit(127);
-	if (*(char *)cmd->args->content == 0)
-		exit(0);
-	if (!is_builtin(cmd->cmd[0]) && !command_exist(&cmd->cmd[0], exec->path))
-		err_cmd_404(cmd->cmd[0]);
-	if (cmd->inp != NO_INP)
-	{
-		dup2(cmd->inp, 0);
-		close(cmd->inp);
-	}
-	if (cmd->out != NO_OUT)
-	{
-		dup2(cmd->out, 1);
-		close(cmd->out);
-	}
-	if (is_builtin(cmd->cmd[0]))
-		exit(exec_builtins(exec));
-	else
-	{
-		execve(cmd->cmd[0], cmd->cmd, exec->envp);
-		perror("minishell: ");
-	}
-}
+// 	cmd = *exec->cmd;
 
-void	exec_pipes(t_exec *exec)
-{
-	t_cmd	*cmd;
-	int		status;
-	pid_t	pid;
-
-	cmd = *exec->cmd;
-	if (!cmd->next && is_builtin(cmd->cmd[0]))
-	{
-		exec_builtins(exec); // in main
-		cmd = cmd->next;
-	}
-	while (cmd)
-	{
-		if (cmd->next && pipe(cmd->fd) == -1)
-			ft_put_error(1, strerror(errno));
-		pid = fork();
-		if (pid == -1)
-			ft_put_error(1, strerror(errno));
-		if (pid == 0)
-		{
-			if (cmd->next)
-			{
-				dup2(cmd->fd[1], 1);
-				close(cmd->fd[0]);
-				close(cmd->fd[1]);
-			}
-			exec_cmd(cmd, exec);
-		}
-		if (cmd->out != NO_OUT)
-			close(cmd->out);
-		if (cmd->inp != NO_INP)
-			close(cmd->inp);
-		if (cmd->next)
-		{
-			dup2(cmd->fd[0], 0);
-			close(cmd->fd[0]);
-			close(cmd->fd[1]);
-		}
-		if(cmd->next == NULL)
-			close(0);
-		cmd = cmd->next;
-	}
-	while ((pid = waitpid(-1, &status, 0)) > 0) {
+// 	if (!cmd->next && cmd->cmd && is_builtin(cmd->cmd[0]))
+// 	{
+// 		exec_builtins(exec); // in main
+// 		cmd = cmd->next;
+// 	}
+// 	while (cmd)
+// 	{
+// 		if (cmd->next && pipe(cmd->fd) == -1)
+// 			ft_put_error(1, strerror(errno));
+// 		pid = fork();
+// 		if (pid == -1)
+// 			ft_put_error(1, strerror(errno));
+// 		if (pid == 0)
+// 		{
+// 			if (cmd->next)
+// 			{
+// 				dup2(cmd->fd[1], 1);
+// 				close(cmd->fd[0]);
+// 				close(cmd->fd[1]);
+// 			}
+// 			exec_cmd(cmd, exec);
+// 		}
+// 		if (cmd->out != NO_OUT)
+// 			close(cmd->out);
+// 		if (cmd->inp != NO_INP)
+// 			close(cmd->inp);
+// 		if (cmd->next)
+// 		{
+// 			dup2(cmd->fd[0], 0);
+// 			close(cmd->fd[0]);
+// 			close(cmd->fd[1]);
+// 		}
+// 		if(cmd->next == NULL)
+// 			close(0);
+// 		cmd = cmd->next;
+// 	}
+// 	while ((pid = waitpid(-1, &status, 0)) > 0) {
 		
-    }
-}
+//     }
+// }
