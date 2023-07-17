@@ -1,14 +1,14 @@
 #include "../minishell.h"
 
-int	ft_env(t_exec *exec)
+int	ft_env(t_exec *exec, t_cmd *cmd)
 {
 	t_env *env;
 
 	env = *exec->env;
-	if ((*exec->cmd)->args->next)
+	if (cmd->args->next)
 	{
 		ft_put_error(1, "too much args");
-		return (g_status = 1);
+		return (1);
 	}
 	while (env)
 	{
@@ -16,5 +16,5 @@ int	ft_env(t_exec *exec)
 			printf("%s=%s\n", env->name, env->value);
 		env = env->next;
 	}
-	return (g_status = 0);
+	return (0);
 }

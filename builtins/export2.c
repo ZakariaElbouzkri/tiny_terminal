@@ -65,7 +65,7 @@ void	insert_node_env(char *s, char *before, char *after, t_env **env)
 		ft_env_add_back(env, env_node);
 	}
 }
-void	check_env_args(char *s, t_env **env)
+void	export_args_hlp(char *s, t_env **env)
 {
 	int		idx;
 	char	*before;
@@ -78,7 +78,7 @@ void	check_env_args(char *s, t_env **env)
 	free(before);
 	free(after);
 }
-int	export_args(t_list *args, t_env **env)
+void	export_args(t_list *args, t_env **env)
 {
 	char	*s;
 
@@ -92,10 +92,9 @@ int	export_args(t_list *args, t_env **env)
 			g_status = 1;
 		}
 		else
-			check_env_args(s, env);
+			export_args_hlp(s, env);
 		args = args->next;
 	}
-	return (g_status);
 }
 
 // ab

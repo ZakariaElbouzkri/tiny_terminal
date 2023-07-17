@@ -1,61 +1,56 @@
 #include "../minishell.h"
 
-// int chdir(const char *path);
-// path begins with a '/'
-// return 0 for succes -1 for error and set errno
 
-void	go_to_home(t_env *env)
+
+void	change_pwd_oldpwd(t_env *env, char *new_path)
 {
-	t_env	*home;
-	t_env	*pwd;
-	t_env	*oldpwd;
-	
-	char buff[1000];
-	home = env_find("HOME", env);
-	if (home->flag) // either removed r nothing set to it
-	{
-		ft_putstr_fd("bash: cd: HOME not set\n", 2);
-		return ;
-	}
-	if (chdir(home->value) == -1)
-	{
-		perror("bash: cd ");
-		return ;
-	}
-	oldpwd = env_find("OLDPWD", env);
-	pwd =  env_find("PWD", env);
-	oldpwd->value =pwd->value;
-	pwd->value = getcwd(buff, 1000);
-	printf("::%s::\n", pwd->value);
+	t_env *pwd;
+	t_env *old_pwd;
+
+	pwd = env_find("PWD", env);
+	old_pwd = env_find("OLDPWD", env);
+	free(old_pwd->value);
+	if (!pwd->value)
+		old_pwd->value = ft_strdup("");
+	else
+		old_pwd->value = ft_strdup(pwd->value);
+	free(pwd->value);
+	pwd->value = ft_strdup(new_path);
+
 }
 
-void	ft_cd(t_exec *exec, int p)
+int	ft_cd(t_exec *exec, t_cmd *cmd)
 {
 	t_env	*home;
 	t_list	*args;
-	char	*path;
+	char	new_path[10000];
+	// char	old_path[10000];
 
-	(void)p;
-	args = (*exec->cmd)->args;
+	(void)exec;
+	args = cmd->args;
 	if (!args->next)
 	{
 		home = env_find("HOME", *exec->env);
 		if (!home)
 		{
 			ft_put_error(2, "cd", "HOME not set");
-			g_status = 1;
+			return (1);
 		}
-		else if (chdir(home->value) == -1)
-		{
-			ft_put_error(3, "cd", home->value, strerror(errno));
-			g_status = 1;
-		}
+		ft_lstadd_back(&(*exec->cmd)->args, ft_lstnew(ft_strdup(home->value)));
 	}
-	path = getcwd(NULL, 0);
+	// getcwd(old_path, 10000);
 	if (chdir(args->next->content) == -1)
 	{
+		ft_put_error(3, "cd", args->next->content, strerror(errno));
 		g_status = 1;
-		ft_put_error(2, "cd", strerror(errno));
 	}
-
+	else
+	{
+		// printf("hiii\n");
+		if (!getcwd(new_path, 10000))
+			ft_putstr_fd("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n", 2);
+			// printf("%s\n", new_path);
+		change_pwd_oldpwd(*exec->env, new_path);
+	}
+	return (g_status);
 }

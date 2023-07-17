@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:53:59 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/17 03:25:46 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/17 04:13:37 by asettar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int g_status;
 typedef struct s_env
 {
 	char			*name;
-	int				flag;
+	int				hidden;
 	char			*value;
 	struct s_env	*next;
 }	t_env;
@@ -122,11 +122,14 @@ bool	valid_identifer(char *s, int i);
 t_env	*env_find(char *s, t_env *env);
 
 // buitins :
-int		ft_export(t_exec *exec);
-int		export_args(t_list *args, t_env **env);
-int		ft_unset(t_exec *exec);
-int		ft_pwd(t_exec *exec);
-int	ft_env(t_exec *exec);
+void	export_args(t_list *args, t_env **env);
+int		ft_unset(t_exec *exec, t_cmd *cmd);
+int		ft_export(t_exec *exec, t_cmd *cmd);
+int		ft_pwd(t_exec *exec, t_cmd *cmd);
+int		ft_env(t_exec *exec, t_cmd *cmd);
+int		ft_echo(t_exec *exec, t_cmd *cmd);
+int		ft_cd(t_exec *exec, t_cmd *cmd);
+int		ft_exit(t_exec *exec, t_cmd *cmd);
 
 char	*get_env(char *s, t_env *env);
 void	init_redirections(t_cmd *cmd, t_env *env);
@@ -142,7 +145,7 @@ void	free_dubptr(char **ptr);
 
 char	**get_path(t_env *env);
 char	**extract_envp(t_env *env);
-int	exec_pipes(t_exec *exec);
+int		exec_pipes(t_exec *exec);
 void	ft_put_error(int n, ...);
 void	exec_cmd(t_cmd	*cmd, t_exec *exec);
 

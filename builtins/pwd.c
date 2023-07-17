@@ -1,38 +1,24 @@
-// #include "../minishell.h"
+#include "../minishell.h"
 
-// // void	pwd(t_env *env, int p)
-// // {
-// // 	if (!env)
-// // 		return ;
-// // 	if (!ft_strncmp("PWD", env->name, ft_strlen(env->name)))
-// // 	{
-// // 		ft_putstr_fd(env->value, 1);
-// // 		return ;
-// // 	}
-// // 	pwd(env->next);
-// // }
-
-// int	ft_pwd(t_exec *exec)
+// void	pwd(t_env *env, int p)
 // {
-// 	char	*path;
-// 	t_env	*env;
-
-// 	// exec->env = ;
-// 	if (path)
+// 	if (!env)
+// 		return ;
+// 	if (!ft_strncmp("PWD", env->name, ft_strlen(env->name)))
 // 	{
-// 		path = getcwd(NULL, 0);
-// 		ft_putstr_fd(path, 1);
-// 		ft_putstr_fd("\n", 1);
-// 		free(path);
+// 		ft_putstr_fd(env->value, 1);
+// 		return ;
 // 	}
-// 	else
-// 	{
-// 		ft_put_error(2, "pwd", strerror(errno));
-// 		g_status = 1;
-// 		return (g_status);
-// 	}
-// 	ft_putstr_fd(path, 1);
-// 	ft_putstr_fd("\n", 1);
-// 	return (g_status = 0);
-// // }
+// 	pwd(env->next);
+// }
 
+int	ft_pwd(t_exec *exec, t_cmd *cmd)
+{
+	(void)exec;
+	(void)cmd;
+
+	char	path[10000];
+	getcwd(path, 10000);
+	printf("%s\n", path);
+	return (0);
+}
