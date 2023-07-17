@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 01:47:51 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/17 05:03:58 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/17 05:41:56 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	exec_child(t_exec *exec, t_cmd	*node)
 	}
 	if (node->out != NO_OUT)
 	{
-		dup2(node->out, 0);
+		dup2(node->out, 1);
 		close(node->out);
 	}
 	if (is_builtin(node->cmd[0]))
@@ -78,9 +78,8 @@ void	exec_child(t_exec *exec, t_cmd	*node)
 		ft_put_error(2, node->cmd[0], "command not found");
 		clear_and_exit_with_status(exec, 127);
 	}
-	free_env(exec->env);
 	execve(node->cmd[0], node->cmd, exec->envp);
-	ft_put_error(1, strerror(errno));
+	ft_put_error(2, node->cmd[0], strerror(errno));
 	exit(errno);
 }
 
@@ -93,7 +92,19 @@ int	exec_pipes(t_exec *exec)
 
 	itr = *exec->cmd;
 	if (itr->cmd && !itr->next && is_builtin(itr->cmd[0]))
+	{
+		if (itr->inp != NO_INP)
+		{
+			dup2(itr->inp, 0);
+			close(itr->inp);
+		}
+		if (itr->out != NO_OUT)
+		{
+			dup2(itr->out, 1);
+			close(itr->out);
+		}
 		return (exec_builtins(exec, itr));
+	}
 	while (itr)
 	{
 		if (itr->next && pipe(fd) == -1)
