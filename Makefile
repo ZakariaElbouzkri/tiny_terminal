@@ -4,7 +4,7 @@ CC = cc -Wall -Wextra -Werror -g
 
 RM = rm -f
 
-RDL = -lreadline -L/Users/asettar/.brew/opt/readline/lib/ -lhistory -I/Users/asettar/.brew/opt/readline/include
+RDL = -lreadline -L/Users/$(USER)/.brew/opt/readline/lib/ -lhistory -I/Users/$(USER)/.brew/opt/readline/include
 
 INC = minishell.h libft/libft.h 
 

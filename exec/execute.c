@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 21:32:42 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/15 22:51:24 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/18 00:44:37 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,6 @@ bool	open_and_close(char *file, t_tok t)
 
 bool	open_and_save(char *file, t_tok t, int *fd)
 {
-	if (!*file || ft_strchr(file, ' '))
-	{
-		ft_putstr_fd("minishell: ambiguous redirect\n", 2);
-		return (false);
-	}
 	*fd = open(file, O_RDWR|(t == APP || t == OUT) * O_CREAT|
 		(t == OUT) * O_TRUNC|(t == APP) * O_APPEND, 0777);
 	if (*fd == -1)
