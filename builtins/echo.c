@@ -21,6 +21,7 @@ int	ft_echo(t_exec *exec, t_cmd *cmd)
 	bool	new_line;
 	bool	next;
 	t_list	*args;
+
 	new_line = true;
 	next = true;
 	args = cmd->args->next;

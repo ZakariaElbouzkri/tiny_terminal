@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:31:55 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/15 21:55:39 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/17 04:38:58 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,10 @@ void	free_cmd(t_cmd	**cmd)
 		return ;
 	free_cmd(&(*cmd)->next);
 	if ((*cmd)->args)
+	{
 		ft_lstclear(&(*cmd)->args, free);
+		free((*cmd)->cmd);
+	}
 	red = (*cmd)->redir;
 	if (red)
 	{

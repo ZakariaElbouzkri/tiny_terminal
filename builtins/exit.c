@@ -49,7 +49,7 @@ int	ft_exit(t_exec *exec, t_cmd *cmd)
 	if (args && args->next && (!is_digits_string(args->next->content) || greater_than_long(args->next->content)))
 	{
 		ft_put_error(3, "exit", args->next->content, "numeric argument required");
-		g_status = 255;
+		exit(255);
 	}
 	if (ft_lstsize(args) >= 3)
 	{

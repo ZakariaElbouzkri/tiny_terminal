@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:46:18 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/17 04:11:55 by asettar          ###   ########.fr       */
+/*   Updated: 2023/07/17 04:45:54 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,21 @@ char	*ft_strrcat(char *s, char c)
 	return (ret);
 }
 
+char	*exit_status(char *s)
+{
+	char	*ex;
+
+	ex = ft_itoa(g_status);
+	ex = ft_strjoin(ex, &s[1]);
+	return (free(s), ex);
+}
+
 char	*get_env(char *s, t_env *env)
 {
 	if (!env)
 		return (free(s), NULL);
+	if (*s == '?')
+		return (exit_status(s));
 	while (env)
 	{
 		if (!ft_strcmp(s, env->name))

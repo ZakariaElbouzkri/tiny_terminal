@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 01:47:51 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/17 04:30:08 by asettar          ###   ########.fr       */
+/*   Updated: 2023/07/17 05:03:58 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,9 @@ void	exec_child(t_exec *exec, t_cmd	*node)
 	if (!command_exist(&node->cmd[0], exec->path))
 	{
 		ft_put_error(2, node->cmd[0], "command not found");
-		clear_and_exit_with_status(exec, 1);
+		clear_and_exit_with_status(exec, 127);
 	}
 	free_env(exec->env);
-	// free_cmd(exec->cmd);
 	execve(node->cmd[0], node->cmd, exec->envp);
 	ft_put_error(1, strerror(errno));
 	exit(errno);
@@ -90,6 +89,7 @@ int	exec_pipes(t_exec *exec)
 	pid_t	pid;
 	int		fd[2];
 	t_cmd	*itr;
+	int		status;
 
 	itr = *exec->cmd;
 	if (itr->cmd && !itr->next && is_builtin(itr->cmd[0]))
@@ -126,8 +126,7 @@ int	exec_pipes(t_exec *exec)
 			close(0);
 		itr = itr->next;
 	}
-	while ((pid = waitpid(-1, &g_status, 0)) > 0) {
-		
-    }
-	return (0);
+	while ((pid = waitpid(-1, &status, 0)) > 0)
+		g_status =  WEXITSTATUS(status);
+	return (g_status);
 }
