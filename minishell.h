@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:53:59 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/17 23:39:39 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/17 23:57:41 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_lex
 {
 	t_tok			tok;
 	char			*data;
+	bool			expanded;
 	struct s_lex	*next;
 }	t_lex;
 

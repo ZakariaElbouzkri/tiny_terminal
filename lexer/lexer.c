@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:31:55 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/17 23:35:39 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/17 23:58:51 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ bool	lexer(char *cmd, t_env **env)
 		token = (t_lex *)malloc(sizeof(t_lex));
 		token->next = NULL;
 		token->tok = WRD;
+		token->expanded = false;
 		check_token_type(cmd, &i, token);
 		ft_lex_add_back(&lex, token);
 	}

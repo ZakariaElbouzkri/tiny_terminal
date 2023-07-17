@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:43:05 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/17 23:37:34 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/17 23:40:51 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	change_last_args(t_lex *lex, t_cmd *last)
 {
 	t_list	*node;
 
-	node = (t_list *)malloc(sizeof(node))
+	node = (t_list *)malloc(sizeof(node));
 	node->content = ft_strdup(lex->data);
 	node->next = NULL;
 	ft_lstadd_back(&last->args, node);
