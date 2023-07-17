@@ -6,7 +6,7 @@
 /*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 11:53:40 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/16 07:11:36 by asettar          ###   ########.fr       */
+/*   Updated: 2023/07/17 04:07:35 by asettar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,16 +76,6 @@ int	main(int ac, char **av, char **envp)
 	g_status = 0;
 	parse_env(envp, &env);
 	// display_env(env);
-	t_env *PWD = env_find("PWD", env);
-	t_env *OLDPWD = env_find("OLDPWD", env);
-	t_env	*pwd =  (t_env *)malloc(sizeof(t_env));
-	t_env	*oldpwd = (t_env *)malloc(sizeof(t_env));
-	pwd->name = ft_strdup("pwd");
-	pwd->value = ft_strdup(PWD->value);
-	pwd->flag = 1;
-	oldpwd->flag = 1;
-	oldpwd->name = ft_strdup("oldpwd");
-	oldpwd->value = ft_strdup(OLDPWD->value);
 	prompt(&env);
 	free_env(&env);
 }

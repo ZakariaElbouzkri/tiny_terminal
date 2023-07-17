@@ -38,17 +38,18 @@ bool	greater_than_long(char *s)
 	return (0);
 }
 
-void	ft_exit(t_exec *exec)
+int	ft_exit(t_exec *exec, t_cmd *cmd)
 {
 	t_list	*args;
 
-	args = (*exec->cmd)->args;
+	args = cmd->args;
+	(void)exec;
 	if (!args->next)
 		exit(0);
 	if (args && args->next && (!is_digits_string(args->next->content) || greater_than_long(args->next->content)))
 	{
 		ft_put_error(3, "exit", args->next->content, "numeric argument required");
-		exit(255);
+		g_status = 255;
 	}
 	if (ft_lstsize(args) >= 3)
 	{

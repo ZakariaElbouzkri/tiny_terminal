@@ -35,7 +35,7 @@ void	print_export(t_env *env)
 	{
 		node = (t_env *)malloc(sizeof(t_env));
 		node->name = ft_strdup(env->name);
-		node->flag = env->flag;
+		node->hidden = env->hidden;
 		node->value = ft_strdup(env->value);
 		node->next = NULL;
 		ft_env_add_back(&sorted_env, node);
@@ -45,23 +45,22 @@ void	print_export(t_env *env)
 	node = sorted_env;
 	while (node)
 	{
-		printf("declare -x %s", node->name);
-		if (node->value)
-			printf("=\"%s\"", node->value);
-		printf("\n");
-		node = node->next;
+		if (!node->hidden)
+		{
+			printf("declare -x %s", node->name);
+			if (node->value)
+				printf("=\"%s\"", node->value);
+			printf("\n");
+			node = node->next;
+		}
 	}
 	free_env(&sorted_env);
 }
-
-int	ft_export(t_exec *exec)
+int	ft_export(t_exec *exec, t_cmd *cmd)
 {
-	t_cmd	*cmd;
-
-	cmd = *exec->cmd;
 	if (!cmd->args->next)
 		print_export(*exec->env);
 	else
-		g_status = export_args(cmd->args->next, exec->env);
+		export_args(cmd->args->next, exec->env);
 	return (g_status);
 }

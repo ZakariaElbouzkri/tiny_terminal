@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 00:46:07 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/16 06:21:17 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/17 03:55:42 by asettar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,14 @@ bool valid_identifier_unset(char *s)
 	}
 	return (1);
 }
-int	ft_unset(t_exec *exec)
+int	ft_unset(t_exec *exec, t_cmd *cmd)
 {
 	t_env *node;
 	char	*s;
 	t_list	*args;
 	
-	args = (*exec->cmd)->args;
+	args = cmd->args;
+	g_status = 0;
 	while (args)
 	{
 		s = args->content;
@@ -57,9 +58,11 @@ int	ft_unset(t_exec *exec)
 			g_status = 1;
 		}
 		node = env_find(s, *exec->env);
-		if (node)
+		if (node && (!ft_strcmp(node->name, "PWD") || !ft_strcmp(node->name, "OLDPWD")))
+			node->hidden = 1;
+		else if (node)
 			ft_env_delete(exec->env, node);
 		args = args->next;
 	}
-	return (g_status);
+	return (0);
 }
