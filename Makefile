@@ -1,12 +1,10 @@
 NAME = minishell
 
-CC = cc  -g
+CC = cc -Wall -Wextra -Werror -g
 
 RM = rm -f
 
-READLINE_DIR = $(shell brew --prefix readline)
-RDL = -L$(READLINE_DIR)/lib  -lreadline  
-RDL_INC = -I$(READLINE_DIR)/include
+RDL = -lreadline -L/Users/$(USER)/.brew/opt/readline/lib/ -lhistory -I/Users/$(USER)/.brew/opt/readline/include
 
 INC = minishell.h libft/libft.h 
 
@@ -16,7 +14,7 @@ SRC = libft/abs.c libft/ft_atoi.c libft/ft_bzero.c libft/ft_calloc.c libft/ft_is
 	libft/ft_lstdelone.c libft/ft_lstiter.c libft/ft_lstlast.c libft/ft_lstmap.c libft/ft_lstnew.c \
 	libft/ft_lstsize.c libft/ft_memchr.c libft/ft_memcmp.c libft/ft_memcpy.c libft/ft_memmove.c libft/ft_memset.c \
 	libft/ft_printf.c libft/ft_putchar_fd.c libft/ft_putendl_fd.c libft/ft_putnbr_fd.c libft/ft_putstr_fd.c \
-	libft/ft_split.c libft/ft_strchr.c libft/ft_strcmp.c libft/ft_strdup.c libft/ft_swap.c \
+	libft/ft_split.c libft/ft_strchr.c libft/ft_strcmp.c libft/ft_strdup.c \
 	libft/ft_strichr.c libft/ft_striteri.c libft/ft_strjoin.c libft/ft_strlcat.c libft/ft_strlcpy.c \
 	libft/ft_strlen.c libft/ft_strmapi.c libft/ft_strncmp.c libft/ft_strnstr.c \
 	libft/ft_strrchr.c libft/ft_strtrim.c libft/ft_substr.c libft/ft_tolower.c libft/ft_toupper.c \
@@ -33,10 +31,10 @@ OBJ = $(SRC:.c=.o)
 all : $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(RDL) $(RDL_INC)  $^ -o $@
+	$(CC) $(RDL) $^ -o $@
 
-%.o : %.c 
-	$(CC) $(RDL_INC)  -c $< -o $@ 
+%.o : %.c $(INC)
+	$(CC) -c $< -o $@
 
 clean:
 	$(RM) $(OBJ)
@@ -46,4 +44,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: clean fclean all re
+.PHONY: clean fclean all re 

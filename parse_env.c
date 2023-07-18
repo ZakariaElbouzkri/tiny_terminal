@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 11:52:53 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/18 02:46:57 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/17 04:07:45 by asettar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	parse_env(char **envp, t_env **env)
 		node = malloc(sizeof(t_env));
 		node->name = ft_substr(envp[i], 0, idx);
 		node->value = ft_substr(envp[i], idx + 1, ft_strlen(envp[i]) - idx - 1);
+		node->hidden = 0;
 		node->next = NULL;
 		ft_env_add_back(env, node);
 	}
