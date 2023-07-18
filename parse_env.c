@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 11:52:53 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/18 05:40:40 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/18 06:52:45 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,8 @@ void	parse_env(char **envp, t_env **env)
 	int		idx;
 	t_env	*node;
 
-	if (!envp || !*envp)
-		return ;
 	i = -1;
-	while (envp[++i])
+	while (envp && envp[++i])
 	{
 		idx = ft_strchr(envp[i], '=') - envp[i];
 		node = malloc(sizeof(t_env));

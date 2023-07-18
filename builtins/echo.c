@@ -32,7 +32,7 @@ int	ft_echo(t_exec *exec, t_cmd *cmd)
 			new_line = false;
 		else
 		{
-			if (args->content && ft_strcmp(args->content, "PWD") && ft_strcmp(args->content, "OLDPWD"))
+			if (args->content)
 			{
 				ft_putstr_fd(args->content, 1);
 				if (args->next)

@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 01:47:51 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/17 22:56:00 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/18 06:34:06 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,10 @@ int	exec_pipes(t_exec *exec)
 			return (ft_put_error(2, "pipe", strerror(errno)), 1);
 		pid = fork();
 		if (pid == -1)
-			return (ft_put_error(2, "fork", strerror(errno)), 1);
+		{
+			ft_put_error(2, "fork", strerror(errno));
+			break;
+		}
 		if (pid == 0)
 		{
 			close_all_next_fds(itr);
