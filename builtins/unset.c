@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 00:46:07 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/18 02:47:41 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/17 03:55:42 by asettar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,9 @@ int	ft_unset(t_exec *exec, t_cmd *cmd)
 			g_status = 1;
 		}
 		node = env_find(s, *exec->env);
-		if (node)
+		if (node && (!ft_strcmp(node->name, "PWD") || !ft_strcmp(node->name, "OLDPWD")))
+			node->hidden = 1;
+		else if (node)
 			ft_env_delete(exec->env, node);
 		args = args->next;
 	}
