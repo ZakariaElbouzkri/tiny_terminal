@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:46:18 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/18 00:00:58 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/18 02:06:55 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	ft_join_value(t_lex *tmp, char **s, int *i, t_env *env)
 	int idx;
 
 	idx = *i + 1;
-	while (tmp->data[idx] && tmp->data[idx] != '$')
+	while (tmp->data[idx] && ft_isalnum(tmp->data[idx]))
 			idx++;
 	if (idx == *i + 1)
 		*s = ft_strrcat(*s, '$');

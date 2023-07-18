@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 11:53:40 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/17 05:00:59 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/18 03:01:17 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	sigint_handler(int sig)
 }
 void	sigquit_handler(int sig)
 {
+	rl_kill_line(0, 0);
 	(void)sig;
 }
 void	prompt(t_env **env)
