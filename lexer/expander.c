@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:46:18 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/18 04:49:35 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/18 05:00:27 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*ft_strrcat(char *s, char c)
 char	*get_env(char *s, t_env *env)
 {
 	if ((!ft_strcmp(s, "PWD") || !ft_strcmp("OLDPWD", s)) && env_find(s, env)->echo_val)
-		return (NULL);
+		return (free(s), NULL);
 	if (!env)
 		return (free(s), NULL);
 	while (env)
