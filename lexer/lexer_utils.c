@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:36:46 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/10 03:02:56 by asettar          ###   ########.fr       */
+/*   Updated: 2023/07/18 01:39:39 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ bool	is_word(t_lex	*node)
 
 bool	is_redir(t_lex *node)
 {
+	if(!node)
+		return false;
 	return (node->tok == APP || node->tok == HER
 		|| node->tok == OUT || node->tok == INP);
 }

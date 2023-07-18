@@ -97,6 +97,3 @@ void	export_args(t_list *args, t_env **env)
 	}
 }
 
-// ab
-// 3 , 2 - 3 - 1 = 
-
