@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:53:59 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/17 23:57:41 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/18 04:21:25 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct s_env
 {
 	char			*name;
 	int				hidden;
+	int				echo_val;
 	char			*value;
 	struct s_env	*next;
 }	t_env;

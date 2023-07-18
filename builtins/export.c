@@ -1,5 +1,13 @@
 # include "../minishell.h"
 
+void	ft_swap(int *a, int *b)
+{
+	int tmp;
+
+	tmp = *a;
+	*a = *b;
+	*b = tmp;
+}
 void	sort_env(t_env *env)
 {
 	t_env	*tmp;
@@ -18,6 +26,7 @@ void	sort_env(t_env *env)
 				s = env->value;
 				env->value = tmp->value;
 				tmp->value = s;
+				ft_swap(&env->hidden, &tmp->hidden);
 			}
 			tmp = tmp->next;
 		}
@@ -51,8 +60,8 @@ void	print_export(t_env *env)
 			if (node->value)
 				printf("=\"%s\"", node->value);
 			printf("\n");
-			node = node->next;
 		}
+		node = node->next;
 	}
 	free_env(&sorted_env);
 }

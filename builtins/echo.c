@@ -32,9 +32,12 @@ int	ft_echo(t_exec *exec, t_cmd *cmd)
 			new_line = false;
 		else
 		{
-			ft_putstr_fd(args->content, 1);
-			if (args->next)
-				ft_putchar_fd(' ', 1);
+			if (args->content && ft_strcmp(args->content, "PWD") && ft_strcmp(args->content, "OLDPWD"))
+			{
+				ft_putstr_fd(args->content, 1);
+				if (args->next)
+					ft_putchar_fd(' ', 1);
+			}
 			next = false;
 		}
 		args = args->next;

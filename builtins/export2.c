@@ -38,6 +38,8 @@ t_env	*ft_create_env_node(char *s, char *before, char *after)
 		env_node->name = ft_strdup(s);
 		env_node->value = NULL;
 	}
+	env_node->hidden = 0;
+	env_node->echo_val = 0;
 	env_node->next = NULL;
 	return (env_node);
 }
@@ -47,6 +49,13 @@ void	insert_node_env(char *s, char *before, char *after, t_env **env)
 	t_env	*env_node;
 	
 	env_node = env_find(before, *env);
+	if (env_node && (!ft_strcmp("PWD", env_node->name) || !ft_strcmp("OLDPWD", env_node->name)))
+	{
+		free(env_node->value);
+		env_node->hidden = 0;
+		env_node->echo_val = 0;
+		env_node->value = NULL;
+	}
 	if (env_node && ft_strchr(s, '='))
 	{
 		if (env_node->value == NULL)
