@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:53:59 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/18 04:21:25 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/18 05:30:07 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,7 @@ void	exec_cmd(t_cmd	*cmd, t_exec *exec);
 // 
 bool	command_exist(char **cmd, char **path);
 bool	is_builtin(char *s);
+void	ft_env_delete(t_env **env, t_env *node);
 // int		exec_builtins(t_exec *exec);
 char	*find_cmd(char *cmd, char **path);
 

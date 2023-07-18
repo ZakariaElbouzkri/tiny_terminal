@@ -26,7 +26,6 @@ int	ft_cd(t_exec *exec, t_cmd *cmd)
 	t_env	*home;
 	t_list	*args;
 	char	new_path[10000];
-	// char	old_path[10000];
 
 	(void)exec;
 	args = cmd->args;
@@ -40,7 +39,6 @@ int	ft_cd(t_exec *exec, t_cmd *cmd)
 		}
 		ft_lstadd_back(&(*exec->cmd)->args, ft_lstnew(ft_strdup(home->value)));
 	}
-	// getcwd(old_path, 10000);
 	if (chdir(args->next->content) == -1)
 	{
 		ft_put_error(3, "cd", args->next->content, strerror(errno));
@@ -48,10 +46,9 @@ int	ft_cd(t_exec *exec, t_cmd *cmd)
 	}
 	else
 	{
-		// printf("hiii\n");
 		if (!getcwd(new_path, 10000))
-			ft_putstr_fd("cd: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory\n", 2);
-			// printf("%s\n", new_path);
+			ft_put_error(4, "cd", "error retrieving current directory", 
+			"getcwd", "cannot access parent directories: No such file or directory");
 		change_pwd_oldpwd(*exec->env, new_path);
 	}
 	return (g_status);

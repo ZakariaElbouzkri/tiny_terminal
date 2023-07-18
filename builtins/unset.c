@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 00:46:07 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/18 04:22:32 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/18 05:29:28 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 //recieve cmd->args->next  
 void	ft_env_delete(t_env **env, t_env *node)
 {
-	if (!env || !*env)
+	if (!env || !*env || !node)
 		return ;
 	if ((*env) == node)
 	{
