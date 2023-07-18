@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 11:53:40 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/17 05:00:59 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/18 06:16:58 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ bool	check_qutes(char *cmd)
 			while (cmd[i] && cmd[i] != c)
 				i++;
 			if (cmd[i] != c)
-				return (false);
+				return (g_status = 1, false);
 		}
 		if (!cmd[i])
 			break ;
@@ -53,7 +53,8 @@ void	prompt(t_env **env)
 	signal(SIGQUIT, sigquit_handler);
 	while (true)
 	{
-		cmd = readline("\033[0;33m➜  minishell$ \033[0m");
+		cmd = readline("➜  minishell$ ");
+		// cmd = readline("\033[0;33m➜  minishell$ \033[0m");
 		cmd = ft_strtrim(cmd, " \n\t\v\r");
 		if (!cmd || !ft_strcmp("exit", cmd))
 			return (ft_putstr_fd("exit\n", 1), free(cmd));
