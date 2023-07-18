@@ -12,7 +12,7 @@ int	ft_env(t_exec *exec, t_cmd *cmd)
 	}
 	while (env)
 	{
-		if (env->value)
+		if (env->value && !env->hidden)
 			printf("%s=%s\n", env->name, env->value);
 		env = env->next;
 	}

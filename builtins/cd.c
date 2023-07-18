@@ -16,6 +16,8 @@ void	change_pwd_oldpwd(t_env *env, char *new_path)
 		old_pwd->value = ft_strdup(pwd->value);
 	free(pwd->value);
 	pwd->value = ft_strdup(new_path);
+	pwd->echo_val = 0;
+	old_pwd->echo_val = 0;
 
 }
 
