@@ -91,14 +91,14 @@ void	export_args(t_list *args, t_env **env)
 {
 	char	*s;
 
-	g_status = 0;
+	g_glob.status = 0;
 	while (args)
 	{
 		s = (char *)args->content;
 		if (!valid_identifer(s, 0))
 		{
 			ft_put_error(3, "export", s, "not a valid identifier");
-			g_status = 1;
+			g_glob.status = 1;
 		}
 		else
 			export_args_hlp(s, env);

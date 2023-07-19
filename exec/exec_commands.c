@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 22:15:47 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/17 05:03:24 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/19 06:30:44 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,6 @@ void	exec_commands(t_cmd **cmd, t_env **env)
 	exec.env = env;
 	exec.cmd = cmd;
 	extract_args(*cmd);
-	g_status = exec_pipes(&exec);
+	g_glob.status = exec_pipes(&exec);
 	clean_all(exec.path, exec.envp);
 }

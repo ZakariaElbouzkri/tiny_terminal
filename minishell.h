@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:53:59 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/18 05:30:07 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/19 06:28:51 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,19 @@
 #include "readline/history.h"
 # include "libft/libft.h"
 #include <sys/errno.h>
+#include <sys/ioctl.h>
+
 
 #define NO_INP -3
 #define NO_OUT -3
 
+typedef	struct	s_glob
+{
+	int	status;
+	int	her;	
+} t_glob;
 
-int g_status;
+t_glob	g_glob;
 
 typedef struct s_env
 {

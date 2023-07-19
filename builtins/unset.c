@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 00:46:07 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/18 05:29:28 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/19 06:32:46 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,13 @@ int	ft_unset(t_exec *exec, t_cmd *cmd)
 	t_list	*args;
 	
 	args = cmd->args;
-	g_status = 0;
 	while (args)
 	{
 		s = args->content;
 		if (!valid_identifier_unset(s))
 		{
 			ft_put_error(3, "unset", s, "not a valid identifier");
-			g_status = 1;
+			g_glob.status = 1;
 		}
 		node = env_find(s, *exec->env);
 		if (node && (!ft_strcmp(node->name, "PWD") || !ft_strcmp(node->name, "OLDPWD")))
