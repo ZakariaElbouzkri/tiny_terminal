@@ -39,8 +39,8 @@ void	create_new_cmd(t_cmd **cmd, t_cmd **last, bool *new_cmd)
 
 void	change_last_args(t_lex *lex, t_cmd *last)
 {
-	int	i;
-	int	start;
+	int		i;
+	int		start;
 	char	*arg;
 
 	if (lex->expanded)
@@ -60,7 +60,6 @@ void	change_last_args(t_lex *lex, t_cmd *last)
 	}
 	else
 		ft_lstadd_back(&last->args, ft_lstnew(ft_strdup(lex->data)));
-		
 }
 
 void	change_last_redir(t_lex **lst, t_cmd *last)

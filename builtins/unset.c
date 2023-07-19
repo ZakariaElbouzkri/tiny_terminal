@@ -12,7 +12,6 @@
 
 #include "../minishell.h"
 
-//recieve cmd->args->next  
 void	ft_env_delete(t_env **env, t_env *node)
 {
 	if (!env || !*env || !node)
@@ -28,7 +27,8 @@ void	ft_env_delete(t_env **env, t_env *node)
 	}
 	ft_env_delete(&(*env)->next, node);
 }
-bool valid_identifier_unset(char *s)
+
+bool	valid_identifier_unset(char *s)
 {
 	if (*s != '_' && !ft_isalpha(*s))
 		return (0);
@@ -41,12 +41,13 @@ bool valid_identifier_unset(char *s)
 	}
 	return (1);
 }
+
 int	ft_unset(t_exec *exec, t_cmd *cmd)
 {
-	t_env *node;
+	t_env	*node;
 	char	*s;
 	t_list	*args;
-	
+
 	args = cmd->args;
 	while (args)
 	{
@@ -57,7 +58,8 @@ int	ft_unset(t_exec *exec, t_cmd *cmd)
 			g_glob.status = 1;
 		}
 		node = env_find(s, *exec->env);
-		if (node && (!ft_strcmp(node->name, "PWD") || !ft_strcmp(node->name, "OLDPWD")))
+		if (node && (!ft_strcmp(node->name, "PWD")
+				|| !ft_strcmp(node->name, "OLDPWD")))
 		{
 			node->hidden = 1;
 			node->echo_val = 1;

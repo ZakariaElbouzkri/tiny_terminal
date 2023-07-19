@@ -53,6 +53,7 @@ bool	is_redir(t_lex *node)
 		|| node->tok == OUT || node->tok == INP);
 }
 
+<<<<<<< HEAD
 // void	display_cmd(t_cmd *cmd)
 // {
 // 	char	*tok[9] = {"WRD", "SPA", "DQU", "SQU", "INP", "OUT", "HER", "APP", "PIP"};
@@ -91,3 +92,43 @@ bool	is_redir(t_lex *node)
 // 		lex = lex->next;
 // 	}
 // }
+=======
+/*void	display_cmd(t_cmd *cmd)
+{
+	char	*tok[9] = {"WRD", "SPA", "DQU", "SQU", "INP", "OUT", "HER", "APP", "PIP"};
+	if(!cmd)
+		return ;
+	while (cmd)
+	{
+		printf("\nCOMMAND:--------------------------\n");
+		t_list *lst = cmd->args;
+		printf("  args: ");
+		while (lst){
+			printf("%s ", lst->content);
+			lst=lst->next;
+		}
+		printf("\n  redirs:\n");
+		t_redir *ls = cmd->redir;
+		while (ls){
+			printf("    type = %s  || file = %s\n", tok[ls->type], ls->file);
+			ls = ls->next;
+		}
+		cmd = cmd->next;
+	}
+}
+
+void	display_lexer(t_lex *lex)    
+{
+	char	*tok[9] = {"WRD", "SPA", "DQU", "SQU", "INP", "OUT", "HER", "APP", "PIP"};
+	while (lex)
+	{
+		printf("__________________________\n");
+			printf("type : %s\n", tok[lex->tok]);
+		if(lex->tok == WRD || lex->tok == SQU || lex->tok == DQU)
+			printf("data : %s\n", lex->data);
+		else
+			printf("data : (null)\n");
+		lex = lex->next;
+	}
+}*/
+>>>>>>> d0c2517d4f614d7b6305a302bc0d12bc9799b41b

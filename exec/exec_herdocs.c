@@ -18,35 +18,6 @@ void	ft_perror(char *err)
 	exit(EXIT_FAILURE);
 }
 
-char	*ft_her_expander(char *line, int flg, t_env *env)
-{
-	char	*exp;
-	int 	idx;
-	int		i;
-
-	if (!flg || !ft_strchr(line, '$'))
-		return (line);
-	i = -1;
-	exp = ft_strdup("");
-	while (line[++i])
-	{
-		if (line[i] == '$')
-		{
-			idx = i + 1;
-			while (line[idx] && line[idx] != '$')
-				idx++;
-			if (i == idx + 1)
-				exp = ft_strrcat(exp, '$');
-			else
-				exp = ft_strjoin(exp, get_env(ft_substr(line, i + 1, idx - i - 1), env));
-			i = idx - 1;
-		}
-		else
-			exp = ft_strrcat(exp, line[i]);
-	}
-	return (free(line), exp);
-}
-
 char	*ft_readline(char *prompt)
 {
 	char	*line;
@@ -83,7 +54,8 @@ int	create_herdoc(t_redir *redir, t_env *env)
 		line = readline("herdoc $>");
 		if (!line || !ft_strcmp(line, redir->file))
 			return (free(line), close(fd[1]), fd[0]);
-		line = ft_her_expander(line, redir->flag, env);
+		if (redir->flag && ft_strchr(line, '$'))
+			line = replace_dolar(line, env);
 		write(fd[1], line, ft_strlen(line));
 		write(fd[1], "\n", 1);
 		free(line);
