@@ -1,13 +1,14 @@
-# include "../minishell.h"
+#include "../minishell.h"
 
 void	ft_swap(int *a, int *b)
 {
-	int tmp;
+	int	tmp;
 
 	tmp = *a;
 	*a = *b;
 	*b = tmp;
 }
+
 void	sort_env(t_env *env)
 {
 	t_env	*tmp;
@@ -34,6 +35,18 @@ void	sort_env(t_env *env)
 	}
 }
 
+t_env	*ft_env_new_element(char *name, char *value, int hidden)
+{
+	t_env	*node;
+
+	node = (t_env *)malloc(sizeof(t_env));
+	node->name = name;
+	node->hidden = hidden;
+	node->value = value;
+	node->next = NULL;
+	return (node);
+}
+
 void	print_export(t_env *env)
 {
 	t_env	*sorted_env;
@@ -42,11 +55,8 @@ void	print_export(t_env *env)
 	sorted_env = NULL;
 	while (env)
 	{
-		node = (t_env *)malloc(sizeof(t_env));
-		node->name = ft_strdup(env->name);
-		node->hidden = env->hidden;
-		node->value = ft_strdup(env->value);
-		node->next = NULL;
+		node = ft_env_new_element(ft_strdup(env->name),
+				ft_strdup(env->value), env->hidden);
 		ft_env_add_back(&sorted_env, node);
 		env = env->next;
 	}
@@ -65,6 +75,7 @@ void	print_export(t_env *env)
 	}
 	free_env(&sorted_env);
 }
+
 int	ft_export(t_exec *exec, t_cmd *cmd)
 {
 	if (!cmd->args->next)

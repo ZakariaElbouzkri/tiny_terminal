@@ -106,9 +106,8 @@ bool	lexer(char *cmd, t_env **env);
 void	check_token_type(char *cmd, int *idx, t_lex *token);
 void	ft_lex_add_back(t_lex **lex, t_lex *new);
 bool	is_token(char c);
-void	ft_expander(t_lex **lex, t_env *env);
-void	replace_solar(t_lex *tmp, t_env *env);
-void	join_words(t_lex **lex);
+void	ft_expander(t_lex *lex, t_env *env);
+char	*replace_dolar(char *data, t_env *env);
 void	delete_last_node(t_lex **lst, t_lex *node_to_del);
 bool	is_word(t_lex	*node);
 char	*ft_strrcat(char *s, char c);
@@ -123,7 +122,7 @@ void	change_last_redir(t_lex **lst, t_cmd *last);
 void	ft_redir_add_back(t_redir **red, t_redir *new);
 void	free_cmd(t_cmd	**cmd);
 void	display_cmd(t_cmd *cmd);
-void	join_words2(t_lex **lex);
+void	join_words(t_lex **lex);
 
 bool	valid_identifer(char *s, int i);
 

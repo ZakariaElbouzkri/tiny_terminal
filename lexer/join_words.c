@@ -14,22 +14,16 @@
 
 void	remove_white_spaces(t_lex **lex)
 {
-	t_lex	*tmp;
-	t_lex	*prev;
-
-	prev = *lex;
-	tmp = *lex;
-	while (tmp)
+	if (!lex || !*lex)
+		return ;
+	if ((*lex)->tok == SPA)
 	{
-		if (tmp->tok == SPA)
-		{
-			prev->next = tmp->next;
-			free(tmp);
-		}
-		if (tmp->tok != SPA)
-			prev = tmp;
-		tmp = tmp->next;
+		free(*lex);
+		*lex = (*lex)->next;
+		remove_white_spaces(&(*lex));
 	}
+	else
+		remove_white_spaces(&(*lex)->next);
 }
 
 void	lex_del_one(t_lex **lex, t_lex	*node)
@@ -47,7 +41,7 @@ void	lex_del_one(t_lex **lex, t_lex	*node)
 	lex_del_one(&(*lex)->next, node);
 }
 
-void	join_words2(t_lex **lex)
+void	join_words(t_lex **lex)
 {
 	t_lex	*itr;
 

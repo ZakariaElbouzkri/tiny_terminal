@@ -74,7 +74,6 @@ void	free_lex(t_lex	**lex)
 	*lex = NULL;
 }
 
-
 void	free_cmd(t_cmd	**cmd)
 {
 	t_redir	*red;
@@ -121,8 +120,8 @@ bool	lexer(char *cmd, t_env **env)
 		check_token_type(cmd, &i, token);
 		ft_lex_add_back(&lex, token);
 	}
-	ft_expander(&lex, *env);
-	join_words2(&lex);
+	ft_expander(lex, *env);
+	join_words(&lex);
 	if (check_errors(lex))
 		return (free_lex(&lex), 1);
 	cmds = NULL;
