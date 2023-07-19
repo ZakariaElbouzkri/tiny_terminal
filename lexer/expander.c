@@ -27,10 +27,10 @@ char	*ft_strrcat(char *s, char c)
 	return (ret);
 }
 
-
 char	*get_env(char *s, t_env *env)
 {
-	if ((!ft_strcmp(s, "PWD") || !ft_strcmp("OLDPWD", s)) && env_find(s, env)->echo_val)
+	if ((!ft_strcmp(s, "PWD") || !ft_strcmp("OLDPWD", s))
+		&& env_find(s, env)->echo_val)
 		return (free(s), NULL);
 	if (!env)
 		return (free(s), NULL);
@@ -49,7 +49,7 @@ char	*get_env(char *s, t_env *env)
 
 void	ft_join_value(t_lex *tmp, char **s, int *i, t_env *env)
 {
-	int idx;
+	int	idx;
 
 	idx = *i + 1;
 	while (tmp->data[idx]
@@ -76,7 +76,7 @@ void	replace_dolar(t_lex *tmp, t_env *env)
 	{
 		if (tmp->data[i] == '$')
 		{
-			if (tmp->data[i+1] == '?')
+			if (tmp->data[i + 1] == '?')
 			{
 				ex = ft_itoa(g_glob.status);
 				s = ft_strjoin(s, ex);
