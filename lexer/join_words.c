@@ -47,7 +47,7 @@ void	lex_del_one(t_lex **lex, t_lex	*node)
 	lex_del_one(&(*lex)->next, node);
 }
 
-void	join_words2(t_lex **lex)
+void	join_words(t_lex **lex)
 {
 	t_lex	*itr;
 

@@ -53,7 +53,7 @@ bool	is_redir(t_lex *node)
 		|| node->tok == OUT || node->tok == INP);
 }
 
-void	display_cmd(t_cmd *cmd)
+/*void	display_cmd(t_cmd *cmd)
 {
 	char	*tok[9] = {"WRD", "SPA", "DQU", "SQU", "INP", "OUT", "HER", "APP", "PIP"};
 	if(!cmd)
@@ -90,4 +90,4 @@ void	display_lexer(t_lex *lex)
 			printf("data : (null)\n");
 		lex = lex->next;
 	}
-}
+}*/
