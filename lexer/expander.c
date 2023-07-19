@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:46:18 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/18 05:00:27 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/19 06:33:30 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	replace_dolar(t_lex *tmp, t_env *env)
 		{
 			if (tmp->data[i+1] == '?')
 			{
-				ex = ft_itoa(g_status);
+				ex = ft_itoa(g_glob.status);
 				s = ft_strjoin(s, ex);
 				i++;
 				free(ex);

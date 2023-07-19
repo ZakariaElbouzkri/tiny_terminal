@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:42:42 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/18 06:06:48 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/19 06:33:19 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ bool	check_errors(t_lex *lex)
 		if (is_redir(lex))
 		{
 			if (!lex->next || !is_word(lex->next))
-				return (g_status = 1);
+				return (g_glob.status = 1);
 		}
 		else if (lex->tok == PIP)
 		{
 			if (!lex->next || lex->next->tok == PIP)
-				return (g_status = 1);
+				return (g_glob.status = 1);
 		}
 		lex = lex->next;
 	}

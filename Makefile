@@ -1,10 +1,12 @@
 NAME = minishell
 
-CC = cc -Wall -Wextra -Werror -g
+CC = cc  -g
 
 RM = rm -f
 
-RDL = -lreadline -L/Users/$(USER)/.brew/opt/readline/lib/ -lhistory -I/Users/$(USER)/.brew/opt/readline/include
+READLINE_DIR = $(shell brew --prefix readline)
+RDL = -L$(READLINE_DIR)/lib  -lreadline  
+RDL_INC = -I$(READLINE_DIR)/include
 
 INC = minishell.h libft/libft.h 
 
@@ -31,10 +33,10 @@ OBJ = $(SRC:.c=.o)
 all : $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(RDL) $^ -o $@
+	$(CC) $(RDL) $(RDL_INC)  $^ -o $@
 
-%.o : %.c $(INC)
-	$(CC) -c $< -o $@
+%.o : %.c 
+	$(CC) $(RDL_INC)  -c $< -o $@ 
 
 clean:
 	$(RM) $(OBJ)

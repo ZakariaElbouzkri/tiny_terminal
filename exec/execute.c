@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 21:32:42 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/18 00:44:37 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/19 06:29:24 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,6 @@ void	exec_redirs(t_cmd *cmd)
 	}
 }
 
-
-
 void	get_input_output(t_cmd *cmd)
 {
 	int	last_input;
@@ -136,11 +134,22 @@ void	get_input_output(t_cmd *cmd)
 	get_input_output(cmd->next);
 }
 
-// void	save_std_io(int *in_cp, int *out_cp)
-// {
-// 	in_cp = dup(0);
-// 	in_cp = dup(1);
-// }
+void	close_opened_her(t_cmd *cmd, t_redir *redir)
+{
+	if (!cmd)
+		return ;
+	if (!redir)
+	{
+		if (cmd->next)
+			close_opened_her(cmd->next, cmd->next->redir);
+	}
+	else
+	{
+		if (redir->type == HER && redir->fd != NO_INP)
+			close(redir->fd);
+		close_opened_her(cmd, redir->next);
+	}
+}
 
 void	execute(t_cmd	**cmd, t_env **env)
 {
@@ -152,11 +161,15 @@ void	execute(t_cmd	**cmd, t_env **env)
 	if (count_her(*cmd, (*cmd)->redir) >= 17)
 		clear_and_exit(cmd, env);
 	exec_herdocs(*cmd, *env);
+	if (g_glob.her == 1)
+	{
+		close_opened_her(*cmd, (*cmd)->redir);
+		(close(in_cp), close(out_cp));
+		return ;
+	}
 	exec_redirs(*cmd);
 	get_input_output(*cmd);
 	exec_commands(cmd, env);
-	dup2(in_cp, 0);
-	dup2(out_cp, 1);
-	close(in_cp);
-	close(out_cp);
+	(dup2(in_cp, 0), dup2(out_cp, 1));
+	(close(in_cp), close(out_cp));
 }

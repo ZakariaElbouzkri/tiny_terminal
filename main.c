@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 11:53:40 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/18 06:16:58 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/19 06:31:29 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ bool	check_qutes(char *cmd)
 			while (cmd[i] && cmd[i] != c)
 				i++;
 			if (cmd[i] != c)
-				return (g_status = 1, false);
+				return (g_glob.status = 1, false);
 		}
 		if (!cmd[i])
 			break ;
@@ -37,9 +37,11 @@ bool	check_qutes(char *cmd)
 void	sigint_handler(int sig)
 {
 	(void)sig;
-	// rl_replace_line("", 0);
-	// rl_redisplay();
-	g_status = 1;
+	printf("\n");
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+	g_glob.status = 1;
 }
 void	sigquit_handler(int sig)
 {
@@ -49,12 +51,12 @@ void	prompt(t_env **env)
 {
 	char	*cmd;
 
-	// signal(SIGINT, sigint_handler);
 	signal(SIGQUIT, sigquit_handler);
 	while (true)
 	{
+		g_glob.her = 0;
+		signal(SIGINT, sigint_handler);
 		cmd = readline("➜  minishell$ ");
-		// cmd = readline("\033[0;33m➜  minishell$ \033[0m");
 		cmd = ft_strtrim(cmd, " \n\t\v\r");
 		if (!cmd || !ft_strcmp("exit", cmd))
 			return (ft_putstr_fd("exit\n", 1), free(cmd));
@@ -65,7 +67,6 @@ void	prompt(t_env **env)
 	}
 }
 
-
 int	main(int ac, char **av, char **envp)
 {
 	t_env	*env;
@@ -73,9 +74,9 @@ int	main(int ac, char **av, char **envp)
 	(void)ac;
 	(void)av;
 	env = NULL;
-	g_status = 0;
+	g_glob.status = 0;
+	rl_catch_signals = 0;
 	parse_env(envp, &env);
-	// display_env(env);
 	prompt(&env);
 	free_env(&env);
 }

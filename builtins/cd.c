@@ -42,7 +42,7 @@ int	ft_cd(t_exec *exec, t_cmd *cmd)
 	if (chdir(args->next->content) == -1)
 	{
 		ft_put_error(3, "cd", args->next->content, strerror(errno));
-		g_status = 1;
+		g_glob.status = 1;
 	}
 	else
 	{
@@ -51,5 +51,5 @@ int	ft_cd(t_exec *exec, t_cmd *cmd)
 			"getcwd", "cannot access parent directories: No such file or directory");
 		change_pwd_oldpwd(*exec->env, new_path);
 	}
-	return (g_status);
+	return (g_glob.status);
 }

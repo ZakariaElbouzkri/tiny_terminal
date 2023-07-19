@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 01:47:51 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/18 06:34:06 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/19 07:03:38 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int	exec_builtins(t_exec *exec, t_cmd *node)
 void	exec_child(t_exec *exec, t_cmd	*node)
 {
 	if (node->triger == -1)
-		clear_and_exit_with_status(exec, 127);
+		clear_and_exit_with_status(exec, 1);
 	if (!node->cmd || !*node->cmd[0])
 		clear_and_exit_with_status(exec, 0);
 	if (node->inp != NO_INP)
@@ -129,7 +129,7 @@ int	exec_pipes(t_exec *exec)
 		if (itr->inp != NO_INP)
 			close(itr->inp);
 		if (itr->out != NO_INP)
-			close(itr->inp);
+			close(itr->out);
 		if (itr->next)
 		{
 			dup2(fd[0], 0);
@@ -140,7 +140,9 @@ int	exec_pipes(t_exec *exec)
 			close(0);
 		itr = itr->next;
 	}
-	while ((pid = waitpid(-1, &status, 0)) > 0)
-		g_status =  WEXITSTATUS(status);
-	return (g_status);
+	if (waitpid(pid, &status, 0) > 0)
+		g_glob.status =  WEXITSTATUS(status);
+	while (wait(NULL) != -1)
+		;
+	return (g_glob.status);
 }

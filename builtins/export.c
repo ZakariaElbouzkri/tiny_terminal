@@ -71,5 +71,5 @@ int	ft_export(t_exec *exec, t_cmd *cmd)
 		print_export(*exec->env);
 	else
 		export_args(cmd->args->next, exec->env);
-	return (g_status);
+	return (g_glob.status);
 }
