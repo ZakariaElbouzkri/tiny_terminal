@@ -47,24 +47,28 @@ char	*get_env(char *s, t_env *env)
 	return (NULL);
 }
 
-void	ft_join_value(t_lex *tmp, char **s, int *i, t_env *env)
+void	ft_join_value(char *data, char **s, int *i, t_env *env)
 {
 	int	idx;
 
 	idx = *i + 1;
-	while (tmp->data[idx]
-		&& (ft_isalnum(tmp->data[idx]) || tmp->data[idx] == '_'))
+	if (ft_isdigit(data[idx]))
+	{
+		*i = idx;
+		return ;
+	}
+	while (data[idx]
+		&& (ft_isalnum(data[idx]) || data[idx] == '_'))
 			idx++;
 	if (idx == *i + 1)
 		*s = ft_strrcat(*s, '$');
 	else
 		*s = ft_strjoin(*s,
-				get_env(ft_substr(tmp->data, *i + 1, idx - (*i) - 1), env));
+				get_env(ft_substr(data, *i + 1, idx - (*i) - 1), env));
 	*i = idx - 1;
-	tmp->expanded = true;
 }
 
-void	replace_dolar(t_lex *tmp, t_env *env)
+char	*replace_dolar(char *data, t_env *env)
 {
 	int		i;
 	char	*s;
@@ -72,11 +76,11 @@ void	replace_dolar(t_lex *tmp, t_env *env)
 
 	i = -1;
 	s = ft_strdup("");
-	while (tmp->data[++i])
+	while (data[++i])
 	{
-		if (tmp->data[i] == '$')
+		if (data[i] == '$')
 		{
-			if (tmp->data[i + 1] == '?')
+			if (data[i + 1] == '?')
 			{
 				ex = ft_itoa(g_glob.status);
 				s = ft_strjoin(s, ex);
@@ -84,40 +88,39 @@ void	replace_dolar(t_lex *tmp, t_env *env)
 				free(ex);
 			}
 			else
-				ft_join_value(tmp, &s, &i, env);
+				ft_join_value(data, &s, &i, env);
 		}
 		else
-			s = ft_strrcat(s, tmp->data[i]);
+			s = ft_strrcat(s, data[i]);
 	}
-	free(tmp->data);
-	tmp->data = s;
+	free(data);
+	return (s);
 }
 
-void	ft_expander(t_lex **lex, t_env *env)
+void	ft_expander(t_lex *lex, t_env *env)
 {
-	t_lex	*tmp;
 	t_lex	*last;
 
-	tmp = *lex;
 	last = NULL;
-	while (tmp)
+	while (lex)
 	{
-		last = tmp;
-		if (tmp->tok == HER)
+		last = lex;
+		if (lex->tok == HER)
 		{
-			tmp = tmp->next;
-			if (tmp && tmp->tok == SPA)
-				tmp = tmp->next;
-			while (tmp && is_word(tmp))
-				tmp = tmp->next;
+			lex = lex->next;
+			if (lex && lex->tok == SPA)
+				lex = lex->next;
+			while (lex && is_word(lex))
+				lex = lex->next;
 		}
-		else if ((tmp->tok == WRD || tmp->tok == DQU)
-			&& ft_strchr(tmp->data, '$'))
+		else if ((lex->tok == WRD || lex->tok == DQU)
+			&& ft_strchr(lex->data, '$'))
 		{
-			replace_dolar(tmp, env);
-			tmp = tmp->next;
+			lex->expanded = true;
+			lex->data = replace_dolar(lex->data, env);
+			lex = lex->next;
 		}
 		else
-			tmp = tmp->next;
+			lex = lex->next;
 	}
 }
