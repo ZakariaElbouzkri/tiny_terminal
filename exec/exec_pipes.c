@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 04:12:12 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/17 05:36:39 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/19 22:50:57 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ bool	command_exist(char **cmd, char **path)
 {
 	char	*p;
 	int		idx;
+	
 
 	p  = NULL;
 	idx = -1;
