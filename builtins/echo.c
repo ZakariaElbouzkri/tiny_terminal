@@ -1,12 +1,11 @@
 #include "../minishell.h"
 
-bool check_n_flag(char *s)
+bool	check_n_flag(char *s)
 {
-	int i;
+	int	i;
 
 	if (!s || s[0] != '-' || s[1] != 'n')
 		return (0);
-	
 	i = 0;
 	while (s[++i])
 	{
@@ -14,6 +13,16 @@ bool check_n_flag(char *s)
 			return (0);
 	}
 	return (1);
+}
+
+void	ft_put_content(t_list *args)
+{
+	if (args->content)
+	{
+		ft_putstr_fd(args->content, 1);
+		if (args->next)
+			ft_putchar_fd(' ', 1);
+	}
 }
 
 int	ft_echo(t_exec *exec, t_cmd *cmd)
@@ -32,12 +41,7 @@ int	ft_echo(t_exec *exec, t_cmd *cmd)
 			new_line = false;
 		else
 		{
-			if (args->content)
-			{
-				ft_putstr_fd(args->content, 1);
-				if (args->next)
-					ft_putchar_fd(' ', 1);
-			}
+			ft_put_content(args);
 			next = false;
 		}
 		args = args->next;
@@ -46,7 +50,3 @@ int	ft_echo(t_exec *exec, t_cmd *cmd)
 		ft_putchar_fd('\n', 1);
 	return (0);
 }
-
-
-
-

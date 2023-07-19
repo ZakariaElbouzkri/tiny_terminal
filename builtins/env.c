@@ -1,8 +1,19 @@
 #include "../minishell.h"
 
+bool	valid_identifer(char *s, int i)
+{
+	if (!ft_isalpha(s[0]) && s[0] != '_')
+		return (0);
+	if (!s[i] || s[i] == '=' || (s[i] == '+' && s[i + 1] == '='))
+		return (1);
+	if (!ft_isalnum(s[i]) && s[i] != '_')
+		return (0);
+	return (valid_identifer(s, i + 1));
+}
+
 int	ft_env(t_exec *exec, t_cmd *cmd)
 {
-	t_env *env;
+	t_env	*env;
 
 	env = *exec->env;
 	if (cmd->args->next)

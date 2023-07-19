@@ -1,28 +1,5 @@
 #include "../minishell.h"
 
-// recieve in args args->next from execution 
-// if not alnum char or start with number  --> unvalid
-
-bool valid_identifer(char *s, int i)
-{
-	if (!ft_isalpha(s[0]) && s[0] != '_')
-		return (0);
-	if (!s[i] || s[i] == '=' || (s[i] == '+' && s[i + 1] == '='))
-		return (1);
-	if (!ft_isalnum(s[i]) && s[i] != '_')
-		return (0);
-	return (valid_identifer(s, i + 1));
-}
-
-t_env	*env_find(char *s, t_env *env)
-{
-	if (!env || !s)
-		return (NULL);
-	if (!strcmp(s, env->name))
-		return (env);
-	return (env_find(s, env->next));
-}
-
 t_env	*ft_create_env_node(char *s, char *before, char *after)
 {
 	t_env	*env_node;
@@ -44,18 +21,24 @@ t_env	*ft_create_env_node(char *s, char *before, char *after)
 	return (env_node);
 }
 
-void	insert_node_env(char *s, char *before, char *after, t_env **env)
+void	check_pwds(t_env *env_node)
 {
-	t_env	*env_node;
-	
-	env_node = env_find(before, *env);
-	if (env_node && (!ft_strcmp("PWD", env_node->name) || !ft_strcmp("OLDPWD", env_node->name)))
+	if (env_node && (!ft_strcmp("PWD", env_node->name)
+			|| !ft_strcmp("OLDPWD", env_node->name)))
 	{
 		free(env_node->value);
 		env_node->hidden = 0;
 		env_node->echo_val = 0;
 		env_node->value = NULL;
 	}
+}
+
+void	insert_node_env(char *s, char *before, char *after, t_env **env)
+{
+	t_env	*env_node;
+
+	env_node = env_find(before, *env);
+	check_pwds(env_node);
 	if (env_node && ft_strchr(s, '='))
 	{
 		if (env_node->value == NULL)
@@ -74,6 +57,7 @@ void	insert_node_env(char *s, char *before, char *after, t_env **env)
 		ft_env_add_back(env, env_node);
 	}
 }
+
 void	export_args_hlp(char *s, t_env **env)
 {
 	int		idx;
@@ -87,11 +71,11 @@ void	export_args_hlp(char *s, t_env **env)
 	free(before);
 	free(after);
 }
+
 void	export_args(t_list *args, t_env **env)
 {
 	char	*s;
 
-	g_glob.status = 0;
 	while (args)
 	{
 		s = (char *)args->content;
@@ -105,7 +89,3 @@ void	export_args(t_list *args, t_env **env)
 		args = args->next;
 	}
 }
-
-// ab
-// 3 , 2 - 3 - 1 = 
-
