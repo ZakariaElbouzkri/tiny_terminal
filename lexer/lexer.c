@@ -120,7 +120,7 @@ bool	lexer(char *cmd, t_env **env)
 		check_token_type(cmd, &i, token);
 		ft_lex_add_back(&lex, token);
 	}
-	ft_expander(&lex, *env);
+	ft_expander(lex, *env);
 	join_words(&lex);
 	if (check_errors(lex))
 		return (free_lex(&lex), 1);
