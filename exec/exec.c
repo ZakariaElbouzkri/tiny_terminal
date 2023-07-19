@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 01:47:51 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/19 07:03:38 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/19 22:52:19 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void	exec_child(t_exec *exec, t_cmd	*node)
 		clear_and_exit_with_status(exec, 127);
 	}
 	execve(node->cmd[0], node->cmd, exec->envp);
+	printf("%s\n", node->cmd[0]);
 	ft_put_error(2, node->cmd[0], strerror(errno));
 	exit(errno);
 }
