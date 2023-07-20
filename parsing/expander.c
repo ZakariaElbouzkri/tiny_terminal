@@ -60,7 +60,13 @@ void	ft_join_value(char *data, char **s, int *i, t_env *env)
 	while (data[idx]
 		&& (ft_isalnum(data[idx]) || data[idx] == '_'))
 			idx++;
-	if (idx == *i + 1)
+	if (idx == *i + 1 && data[idx] == '$')
+	{
+		*s = ft_strjoin(*s, "PID");
+		*i = idx;
+		return ;
+	}
+	else if (idx == *i + 1)
 		*s = ft_strrcat(*s, '$');
 	else
 		*s = ft_strjoin(*s,
@@ -118,6 +124,10 @@ void	ft_expander(t_lex *lex, t_env *env)
 		{
 			lex->expanded = true;
 			lex->data = replace_dolar(lex->data, env);
+			if (lex->tok == WRD && *lex->data 
+				&& lex->data[ft_strlen(lex->data) - 1] == '$'
+				&& lex->next && lex->next->tok == DQU)
+					lex->data = ft_strtrim(lex->data, "$");
 			lex = lex->next;
 		}
 		else
