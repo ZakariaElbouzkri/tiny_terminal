@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_pipes.c                                       :+:      :+:    :+:   */
+/*   exec_utils3.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 04:12:12 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/20 01:55:06 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/20 23:19:38 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,15 @@ bool	command_exist(char **cmd, char **path)
 	char	*p;
 	int		idx;
 
-	p = NULL;
-	idx = -1;
-	if (!access(*cmd, X_OK))
-		return (true);
+	if (ft_strchr(*cmd, '/'))
+	{
+		if (!access(*cmd, X_OK))
+			return (true);
+		return (false);
+	}
 	if (!path)
 		return (false);
+	idx = -1;
 	while (path[++idx])
 	{
 		p = ft_strjoin(ft_strdup(path[idx]), *cmd);
