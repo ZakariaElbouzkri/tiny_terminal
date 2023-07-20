@@ -43,7 +43,7 @@ void	change_last_args(t_lex *lex, t_cmd *last)
 	int		start;
 	char	*arg;
 
-	if (lex->expanded)
+	if (lex->expanded && lex->tok == WRD)
 	{
 		i = 0;
 		while (lex->data[i])

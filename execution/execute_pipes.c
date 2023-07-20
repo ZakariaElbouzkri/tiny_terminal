@@ -64,7 +64,14 @@ void	send_to_exec(t_exec *exec, t_cmd	*node)
 void	exec_pipes(t_exec *exec, int *pid, t_cmd *itr)
 {
 	if (itr->cmd && !itr->next && is_builtin(itr->cmd[0]))
+	{
+		if (itr->triger == -1)
+		{
+			g_glob.status = 1;
+			return ;
+		}
 		return (ft_dup2(itr->inp, itr->out), exec_builtins(exec, itr));
+	}	
 	while (itr)
 	{
 		if (itr->next && pipe(exec->fd) == -1)
