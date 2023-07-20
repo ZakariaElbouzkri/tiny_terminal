@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 01:47:51 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/20 05:16:11 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/20 23:23:33 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ void	send_to_exec(t_exec *exec, t_cmd	*node)
 	}
 	if (!command_exist(&node->cmd[0], exec->path))
 	{
-		ft_put_error(2, node->cmd[0], "command not found");
-		clear_and_exit_with_status(exec, 127);
+		ft_put_error(2, node->cmd[0], strerror(errno));
+		clear_and_exit_with_status(exec, 127 - (errno == 13));
 	}
 	execve(node->cmd[0], node->cmd, exec->envp);
 	ft_put_error(2, node->cmd[0], strerror(errno));

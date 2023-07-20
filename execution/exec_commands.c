@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 22:15:47 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/20 05:11:00 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/20 23:02:13 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,6 @@ void	update_exit_status(int pid)
 				ft_putstr_fd("\n", 2);
 			else if (g_glob.status == 131)
 				ft_putstr_fd("Quit: 3\n", 2);
-			else if (g_glob.status == 139)
-			{
-				ft_putstr_fd(ft_itoa(pid), 2);
-				ft_putstr_fd(" segmentation fault\n", 2);
-			}
 		}
 		else if (WIFEXITED(status))
 			g_glob.status = WEXITSTATUS(status);
