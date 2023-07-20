@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 03:50:27 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/19 23:49:43 by asettar          ###   ########.fr       */
+/*   Updated: 2023/07/20 05:11:37 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,6 @@ void	free_dubptr(char **ptr)
 	}
 	free(ptr);
 	ptr = NULL;
-}
-
-int	count_her(t_cmd *cmd, t_redir *redir)
-{
-	if (!redir)
-	{
-		if (!cmd->next)
-			return (0);
-		return (count_her(cmd->next, cmd->next->redir));
-	}
-	return ((redir->type == HER) + count_her(cmd, redir->next));
 }
 
 char	**get_path(t_env *env)

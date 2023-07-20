@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_redirections.c                                :+:      :+:    :+:   */
+/*   open_redirs.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 05:32:33 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/19 23:47:48 by asettar          ###   ########.fr       */
+/*   Updated: 2023/07/20 04:46:23 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ bool	open_and_save(char *file, t_tok t, int *fd)
 	return (true);
 }
 
-void	exec_redirs(t_cmd *cmd)
+void	open_redirs(t_cmd *cmd)
 {
 	t_redir	*red;
 

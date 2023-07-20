@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_put_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 06:12:15 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/20 01:14:45 by asettar          ###   ########.fr       */
+/*   Updated: 2023/07/20 05:05:53 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	ft_put_error(int n, ...)
 {

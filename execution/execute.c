@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 21:32:42 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/20 00:27:24 by asettar          ###   ########.fr       */
+/*   Updated: 2023/07/20 05:07:22 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,17 +93,16 @@ void	execute(t_cmd	**cmd, t_env **env)
 
 	in_cp = dup(0);
 	out_cp = dup(1);
-	if (count_her(*cmd, (*cmd)->redir) >= 17)
-		clear_and_exit(cmd, env);
-	exec_herdocs(*cmd, *env);
+	open_herdocs(*cmd, *env);
 	if (g_glob.her == 1)
 	{
 		close_opened_her(*cmd, (*cmd)->redir);
 		(close(in_cp), close(out_cp));
 		return ;
 	}
-	exec_redirs(*cmd);
+	open_redirs(*cmd);
 	get_input_output(*cmd);
+	g_glob.under_exec = 1;
 	exec_commands(cmd, env);
 	(dup2(in_cp, 0), dup2(out_cp, 1));
 	(close(in_cp), close(out_cp));

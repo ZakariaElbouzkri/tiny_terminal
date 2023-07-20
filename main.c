@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 11:53:40 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/20 00:49:49 by asettar          ###   ########.fr       */
+/*   Updated: 2023/07/20 05:18:13 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,22 +37,26 @@ bool	check_qutes(char *cmd)
 void	sigint_handler(int sig)
 {
 	(void)sig;
-	printf("\n");
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-	g_glob.status = 1;
+	if (!g_glob.under_exec)
+	{
+		ft_putstr_fd("\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+		g_glob.status = 1;
+	}
 }
 
 void	prompt(t_env **env)
 {
 	char	*cmd;
 
-	signal(SIGQUIT, SIG_IGN);
 	while (true)
 	{
 		g_glob.her = 0;
+		g_glob.under_exec = 0;
 		signal(SIGINT, sigint_handler);
+		signal(SIGQUIT, SIG_IGN);
 		cmd = readline("➜  minishell$ ");
 		cmd = ft_strtrim(cmd, " \n\t\v\r");
 		if (!cmd || !ft_strcmp("exit", cmd))
@@ -68,8 +72,7 @@ int	main(int ac, char **av, char **envp)
 {
 	t_env	*env;
 
-	(void)ac;
-	(void)av;
+	((void)ac, (void)av);
 	env = NULL;
 	g_glob.status = 0;
 	rl_catch_signals = 0;
