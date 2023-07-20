@@ -18,7 +18,7 @@ bool	open_and_save(char *file, t_tok t, int *fd)
 			| (t == OUT) * O_TRUNC | (t == APP) * O_APPEND, 0777);
 	if (*fd == -1)
 	{
-		perror("minishell: ");
+		ft_put_error(2, file, strerror(errno));
 		return (false);
 	}
 	return (true);
