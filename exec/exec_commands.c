@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_commands.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 22:15:47 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/19 06:30:44 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/19 23:39:26 by asettar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,10 @@ void	fget(int fd)
 	{
 		line = get_next_line(fd);
 		if (!line)
-			break;
+			break ;
 		printf("%s", line);
 	}
 }
-
-
 
 void	exec_commands(t_cmd **cmd, t_env **env)
 {

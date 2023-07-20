@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 01:47:51 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/19 22:52:19 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/19 23:38:51 by asettar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ int	exec_pipes(t_exec *exec)
 		if (pid == -1)
 		{
 			ft_put_error(2, "fork", strerror(errno));
-			break;
+			break ;
 		}
 		if (pid == 0)
 		{
@@ -142,7 +142,7 @@ int	exec_pipes(t_exec *exec)
 		itr = itr->next;
 	}
 	if (waitpid(pid, &status, 0) > 0)
-		g_glob.status =  WEXITSTATUS(status);
+		g_glob.status = WEXITSTATUS(status);
 	while (wait(NULL) != -1)
 		;
 	return (g_glob.status);

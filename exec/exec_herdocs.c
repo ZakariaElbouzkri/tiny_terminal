@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_herdocs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 04:16:48 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/19 06:30:01 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/19 23:41:31 by asettar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ char	*ft_readline(char *prompt)
 void	her_handler(int s)
 {
 	(void)s;
-
 	g_glob.her = 1;
 	g_glob.status = 1;
 	rl_on_new_line();
@@ -80,7 +79,7 @@ void	exec_herdocs(t_cmd	*cmd, t_env *env)
 				if (itr->fd == -1)
 				{
 					cmd->triger = -1;
-					break;
+					break ;
 				}
 			}
 			itr = itr->next;

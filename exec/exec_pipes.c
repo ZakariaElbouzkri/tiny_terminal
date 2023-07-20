@@ -3,14 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipes.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 04:12:12 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/19 22:50:57 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/19 23:49:28 by asettar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	clear_and_exit(t_cmd **cmd, t_env **env)
+{
+	free_cmd(cmd);
+	free_env(env);
+	ft_putstr_fd("minishell: maximum here-document count exceeded\n", 2);
+	exit(EXIT_FAILURE);
+}
 
 // char	*find_cmd(char *cmd, char **path)
 // {
@@ -44,9 +52,8 @@ bool	command_exist(char **cmd, char **path)
 {
 	char	*p;
 	int		idx;
-	
 
-	p  = NULL;
+	p = NULL;
 	idx = -1;
 	if (!access(*cmd, X_OK))
 		return (true);
@@ -69,9 +76,10 @@ bool	command_exist(char **cmd, char **path)
 
 bool	is_builtin(char *s)
 {
-	if (!ft_strcmp("pwd", s) || !ft_strcmp("export", s) || !ft_strcmp("unset", s)
-		|| !ft_strcmp("echo", s) || !ft_strcmp("env", s) || !ft_strcmp("cd", s) || !ft_strcmp("exit", s))
-			return (1);
+	if (!ft_strcmp("pwd", s) || !ft_strcmp("export", s)
+		|| !ft_strcmp("unset", s) || !ft_strcmp("echo", s)
+		|| !ft_strcmp("env", s) || !ft_strcmp("cd", s) || !ft_strcmp("exit", s))
+		return (1);
 	return (0);
 }
 
@@ -146,7 +154,6 @@ bool	is_builtin(char *s)
 // 			close(0);
 // 		cmd = cmd->next;
 // 	}
-// 	while ((pid = waitpid(-1, &status, 0)) > 0) {
-		
+// 	while ((pid = waitpid(-1, &status, 0)) > 0) {	
 //     }
 // }

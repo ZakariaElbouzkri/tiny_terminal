@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 00:46:07 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/19 06:32:46 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/20 00:52:27 by asettar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	ft_unset(t_exec *exec, t_cmd *cmd)
 	char	*s;
 	t_list	*args;
 
-	args = cmd->args;
+	args = cmd->args->next;
 	while (args)
 	{
 		s = args->content;
