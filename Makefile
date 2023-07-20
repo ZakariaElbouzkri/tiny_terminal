@@ -32,16 +32,19 @@ OBJ = $(SRC:.c=.o)
 all : $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(RDL) $(RDL_INC)  $^ -o $@
+	@$(CC) $(RDL) $(RDL_INC)  $^ -o $@
+	@echo "$@ created"
 
 %.o : %.c 
-	$(CC) $(RDL_INC)  -c $< -o $@ 
+	@$(CC) $(RDL_INC)  -c $< -o $@
 
 clean:
-	$(RM) $(OBJ)
+	@$(RM) $(OBJ)
+	@echo	"object files removed"
 
 fclean: clean
-	$(RM) $(NAME)
+	@$(RM) $(NAME)
+	@echo	"$@ removed"
 
 re: fclean all
 
