@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 11:53:40 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/19 06:31:29 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/20 00:49:49 by asettar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,12 @@ void	sigint_handler(int sig)
 	rl_redisplay();
 	g_glob.status = 1;
 }
-void	sigquit_handler(int sig)
-{
-	(void)sig;
-}
+
 void	prompt(t_env **env)
 {
 	char	*cmd;
 
-	signal(SIGQUIT, sigquit_handler);
+	signal(SIGQUIT, SIG_IGN);
 	while (true)
 	{
 		g_glob.her = 0;

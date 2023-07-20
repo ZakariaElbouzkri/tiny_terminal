@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:53:59 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/19 06:28:51 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/20 00:47:15 by asettar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,20 @@
 # include <string.h>
 # include <sys/wait.h>
 # include <stdbool.h>
-#include "readline/readline.h"
-#include "readline/history.h"
+# include "readline/readline.h"
+# include "readline/history.h"
 # include "libft/libft.h"
-#include <sys/errno.h>
-#include <sys/ioctl.h>
+# include <sys/errno.h>
+# include <sys/ioctl.h>
 
+# define NO_INP -3
+# define NO_OUT -3
 
-#define NO_INP -3
-#define NO_OUT -3
-
-typedef	struct	s_glob
+typedef struct s_glob
 {
 	int	status;
 	int	her;	
-} t_glob;
+}		t_glob;
 
 t_glob	g_glob;
 
@@ -88,14 +87,13 @@ typedef struct s_cmd
 	struct s_cmd	*next;
 }	t_cmd;
 
-typedef	struct s_exec
+typedef struct s_exec
 {
 	char	**path;
 	char	**envp;
 	t_cmd	**cmd;
 	t_env	**env;
-} t_exec;
-
+}			t_exec;
 
 void	parse_env(char **envp, t_env **env);
 void	ft_env_add_back(t_env **env, t_env *node);
@@ -140,7 +138,6 @@ int		ft_exit(t_exec *exec, t_cmd *cmd);
 
 char	*get_env(char *s, t_env *env);
 void	init_redirections(t_cmd *cmd, t_env *env);
-void	sigint_handler();
 void	execute(t_cmd	**cmd, t_env **env);
 void	ft_perror(char *err);
 int		count_her(t_cmd *cmd, t_redir *redir);
@@ -162,5 +159,7 @@ bool	is_builtin(char *s);
 void	ft_env_delete(t_env **env, t_env *node);
 // int		exec_builtins(t_exec *exec);
 char	*find_cmd(char *cmd, char **path);
+void	clear_and_exit(t_cmd **cmd, t_env **env);
+void	exec_redirs(t_cmd *cmd);
 
 #endif
