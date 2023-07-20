@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:53:59 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/20 00:47:15 by asettar          ###   ########.fr       */
+/*   Updated: 2023/07/20 05:20:25 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,13 @@
 
 # define NO_INP -3
 # define NO_OUT -3
+# define FSIGNAL 128
 
 typedef struct s_glob
 {
 	int	status;
-	int	her;	
+	int	her;
+	int	under_exec;
 }		t_glob;
 
 t_glob	g_glob;
@@ -92,74 +94,71 @@ typedef struct s_exec
 	char	**path;
 	char	**envp;
 	t_cmd	**cmd;
+	int		fd[2];
 	t_env	**env;
 }			t_exec;
 
-void	parse_env(char **envp, t_env **env);
-void	ft_env_add_back(t_env **env, t_env *node);
-void	free_env(t_env	**env);
-void	display_env(t_env *env);
-void	display_lexer(t_lex *lex);
-bool	lexer(char *cmd, t_env **env);
-void	check_token_type(char *cmd, int *idx, t_lex *token);
-void	ft_lex_add_back(t_lex **lex, t_lex *new);
-bool	is_token(char c);
-void	ft_expander(t_lex *lex, t_env *env);
-char	*replace_dolar(char *data, t_env *env);
-void	delete_last_node(t_lex **lst, t_lex *node_to_del);
-bool	is_word(t_lex	*node);
-char	*ft_strrcat(char *s, char c);
-void	remove_white_spaces(t_lex **lex);
-bool	check_errors(t_lex *lex);
-bool	is_redir(t_lex *node);
-void	construct_cmds(t_cmd **cmd, t_lex **lst);
-void	ft_cmd_add_back(t_cmd **cmd, t_cmd *new);
-void	create_new_cmd(t_cmd **cmd, t_cmd **last, bool *new_cmd);
-void	change_last_args(t_lex *lex, t_cmd *last);
-void	change_last_redir(t_lex **lst, t_cmd *last);
-void	ft_redir_add_back(t_redir **red, t_redir *new);
-void	free_cmd(t_cmd	**cmd);
-void	display_cmd(t_cmd *cmd);
-void	join_words(t_lex **lex);
-
-bool	valid_identifer(char *s, int i);
-
-t_env	*env_find(char *s, t_env *env);
-
-// buitins :
-void	export_args(t_list *args, t_env **env);
-int		ft_unset(t_exec *exec, t_cmd *cmd);
+// builtins :
+int		ft_cd(t_exec *exec, t_cmd *cmd);
+int		ft_echo(t_exec *exec, t_cmd *cmd);
+int		ft_env(t_exec *exec, t_cmd *cmd);
+int		ft_exit(t_exec *exec, t_cmd *cmd);
 int		ft_export(t_exec *exec, t_cmd *cmd);
 int		ft_pwd(t_exec *exec, t_cmd *cmd);
-int		ft_env(t_exec *exec, t_cmd *cmd);
-int		ft_echo(t_exec *exec, t_cmd *cmd);
-int		ft_cd(t_exec *exec, t_cmd *cmd);
-int		ft_exit(t_exec *exec, t_cmd *cmd);
+int		ft_unset(t_exec *exec, t_cmd *cmd);
+void	construct_cmds(t_cmd **cmd, t_lex **lst);
 
-char	*get_env(char *s, t_env *env);
-void	init_redirections(t_cmd *cmd, t_env *env);
+// builtins -utils:
+void	export_args(t_list *args, t_env **env);
+bool	valid_identifer(char *s, int i);
+
+// parsing :
+void	parse_env(char **envp, t_env **env);
+bool	lexer(char *cmd, t_env **env);
+void	ft_expander(t_lex *lex, t_env *env);
+void	join_words(t_lex **lex);
+bool	check_errors(t_lex *lex);
+
+// parsing utils:
+void	ft_env_add_back(t_env **env, t_env *node);
+void	ft_env_delete(t_env **env, t_env *node);
+t_env	*env_find(char *s, t_env *env);
+void	ft_lex_add_back(t_lex **lex, t_lex *new);
+void	ft_cmd_add_back(t_cmd **cmd, t_cmd *new);
+bool	is_token(char c);
+bool	is_word(t_lex	*node);
+bool	is_redir(t_lex *node);
+char	*replace_dolar(char *data, t_env *env);
+void	exec_builtins(t_exec *exec, t_cmd *node);
+
+// execution:
 void	execute(t_cmd	**cmd, t_env **env);
-void	ft_perror(char *err);
-int		count_her(t_cmd *cmd, t_redir *redir);
-void	exec_herdocs(t_cmd	*cmd, t_env *env);
+void	open_herdocs(t_cmd	*cmd, t_env *env);
 void	exec_commands(t_cmd **cmd, t_env **env);
-char	**get_path(t_env *env);
-char	*find_cmd(char *cmd, char **path);
-void	free_dubptr(char **ptr);
+void	open_redirs(t_cmd *cmd);
 
-char	**get_path(t_env *env);
-char	**extract_envp(t_env *env);
-int		exec_pipes(t_exec *exec);
-void	ft_put_error(int n, ...);
-void	exec_cmd(t_cmd	*cmd, t_exec *exec);
-
-// 
+// execution utils:
+void	clear_and_exit(t_cmd **cmd, t_env **env);
 bool	command_exist(char **cmd, char **path);
 bool	is_builtin(char *s);
-void	ft_env_delete(t_env **env, t_env *node);
-// int		exec_builtins(t_exec *exec);
-char	*find_cmd(char *cmd, char **path);
-void	clear_and_exit(t_cmd **cmd, t_env **env);
-void	exec_redirs(t_cmd *cmd);
+void	extract_args(t_cmd *cmd);
+void	update_exit_status(int pid);
+char	**extract_envp(t_env *env);
+char	**get_path(t_env *env);
+void	exec_pipes(t_exec *exec, int *pid, t_cmd *itr);
+void	ft_dup2(int fdin, int fdout);
+void	execute_child(t_exec *exec, t_cmd *itr);
+void	send_to_exec(t_exec *exec, t_cmd	*node);
+void	clear_and_exit_with_status(t_exec *exec, int status);
+void	close_all_next_fds(t_cmd *itr);
+void	free_dubptr(char **ptr);
+void	ft_put_error(int n, ...);
+void	free_cmd(t_cmd	**cmd);
+void	free_env(t_env	**env);
+char	*get_env(char *s, t_env *env);
+void	init_child_signals(void);
+void	ft_dup2(int fdin, int fdout);
+void	sigint_handler(int sig);
+bool	check_qutes(char *cmd);
 
 #endif

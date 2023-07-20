@@ -3,23 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec_commands.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 22:15:47 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/19 23:39:26 by asettar          ###   ########.fr       */
+/*   Updated: 2023/07/20 05:11:00 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	ft_puterr(char *err, char *s)
-{
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(s, 2);
-	ft_putstr_fd(":", 2);
-	ft_putstr_fd(err, 2);
-	exit(EXIT_FAILURE);
-}
 
 void	extract_args(t_cmd *cmd)
 {
@@ -44,28 +35,38 @@ void	extract_args(t_cmd *cmd)
 	}
 }
 
-void	clean_all(char **path, char **envp)
+void	update_exit_status(int pid)
 {
-	free_dubptr(path);
-	free_dubptr(envp);
-}
+	int	status;
 
-void	fget(int fd)
-{
-	char	*line;
-
-	while (1)
+	if (waitpid(pid, &status, 0) > 0)
 	{
-		line = get_next_line(fd);
-		if (!line)
-			break ;
-		printf("%s", line);
+		if (WIFSTOPPED(status))
+			g_glob.status = FSIGNAL + WSTOPSIG(status);
+		else if (WIFSIGNALED(status))
+		{
+			g_glob.status = FSIGNAL + WTERMSIG(status);
+			if (g_glob.status == 130)
+				ft_putstr_fd("\n", 2);
+			else if (g_glob.status == 131)
+				ft_putstr_fd("Quit: 3\n", 2);
+			else if (g_glob.status == 139)
+			{
+				ft_putstr_fd(ft_itoa(pid), 2);
+				ft_putstr_fd(" segmentation fault\n", 2);
+			}
+		}
+		else if (WIFEXITED(status))
+			g_glob.status = WEXITSTATUS(status);
 	}
+	while (wait(NULL) != -1)
+		;
 }
 
 void	exec_commands(t_cmd **cmd, t_env **env)
 {
 	t_exec	exec;
+	int		pid;
 
 	ft_memset(&exec, 0, sizeof(t_exec));
 	exec.path = get_path(*env);
@@ -73,6 +74,8 @@ void	exec_commands(t_cmd **cmd, t_env **env)
 	exec.env = env;
 	exec.cmd = cmd;
 	extract_args(*cmd);
-	g_glob.status = exec_pipes(&exec);
-	clean_all(exec.path, exec.envp);
+	exec_pipes(&exec, &pid, *cmd);
+	update_exit_status(pid);
+	free_dubptr(exec.path);
+	free_dubptr(exec.envp);
 }

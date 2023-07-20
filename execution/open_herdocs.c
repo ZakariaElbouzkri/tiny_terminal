@@ -1,33 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_herdocs.c                                     :+:      :+:    :+:   */
+/*   open_herdocs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 04:16:48 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/19 23:41:31 by asettar          ###   ########.fr       */
+/*   Updated: 2023/07/20 05:16:24 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	ft_perror(char *err)
-{
-	perror(err);
-	exit(EXIT_FAILURE);
-}
-
-char	*ft_readline(char *prompt)
-{
-	char	*line;
-
-	ft_printf("%s", prompt);
-	line = get_next_line(0);
-	if (line)
-		line[ft_strlen(line) - 1] = '\0';
-	return (line);
-}
 
 void	her_handler(int s)
 {
@@ -62,7 +45,7 @@ int	create_herdoc(t_redir *redir, t_env *env)
 	return (free(line), close(fd[1]), fd[0]);
 }
 
-void	exec_herdocs(t_cmd	*cmd, t_env *env)
+void	open_herdocs(t_cmd	*cmd, t_env *env)
 {
 	t_redir	*itr;
 

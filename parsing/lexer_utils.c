@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:36:46 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/19 23:34:38 by asettar          ###   ########.fr       */
+/*   Updated: 2023/07/20 05:09:30 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,41 +52,3 @@ bool	is_redir(t_lex *node)
 	return (node->tok == APP || node->tok == HER
 		|| node->tok == OUT || node->tok == INP);
 }
-/*void	display_cmd(t_cmd *cmd)
-{
-	char	*tok[9] = {"WRD", "SPA", "DQU", "SQU", "INP", "OUT", "HER", "APP", "PIP"};
-	if(!cmd)
-		return ;
-	while (cmd)
-		printf("\nCOMMAND:--------------------------\n");
-	{
-		t_list *lst = cmd->args;
-		printf("  args: ");
-		while (lst){
-			printf("%s ", lst->content);
-			lst=lst->next;
-		}
-		printf("\n  redirs:\n");
-		t_redir *ls = cmd->redir;
-		while (ls){
-			printf("    type = %s  || file = %s\n", tok[ls->type], ls->file);
-			ls = ls->next;
-		}
-		cmd = cmd->next;
-	}
-}
-
-void	display_lexer(t_lex *lex)    
-{
-	char	*tok[9] = {"WRD", "SPA", "DQU", "SQU", "INP", "OUT", "HER", "APP", "PIP"};
-	while (lex)
-	{
-		printf("__________________________\n");
-			printf("type : %s\n", tok[lex->tok]);
-		if(lex->tok == WRD || lex->tok == SQU || lex->tok == DQU)
-			printf("data : %s\n", lex->data);
-		else
-			printf("data : (null)\n");
-		lex = lex->next;
-	}
-}*/

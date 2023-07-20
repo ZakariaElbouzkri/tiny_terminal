@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parse_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 11:52:53 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/20 00:48:36 by asettar          ###   ########.fr       */
+/*   Updated: 2023/07/20 05:06:15 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	ft_env_add_back(t_env **env, t_env *node)
 {
@@ -68,12 +68,4 @@ void	free_env(t_env	**env)
 	free((*env)->value);
 	free(*env);
 	*env = NULL;
-}
-
-void	display_env(t_env *env)
-{
-	if (!env)
-		return ;
-	printf("%s=%s\n", env->name, env->value);
-	display_env(env->next);
 }
