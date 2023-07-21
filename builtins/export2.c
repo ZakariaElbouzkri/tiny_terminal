@@ -36,7 +36,8 @@ t_env	*ft_create_env_node(char *s, char *before, char *after)
 void	check_pwds(t_env *env_node)
 {
 	if (env_node && (!ft_strcmp("PWD", env_node->name)
-			|| !ft_strcmp("OLDPWD", env_node->name)))
+			|| !ft_strcmp("OLDPWD", env_node->name)
+			|| !ft_strcmp("PATH", env_node->name)))
 	{
 		free(env_node->value);
 		env_node->hidden = 0;
@@ -96,7 +97,7 @@ void	export_args(t_list *args, t_env **env)
 			ft_put_error(3, "export", s, "not a valid identifier");
 			g_glob.status = 1;
 		}
-		else
+		else if (ft_strcmp("_", s))
 			export_args_hlp(s, env);
 		args = args->next;
 	}

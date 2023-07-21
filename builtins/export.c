@@ -76,7 +76,7 @@ void	print_export(t_env *env)
 	node = sorted_env;
 	while (node)
 	{
-		if (!node->hidden)
+		if (!node->hidden && ft_strcmp(node->name, "_"))
 		{
 			printf("declare -x %s", node->name);
 			if (node->value)

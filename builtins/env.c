@@ -35,9 +35,10 @@ int	ft_env(t_exec *exec, t_cmd *cmd)
 	}
 	while (env)
 	{
-		if (env->value && !env->hidden)
+		if (env->value && !env->hidden && ft_strcmp("_", env->name))
 			printf("%s=%s\n", env->name, env->value);
 		env = env->next;
 	}
+	printf("_=/usr/bin/env\n");
 	return (0);
 }
