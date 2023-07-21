@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 01:47:51 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/21 01:34:14 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/21 01:42:49 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,17 +69,24 @@ void	send_to_exec(t_exec *exec, t_cmd	*node)
 	catch_error(node->cmd[0]);
 }
 
-void	exec_pipes(t_exec *exec, int *pid, t_cmd *itr)
+bool	check_builtins(t_exec *exec, t_cmd *itr)
 {
 	if (itr->cmd && !itr->next && is_builtin(itr->cmd[0]))
 	{
 		if (itr->triger == -1)
 		{
 			g_glob.status = 1;
-			return ;
+			return (false);
 		}
-		return (ft_dup2(itr->inp, itr->out), exec_builtins(exec, itr));
-	}	
+		return (ft_dup2(itr->inp, itr->out), exec_builtins(exec, itr), false);
+	}
+	return (true);
+}
+
+void	exec_pipes(t_exec *exec, int *pid, t_cmd *itr)
+{
+	if (!check_builtins(exec, itr))
+		return ;
 	while (itr)
 	{
 		if (itr->next && pipe(exec->fd) == -1)
