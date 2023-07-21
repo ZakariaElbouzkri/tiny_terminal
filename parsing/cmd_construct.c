@@ -82,7 +82,21 @@ void	change_last_redir(t_lex **lst, t_cmd *last)
 	}
 }
 
-void	construct_cmds(t_cmd **cmd, t_lex **lst)
+void	change_env_last_cmd(t_env *env, t_cmd *cmd)
+{
+	t_env	*last_env;
+	t_list	*last_arg;
+
+	last_env = env_find("_", env);
+	free(last_env->value);
+	last_env->value = NULL;
+	if (!cmd || !cmd->args || cmd->next)
+		return ;
+	last_arg = ft_lstlast(cmd->args);
+	last_env->value = ft_strdup(last_arg->content);
+}
+
+void	construct_cmds(t_cmd **cmd, t_lex **lst, t_env *env)
 {
 	t_lex	*lex;
 	bool	new_cmd;
@@ -102,4 +116,5 @@ void	construct_cmds(t_cmd **cmd, t_lex **lst)
 			new_cmd = true;
 		lex = lex->next;
 	}
+	change_env_last_cmd(env, *cmd);
 }

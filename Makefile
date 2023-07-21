@@ -1,6 +1,6 @@
 NAME = minishell
 
-CC = cc -Wall -Wextra -Werror
+CC = cc  -g
 
 RM = rm -f
 
@@ -24,7 +24,7 @@ SRC = libft/abs.c libft/ft_atoi.c libft/ft_bzero.c libft/ft_calloc.c libft/ft_is
 	execution/exec_commands.c execution/exec_utils.c execution/exec_utils3.c execution/execute.c \
 	execution/execute_pipes.c execution/open_herdocs.c execution/open_redirs.c execution/exec_utils4.c \
 	builtins/cd.c builtins/echo.c builtins/env.c builtins/exit.c builtins/export.c \
-	builtins/export2.c builtins/pwd.c builtins/unset.c parsing/update_env.c main.c 
+	builtins/export2.c builtins/pwd.c builtins/unset.c  main.c 
 
 
 OBJ = $(SRC:.c=.o)
