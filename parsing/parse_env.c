@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 11:52:53 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/20 05:06:15 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/21 20:50:46 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	parse_env(char **envp, t_env **env)
 	}
 	ft_env_delete(env, env_find("PWD", *env));
 	ft_env_delete(env, env_find("OLDPWD", *env));
+	update_shell_level(env);
 	ft_env_add_back(env, ft_new_env(ft_strdup("PWD"), getcwd(NULL, 0)));
 	ft_env_add_back(env, ft_new_env(ft_strdup("OLDPWD"), NULL));
 }

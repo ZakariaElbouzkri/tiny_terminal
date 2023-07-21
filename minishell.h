@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
+/*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:53:59 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/21 01:37:02 by asettar          ###   ########.fr       */
+/*   Updated: 2023/07/21 21:54:24 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # define NO_INP -3
 # define NO_OUT -3
 # define FSIGNAL 128
+# define DFPATH "/bin/"
 
 typedef struct s_glob
 {
@@ -161,5 +162,9 @@ void	ft_dup2(int fdin, int fdout);
 void	sigint_handler(int sig);
 bool	check_qutes(char *cmd);
 char	*ft_strrcat(char *s, char c);
+t_env	*ft_new_env(char *name, char *value);
+void	update_shell_level(t_env **env);
+int	evlauate(char *nbr);
+
 
 #endif
