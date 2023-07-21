@@ -106,7 +106,7 @@ int		ft_exit(t_exec *exec, t_cmd *cmd);
 int		ft_export(t_exec *exec, t_cmd *cmd);
 int		ft_pwd(t_exec *exec, t_cmd *cmd);
 int		ft_unset(t_exec *exec, t_cmd *cmd);
-void	construct_cmds(t_cmd **cmd, t_lex **lst);
+void	construct_cmds(t_cmd **cmd, t_lex **lst, t_env *env);
 
 // builtins -utils:
 void	export_args(t_list *args, t_env **env);

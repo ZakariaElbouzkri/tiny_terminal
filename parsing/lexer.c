@@ -125,7 +125,7 @@ bool	lexer(char *cmd, t_env **env)
 	if (check_errors(lex))
 		return (free_lex(&lex), 1);
 	cmds = NULL;
-	construct_cmds(&cmds, &lex);
+	construct_cmds(&cmds, &lex, *env);
 	free_lex(&lex);
 	execute(&cmds, env);
 	return (free_cmd(&cmds), 0);
