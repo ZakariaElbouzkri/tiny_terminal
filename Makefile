@@ -1,7 +1,7 @@
 NAME = minishell
 
 CC = cc  -g
-
+CFLAGS = -Wall -Wextra -Werror
 RM = rm -f
 
 READLINE_DIR = $(shell brew --prefix readline)
