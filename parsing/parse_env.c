@@ -40,6 +40,7 @@ void	update_pwds_shlvl(t_env **env)
 	t_env	*shlvl;
 	t_env	*last_cmd;
 	t_env	*pwd;
+	t_env	*path;
 
 	ft_env_delete(env, env_find("PWD", *env));
 	ft_env_delete(env, env_find("OLDPWD", *env));
@@ -53,6 +54,10 @@ void	update_pwds_shlvl(t_env **env)
 	pwd = env_find("PWD", *env);
 	if (!env_find("_", *env))
 	{
+		ft_env_add_back(env , ft_new_env(ft_strdup("PATH"),
+			ft_strdup("/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.")));
+		path = env_find("PATH", *env);
+		path->hidden = 1;
 		last_cmd = ft_new_env(ft_strdup("_"),
 				ft_strdup("/usr/bin/env"));
 		ft_env_add_back(env, last_cmd);
