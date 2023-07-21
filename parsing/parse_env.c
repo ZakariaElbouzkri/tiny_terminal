@@ -35,6 +35,29 @@ t_env	*ft_new_env(char *name, char *value)
 	return (new);
 }
 
+void	update_pwds_shlvl(t_env **env)
+{
+	t_env	*shlvl;
+	t_env	*last_cmd;
+	t_env	*pwd;
+
+	ft_env_delete(env, env_find("PWD", *env));
+	ft_env_delete(env, env_find("OLDPWD", *env));
+	ft_env_add_back(env, ft_new_env(ft_strdup("PWD"), getcwd(NULL, 0)));
+	ft_env_add_back(env, ft_new_env(ft_strdup("OLDPWD"), NULL));
+	shlvl = env_find("SHLVL", *env);
+	if (!shlvl)
+		ft_env_add_back(env, ft_new_env(ft_strdup("SHLVL"), ft_strdup("1")));
+	else
+		shlvl->value = ft_itoa(ft_atoi(shlvl->value) + 1);
+	pwd = env_find("PWD", *env);
+	if (!env_find("_", *env))
+	{
+		last_cmd = ft_new_env(ft_strdup("_"),
+				ft_strdup("/usr/bin/env"));
+		ft_env_add_back(env, last_cmd);
+	}
+}
 void	parse_env(char **envp, t_env **env)
 {
 	int		i;
@@ -53,10 +76,7 @@ void	parse_env(char **envp, t_env **env)
 		node->next = NULL;
 		ft_env_add_back(env, node);
 	}
-	ft_env_delete(env, env_find("PWD", *env));
-	ft_env_delete(env, env_find("OLDPWD", *env));
-	ft_env_add_back(env, ft_new_env(ft_strdup("PWD"), getcwd(NULL, 0)));
-	ft_env_add_back(env, ft_new_env(ft_strdup("OLDPWD"), NULL));
+	update_pwds_shlvl(env);
 }
 
 void	free_env(t_env	**env)
