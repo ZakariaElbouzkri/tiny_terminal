@@ -59,7 +59,7 @@ void	update_pwds_shlvl(t_env **env)
 		path = env_find("PATH", *env);
 		path->hidden = 1;
 		last_cmd = ft_new_env(ft_strdup("_"),
-				ft_strdup("/usr/bin/env"));
+				ft_strdup("./minishell"));
 		ft_env_add_back(env, last_cmd);
 	}
 }
