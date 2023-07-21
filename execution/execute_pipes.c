@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 01:47:51 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/20 23:23:33 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/21 01:34:14 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,14 @@ void	exec_builtins(t_exec *exec, t_cmd *node)
 		g_glob.status = ft_unset(exec, node);
 }
 
+void	catch_error(char *s)
+{
+	ft_put_error(2, s, strerror(errno));
+	if (errno == 2 || errno == 13)
+		exit(127 - (errno == 13));
+	exit(1);
+}
+
 void	send_to_exec(t_exec *exec, t_cmd	*node)
 {
 	if (node->triger == -1)
@@ -51,14 +59,14 @@ void	send_to_exec(t_exec *exec, t_cmd	*node)
 	}
 	if (!command_exist(&node->cmd[0], exec->path))
 	{
-		ft_put_error(2, node->cmd[0], strerror(errno));
+		if (errno == 2)
+			ft_put_error(2, node->cmd[0], "command not found");
+		else
+			ft_put_error(2, node->cmd[0], strerror(errno));
 		clear_and_exit_with_status(exec, 127 - (errno == 13));
 	}
 	execve(node->cmd[0], node->cmd, exec->envp);
-	ft_put_error(2, node->cmd[0], strerror(errno));
-	if (errno == 2 || errno == 13)
-		exit(127 - (errno == 13));
-	exit(1);
+	catch_error(node->cmd[0]);
 }
 
 void	exec_pipes(t_exec *exec, int *pid, t_cmd *itr)
