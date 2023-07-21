@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:53:59 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/20 05:20:25 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/21 01:37:02 by asettar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,5 +160,6 @@ void	init_child_signals(void);
 void	ft_dup2(int fdin, int fdout);
 void	sigint_handler(int sig);
 bool	check_qutes(char *cmd);
+char	*ft_strrcat(char *s, char c);
 
 #endif
