@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_put_error.c                                     :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 06:12:15 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/20 05:05:53 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/21 01:05:11 by asettar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,19 @@ void	ft_put_error(int n, ...)
 	}
 	ft_putstr_fd("\n", 2);
 	va_end(args);
+}
+
+char	*ft_strrcat(char *s, char c)
+{
+	char	*ret;
+	int		i;
+
+	ret = malloc(ft_strlen(s) + 2);
+	i = -1;
+	while (s[++i])
+		ret[i] = s[i];
+	ret[i++] = c;
+	ret[i] = 0;
+	free(s);
+	return (ret);
 }
