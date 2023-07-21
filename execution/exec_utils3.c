@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 04:12:12 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/20 23:19:38 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/21 02:58:19 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,29 @@ void	clear_and_exit(t_cmd **cmd, t_env **env)
 	exit(EXIT_FAILURE);
 }
 
+bool	check_in_dir(char *cmd)
+{
+	if (!access(cmd, F_OK))
+	{
+		if (!access(cmd, X_OK))
+			return (true);
+		return (ft_put_error(2, cmd, "Permission denied"),
+			g_glob.status = 126, false);
+	}
+	return (ft_put_error(2, cmd, "No such file or directory"),
+		g_glob.status = 127, false);
+}
+
 bool	command_exist(char **cmd, char **path)
 {
 	char	*p;
 	int		idx;
 
 	if (ft_strchr(*cmd, '/'))
-	{
-		if (!access(*cmd, X_OK))
-			return (true);
-		return (false);
-	}
+		return (check_in_dir(*cmd));
 	if (!path)
-		return (false);
+		return (ft_put_error(2, *cmd, "command not found"),
+			g_glob.status = 127, false);
 	idx = -1;
 	while (path[++idx])
 	{
@@ -46,7 +56,8 @@ bool	command_exist(char **cmd, char **path)
 		free(p);
 		p = NULL;
 	}
-	return (false);
+	return (ft_put_error(2, *cmd, "command not found"),
+		g_glob.status = 127, false);
 }
 
 bool	is_builtin(char *s)
