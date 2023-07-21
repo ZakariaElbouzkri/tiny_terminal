@@ -36,7 +36,8 @@ t_env	*ft_create_env_node(char *s, char *before, char *after)
 void	check_pwds(t_env *env_node)
 {
 	if (env_node && (!ft_strcmp("PWD", env_node->name)
-			|| !ft_strcmp("OLDPWD", env_node->name)))
+			|| !ft_strcmp("OLDPWD", env_node->name)
+			|| !ft_strcmp("PATH", env_node->name)))
 	{
 		free(env_node->value);
 		env_node->hidden = 0;
