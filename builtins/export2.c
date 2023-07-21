@@ -96,7 +96,7 @@ void	export_args(t_list *args, t_env **env)
 			ft_put_error(3, "export", s, "not a valid identifier");
 			g_glob.status = 1;
 		}
-		else
+		else if (ft_strcmp("_", s))
 			export_args_hlp(s, env);
 		args = args->next;
 	}

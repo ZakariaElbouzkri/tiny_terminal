@@ -64,7 +64,7 @@ int	ft_unset(t_exec *exec, t_cmd *cmd)
 			node->hidden = 1;
 			node->echo_val = 1;
 		}
-		else if (node)
+		else if (node && ft_strcmp("_", s))
 			ft_env_delete(exec->env, node);
 		args = args->next;
 	}
