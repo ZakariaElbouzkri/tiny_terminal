@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 01:47:51 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/20 05:16:11 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/21 02:49:22 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,14 @@ void	exec_builtins(t_exec *exec, t_cmd *node)
 		g_glob.status = ft_unset(exec, node);
 }
 
+void	catch_error(char *s)
+{
+	ft_put_error(2, s, strerror(errno));
+	if (errno == 2 || errno == 13)
+		exit(127 - (errno == 13));
+	exit(1);
+}
+
 void	send_to_exec(t_exec *exec, t_cmd	*node)
 {
 	if (node->triger == -1)
@@ -50,28 +58,29 @@ void	send_to_exec(t_exec *exec, t_cmd	*node)
 		clear_and_exit_with_status(exec, g_glob.status);
 	}
 	if (!command_exist(&node->cmd[0], exec->path))
-	{
-		ft_put_error(2, node->cmd[0], "command not found");
-		clear_and_exit_with_status(exec, 127);
-	}
+		clear_and_exit_with_status(exec, 127 - (errno == 13));
 	execve(node->cmd[0], node->cmd, exec->envp);
-	ft_put_error(2, node->cmd[0], strerror(errno));
-	if (errno == 2 || errno == 13)
-		exit(127 - (errno == 13));
-	exit(1);
+	catch_error(node->cmd[0]);
 }
 
-void	exec_pipes(t_exec *exec, int *pid, t_cmd *itr)
+bool	check_builtins(t_exec *exec, t_cmd *itr)
 {
 	if (itr->cmd && !itr->next && is_builtin(itr->cmd[0]))
 	{
 		if (itr->triger == -1)
 		{
 			g_glob.status = 1;
-			return ;
+			return (false);
 		}
-		return (ft_dup2(itr->inp, itr->out), exec_builtins(exec, itr));
-	}	
+		return (ft_dup2(itr->inp, itr->out), exec_builtins(exec, itr), false);
+	}
+	return (true);
+}
+
+void	exec_pipes(t_exec *exec, int *pid, t_cmd *itr)
+{
+	if (!check_builtins(exec, itr))
+		return ;
 	while (itr)
 	{
 		if (itr->next && pipe(exec->fd) == -1)

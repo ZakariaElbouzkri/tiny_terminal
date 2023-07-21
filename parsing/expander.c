@@ -3,29 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:46:18 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/20 02:51:21 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/21 01:05:35 by asettar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-char	*ft_strrcat(char *s, char c)
-{
-	char	*ret;
-	int		i;
-
-	ret = malloc(ft_strlen(s) + 2);
-	i = -1;
-	while (s[++i])
-		ret[i] = s[i];
-	ret[i++] = c;
-	ret[i] = 0;
-	free(s);
-	return (ret);
-}
 
 char	*get_env(char *s, t_env *env)
 {
@@ -103,6 +88,19 @@ char	*replace_dolar(char *data, t_env *env)
 	return (s);
 }
 
+void	skip_herdoc_words(t_lex **lst)
+{
+	t_lex	*lex;
+
+	lex = *lst;
+	lex = lex->next;
+	if (lex && lex->tok == SPA)
+		lex = lex->next;
+	while (lex && is_word(lex))
+		lex = lex->next;
+	*lst = lex;
+}
+
 void	ft_expander(t_lex *lex, t_env *env)
 {
 	t_lex	*last;
@@ -112,19 +110,13 @@ void	ft_expander(t_lex *lex, t_env *env)
 	{
 		last = lex;
 		if (lex->tok == HER)
-		{
-			lex = lex->next;
-			if (lex && lex->tok == SPA)
-				lex = lex->next;
-			while (lex && is_word(lex))
-				lex = lex->next;
-		}
+			skip_herdoc_words(&lex);
 		else if ((lex->tok == WRD || lex->tok == DQU)
 			&& ft_strchr(lex->data, '$'))
 		{
 			lex->expanded = true;
 			lex->data = replace_dolar(lex->data, env);
-			if (lex->tok == WRD && *lex->data 
+			if (lex->tok == WRD && *lex->data
 				&& lex->data[ft_strlen(lex->data) - 1] == '$'
 				&& lex->next && lex->next->tok == DQU)
 					lex->data = ft_strtrim(lex->data, "$");
