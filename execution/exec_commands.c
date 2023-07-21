@@ -57,19 +57,6 @@ void	update_exit_status(int pid)
 	while (wait(NULL) != -1)
 		;
 }
-void	change_env_last_cmd(t_env *env, t_cmd *cmd)
-{
-	t_env	*last_env;
-	t_list	*last_arg;
-
-	last_env = env_find("_", env);
-	free(last_env->value);
-	last_env->value = NULL;
-	if (!cmd || !cmd->args || cmd->next)
-		return ;
-	last_arg = ft_lstlast(cmd->args);
-	last_env->value = ft_strdup(last_arg->content);
-}
 
 void	exec_commands(t_cmd **cmd, t_env **env)
 {
@@ -84,7 +71,6 @@ void	exec_commands(t_cmd **cmd, t_env **env)
 	extract_args(*cmd);
 	exec_pipes(&exec, &pid, *cmd);
 	update_exit_status(pid);
-	change_env_last_cmd(*env, *cmd);
 	free_dubptr(exec.path);
 	free_dubptr(exec.envp);
 }
