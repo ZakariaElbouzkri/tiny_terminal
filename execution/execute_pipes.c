@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/17 01:47:51 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/21 02:26:05 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/21 02:49:22 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,13 +58,7 @@ void	send_to_exec(t_exec *exec, t_cmd	*node)
 		clear_and_exit_with_status(exec, g_glob.status);
 	}
 	if (!command_exist(&node->cmd[0], exec->path))
-	{
-		if (errno == 2)
-			ft_put_error(2, node->cmd[0], "command not found");
-		else
-			ft_put_error(2, node->cmd[0], "Permission denied");
 		clear_and_exit_with_status(exec, 127 - (errno == 13));
-	}
 	execve(node->cmd[0], node->cmd, exec->envp);
 	catch_error(node->cmd[0]);
 }
