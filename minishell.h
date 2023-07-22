@@ -124,8 +124,7 @@ bool	check_errors(t_lex *lex);
 void	ft_env_add_back(t_env **env, t_env *node);
 void	free_env(t_env	**env);
 t_env	*ft_new_env(char *name, char *value);
-
-
+void	ft_redir_add_back(t_redir **red, t_redir *new);
 void	ft_env_delete(t_env **env, t_env *node);
 t_env	*env_find(char *s, t_env *env);
 void	ft_lex_add_back(t_lex **lex, t_lex *new);
@@ -168,7 +167,5 @@ bool	check_qutes(char *cmd);
 char	*ft_strrcat(char *s, char c);
 t_env	*ft_new_env(char *name, char *value);
 void	update_shell_level(t_env **env);
-int	evlauate(char *nbr);
-
 
 #endif

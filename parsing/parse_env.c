@@ -12,12 +12,11 @@
 
 #include "../minishell.h"
 
-
 void	update_shlvl(t_env **env)
 {
 	t_env	*shlvl;
 	int		new_shlvl;
-	
+
 	shlvl = env_find("SHLVL", *env);
 	if (!shlvl)
 		ft_env_add_back(env, ft_new_env(ft_strdup("SHLVL"), ft_strdup("1")));
@@ -39,6 +38,7 @@ void	update_shlvl(t_env **env)
 			shlvl->value = ft_itoa(new_shlvl + 1);
 	}
 }
+
 void	update_last_cmd(t_env **env)
 {
 	t_env	*last_cmd;
@@ -46,14 +46,15 @@ void	update_last_cmd(t_env **env)
 
 	if (!env_find("_", *env))
 	{
-		ft_env_add_back(env , ft_new_env(ft_strdup("PATH"),
-			ft_strdup("/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.")));
+		ft_env_add_back(env, ft_new_env(ft_strdup("PATH"),
+				ft_strdup("/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.")));
 		path = env_find("PATH", *env);
 		path->hidden = 1;
 		last_cmd = ft_new_env(ft_strdup("_"), ft_strdup("./minishell"));
 		ft_env_add_back(env, last_cmd);
 	}
 }
+
 void	parse_env(char **envp, t_env **env)
 {
 	int		i;

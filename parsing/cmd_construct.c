@@ -12,18 +12,6 @@
 
 #include "../minishell.h"
 
-void	ft_redir_add_back(t_redir **red, t_redir *new)
-{	
-	if (!red || !new)
-		return ;
-	if (*red == NULL)
-	{
-		*red = new;
-		return ;
-	}
-	ft_redir_add_back(&(*red)->next, new);
-}
-
 void	create_new_cmd(t_cmd **cmd, t_cmd **last, bool *new_cmd)
 {
 	t_cmd	*new;
