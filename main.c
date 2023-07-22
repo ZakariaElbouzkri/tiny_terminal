@@ -77,6 +77,8 @@ int	main(int ac, char **av, char **envp)
 	g_glob.status = 0;
 	rl_catch_signals = 0;
 	parse_env(envp, &env);
+	g_glob.pwd = ft_strdup(env_find("PWD", env)->value);
 	prompt(&env);
 	free_env(&env);
+	free(g_glob.pwd);
 }

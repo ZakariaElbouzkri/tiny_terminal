@@ -28,22 +28,8 @@ t_env	*ft_create_env_node(char *s, char *before, char *after)
 		env_node->value = NULL;
 	}
 	env_node->hidden = 0;
-	env_node->echo_val = 0;
 	env_node->next = NULL;
 	return (env_node);
-}
-
-void	check_pwds(t_env *env_node)
-{
-	if (env_node && (!ft_strcmp("PWD", env_node->name)
-			|| !ft_strcmp("OLDPWD", env_node->name)
-			|| !ft_strcmp("PATH", env_node->name)))
-	{
-		free(env_node->value);
-		env_node->hidden = 0;
-		env_node->echo_val = 0;
-		env_node->value = NULL;
-	}
 }
 
 void	insert_node_env(char *s, char *before, char *after, t_env **env)
@@ -51,7 +37,6 @@ void	insert_node_env(char *s, char *before, char *after, t_env **env)
 	t_env	*env_node;
 
 	env_node = env_find(before, *env);
-	check_pwds(env_node);
 	if (env_node && ft_strchr(s, '='))
 	{
 		if (env_node->value == NULL)
@@ -69,6 +54,7 @@ void	insert_node_env(char *s, char *before, char *after, t_env **env)
 		env_node = ft_create_env_node(s, before, after);
 		ft_env_add_back(env, env_node);
 	}
+	env_node->hidden = 0;
 }
 
 void	export_args_hlp(char *s, t_env **env)

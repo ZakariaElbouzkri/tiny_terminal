@@ -20,36 +20,81 @@ t_env	*env_find(char *s, t_env *env)
 		return (env);
 	return (env_find(s, env->next));
 }
+void	update_old_pwd(t_env **env, t_env *pwd, t_env *old_pwd)
+{
+	char	*value;
 
-void	change_pwd_oldpwd(t_env *env, char *new_path)
+	if (!old_pwd)
+	{
+		if (!pwd)
+			value = NULL;
+		else
+			value = pwd->value;
+		
+		old_pwd = ft_new_env(ft_strdup("OLDPWD"), ft_strdup(value));
+		old_pwd->hidden = 1;
+		ft_env_add_back(env, old_pwd);
+	}
+	else
+	{
+		free(old_pwd->value);
+		if (!pwd)
+			old_pwd->value = NULL;
+		else
+			old_pwd->value = ft_strdup(pwd->value);
+	}
+}
+
+void	update_pwd(t_env **env , char *new_path, char *content, char *getcwd_ret)
 {
 	t_env	*pwd;
-	t_env	*old_pwd;
 
-	if (!getcwd(new_path, 10000))
+	pwd = env_find("PWD", *env);
+	if (!pwd)
+	{
+		pwd = ft_new_env(ft_strdup("PWD"), ft_strdup(new_path));
+		pwd->hidden = 0;
+		ft_env_add_back(env, pwd);
+	}
+	else if (!getcwd_ret && !ft_strcmp(content, ".."))
+	{
+		pwd->value = ft_strjoin(pwd->value, "/..");
+		free(g_glob.pwd);
+		g_glob.pwd = ft_strdup(pwd->value);
+	}
+	else
+	{
+		free(pwd->value);
+		free(g_glob.pwd);
+		pwd->value = ft_strdup(new_path);
+		g_glob.pwd = ft_strdup(new_path);
+	}
+}
+
+void	change_pwd_oldpwd(t_env **env, char *content)
+{
+	char	new_path[PATH_MAX];
+	t_env	*pwd;
+	t_env	*old_pwd;
+	char	*getcwd_ret;
+	getcwd_ret = getcwd(new_path, PATH_MAX);
+	if (!getcwd_ret)
 	{
 		ft_put_error(4, "cd", "error retrieving current directory", "getcwd",
 			"cannot access parent directories: No such file or directory");
 		g_glob.status = 0;
 	}
-	pwd = env_find("PWD", env);
-	old_pwd = env_find("OLDPWD", env);
-	free(old_pwd->value);
-	if (!pwd->value)
-		old_pwd->value = ft_strdup("");
-	else
-		old_pwd->value = ft_strdup(pwd->value);
-	free(pwd->value);
-	pwd->value = ft_strdup(new_path);
-	pwd->echo_val = 0;
-	old_pwd->echo_val = 0;
+	pwd = env_find("PWD", *env);
+	old_pwd = env_find("OLDPWD", *env);
+	update_old_pwd(env, pwd, old_pwd);
+	update_pwd(env, new_path, content, getcwd_ret);
+	
 }
 
 int	ft_cd(t_exec *exec, t_cmd *cmd)
 {
 	t_env	*home;
 	t_list	*args;
-	char	new_path[10000];
 
 	args = cmd->args;
 	if (!args->next)
@@ -68,6 +113,6 @@ int	ft_cd(t_exec *exec, t_cmd *cmd)
 		g_glob.status = 1;
 	}
 	else
-		change_pwd_oldpwd(*exec->env, new_path);
+		change_pwd_oldpwd(exec->env, args->next->content);
 	return (g_glob.status);
 }

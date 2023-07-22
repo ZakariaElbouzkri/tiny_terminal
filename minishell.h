@@ -32,9 +32,10 @@
 
 typedef struct s_glob
 {
-	int	status;
-	int	her;
-	int	under_exec;
+	int		status;
+	int		her;
+	int		under_exec;
+	char	*pwd;
 }		t_glob;
 
 t_glob	g_glob;
@@ -43,7 +44,6 @@ typedef struct s_env
 {
 	char			*name;
 	int				hidden;
-	int				echo_val;
 	char			*value;
 	struct s_env	*next;
 }	t_env;
