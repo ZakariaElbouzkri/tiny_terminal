@@ -122,6 +122,10 @@ bool	check_errors(t_lex *lex);
 
 // parsing utils:
 void	ft_env_add_back(t_env **env, t_env *node);
+void	free_env(t_env	**env);
+t_env	*ft_new_env(char *name, char *value);
+
+
 void	ft_env_delete(t_env **env, t_env *node);
 t_env	*env_find(char *s, t_env *env);
 void	ft_lex_add_back(t_lex **lex, t_lex *new);
