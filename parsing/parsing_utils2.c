@@ -33,3 +33,15 @@ t_env	*ft_new_env(char *name, char *value)
 	new->name = name;
 	return (new);
 }
+
+void	ft_redir_add_back(t_redir **red, t_redir *new)
+{	
+	if (!red || !new)
+		return ;
+	if (*red == NULL)
+	{
+		*red = new;
+		return ;
+	}
+	ft_redir_add_back(&(*red)->next, new);
+}
