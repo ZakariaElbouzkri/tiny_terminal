@@ -12,54 +12,45 @@
 
 #include "../minishell.h"
 
-void	ft_env_add_back(t_env **env, t_env *node)
-{
-	if (!env || !node)
-		return ;
-	if (*env == NULL)
-	{
-		*env = node;
-		return ;
-	}
-	ft_env_add_back(&(*env)->next, node);
-}
 
-t_env	*ft_new_env(char *name, char *value)
-{
-	t_env	*new;
-
-	new = malloc(sizeof(t_env));
-	ft_memset(new, 0, sizeof(t_env));
-	new->value = value;
-	new->name = name;
-	return (new);
-}
-
-void	update_pwds_shlvl(t_env **env)
+void	update_shlvl(t_env **env)
 {
 	t_env	*shlvl;
-	t_env	*last_cmd;
-	t_env	*pwd;
-	t_env	*path;
-
-	ft_env_delete(env, env_find("PWD", *env));
-	ft_env_delete(env, env_find("OLDPWD", *env));
-	ft_env_add_back(env, ft_new_env(ft_strdup("PWD"), getcwd(NULL, 0)));
-	ft_env_add_back(env, ft_new_env(ft_strdup("OLDPWD"), NULL));
+	int		new_shlvl;
+	
 	shlvl = env_find("SHLVL", *env);
 	if (!shlvl)
 		ft_env_add_back(env, ft_new_env(ft_strdup("SHLVL"), ft_strdup("1")));
 	else
-		shlvl->value = ft_itoa(ft_atoi(shlvl->value) + 1);
-	pwd = env_find("PWD", *env);
+	{
+		new_shlvl = ft_atoi(shlvl->value);
+		if (new_shlvl < 0)
+			new_shlvl = -1;
+		else if (new_shlvl >= 1000)
+		{
+			ft_putstr_fd("minishell: warning: shell level (", 2);
+			ft_putnbr_fd(new_shlvl, 2);
+			ft_putstr_fd(") too high, resetting to 1\n", 2);
+			new_shlvl = 0;
+		}
+		if (new_shlvl == 999)
+			shlvl->value = ft_strdup("");
+		else
+			shlvl->value = ft_itoa(new_shlvl + 1);
+	}
+}
+void	update_last_cmd(t_env **env)
+{
+	t_env	*last_cmd;
+	t_env	*path;
+
 	if (!env_find("_", *env))
 	{
 		ft_env_add_back(env , ft_new_env(ft_strdup("PATH"),
 			ft_strdup("/usr/gnu/bin:/usr/local/bin:/bin:/usr/bin:.")));
 		path = env_find("PATH", *env);
 		path->hidden = 1;
-		last_cmd = ft_new_env(ft_strdup("_"),
-				ft_strdup("./minishell"));
+		last_cmd = ft_new_env(ft_strdup("_"), ft_strdup("./minishell"));
 		ft_env_add_back(env, last_cmd);
 	}
 }
@@ -81,16 +72,10 @@ void	parse_env(char **envp, t_env **env)
 		node->next = NULL;
 		ft_env_add_back(env, node);
 	}
-	update_pwds_shlvl(env);
-}
-
-void	free_env(t_env	**env)
-{
-	if (!env || !*env)
-		return ;
-	free_env(&(*env)->next);
-	free((*env)->name);
-	free((*env)->value);
-	free(*env);
-	*env = NULL;
+	ft_env_delete(env, env_find("PWD", *env));
+	ft_env_delete(env, env_find("OLDPWD", *env));
+	ft_env_add_back(env, ft_new_env(ft_strdup("PWD"), getcwd(NULL, 0)));
+	ft_env_add_back(env, ft_new_env(ft_strdup("OLDPWD"), NULL));
+	update_shlvl(env);
+	update_last_cmd(env);
 }
