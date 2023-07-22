@@ -68,7 +68,6 @@ void	parse_env(char **envp, t_env **env)
 		node->name = ft_substr(envp[i], 0, idx);
 		node->value = ft_substr(envp[i], idx + 1, ft_strlen(envp[i]) - idx - 1);
 		node->hidden = 0;
-		node->echo_val = 0;
 		node->next = NULL;
 		ft_env_add_back(env, node);
 	}

@@ -14,9 +14,6 @@
 
 char	*get_env(char *s, t_env *env)
 {
-	if ((!ft_strcmp(s, "PWD") || !ft_strcmp("OLDPWD", s))
-		&& env_find(s, env)->echo_val)
-		return (free(s), NULL);
 	if (!env)
 		return (free(s), NULL);
 	while (env)
