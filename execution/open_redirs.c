@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/12 05:32:33 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/20 04:46:23 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/23 20:13:49 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 bool	open_and_save(char *file, t_tok t, int *fd)
 {
 	*fd = open(file, O_RDWR | (t == APP || t == OUT) * O_CREAT
-			| (t == OUT) * O_TRUNC | (t == APP) * O_APPEND, 0777);
+			| (t == OUT) * O_TRUNC | (t == APP) * O_APPEND, 0644);
 	if (*fd == -1)
 	{
 		ft_put_error(2, file, strerror(errno));
