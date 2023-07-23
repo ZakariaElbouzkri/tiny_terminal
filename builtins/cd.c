@@ -50,24 +50,26 @@ void	update_pwd(t_env **env, char *new_path, char *content, char *getcwd_ret)
 	t_env	*pwd;
 
 	pwd = env_find("PWD", *env);
-	if (!pwd)
+	if (getcwd_ret)
 	{
-		pwd = ft_new_env(ft_strdup("PWD"), ft_strdup(new_path));
-		pwd->hidden = 0;
-		ft_env_add_back(env, pwd);
-	}
-	else if (!getcwd_ret && !ft_strcmp(content, ".."))
-	{
-		pwd->value = ft_strjoin(pwd->value, "/..");
+		if (!pwd)
+		{
+			pwd = ft_new_env(ft_strdup("PWD"), NULL);
+			pwd->hidden = 1;
+			ft_env_add_back(env, pwd);
+		}
 		free(g_glob.pwd);
-		g_glob.pwd = ft_strdup(pwd->value);
+		free(pwd->value);
+		pwd->value = ft_strdup(new_path);
+		g_glob.pwd = ft_strdup(new_path);
 	}
 	else
 	{
 		free(pwd->value);
-		free(g_glob.pwd);
-		pwd->value = ft_strdup(new_path);
-		g_glob.pwd = ft_strdup(new_path);
+		if (g_glob.pwd[ft_strlen(g_glob.pwd) - 1] != '/')
+			g_glob.pwd = ft_strjoin(g_glob.pwd, "/");
+		pwd->value = ft_strjoin(g_glob.pwd, content);
+		g_glob.pwd = ft_strdup(pwd->value);
 	}
 }
 
