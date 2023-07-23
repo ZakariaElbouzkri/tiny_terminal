@@ -6,7 +6,7 @@
 /*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 04:12:12 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/21 02:58:19 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/23 20:24:21 by zel-bouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ bool	command_exist(char **cmd, char **path)
 	while (path[++idx])
 	{
 		p = ft_strjoin(ft_strdup(path[idx]), *cmd);
-		if (!access(p, X_OK))
+		if (!access(p, X_OK) && ft_strcmp(*cmd, "..") && ft_strcmp(*cmd, "."))
 		{
 			free(*cmd);
 			*cmd = p;
