@@ -72,7 +72,11 @@ int	main(int ac, char **av, char **envp)
 {
 	t_env	*env;
 
-	((void)ac, (void)av);
+	if (ac != 1)
+	{
+		ft_put_error(2, av[1], "No such file or directory");
+		exit (127);
+	}
 	env = NULL;
 	g_glob.status = 0;
 	rl_catch_signals = 0;
