@@ -6,7 +6,7 @@
 /*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 23:33:26 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/19 23:33:27 by asettar          ###   ########.fr       */
+/*   Updated: 2023/07/24 01:30:41 by asettar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int	ft_cd(t_exec *exec, t_cmd *cmd)
 	if (!args->next)
 	{
 		home = env_find("HOME", *exec->env);
-		if (!home)
+		if (!home || !home->value)
 		{
 			ft_put_error(2, "cd", "HOME not set");
 			return (1);
