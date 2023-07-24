@@ -6,7 +6,7 @@
 /*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:39:46 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/10 02:42:15 by asettar          ###   ########.fr       */
+/*   Updated: 2023/07/24 05:27:48 by asettar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,6 @@ void	remove_white_spaces(t_lex **lex)
 	}
 	else
 		remove_white_spaces(&(*lex)->next);
-}
-
-void	lex_del_one(t_lex **lex, t_lex	*node)
-{
-	if (!lex || !*lex)
-		return ;
-	if ((*lex) == node)
-	{
-		node = (*lex)->next;
-		free((*lex)->data);
-		free(*lex);
-		*lex = node;
-		return ;
-	}
-	lex_del_one(&(*lex)->next, node);
 }
 
 void	join_words(t_lex **lex)
