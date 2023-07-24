@@ -6,7 +6,7 @@
 /*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 23:33:36 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/19 23:33:37 by asettar          ###   ########.fr       */
+/*   Updated: 2023/07/24 02:51:30 by asettar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ t_env	*ft_env_new_element(char *name, char *value, int hidden)
 	t_env	*node;
 
 	node = (t_env *)malloc(sizeof(t_env));
+	if (!node)
+		return (NULL);
 	node->name = name;
 	node->hidden = hidden;
 	node->value = value;

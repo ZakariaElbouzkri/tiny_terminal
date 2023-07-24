@@ -6,7 +6,7 @@
 /*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:53:59 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/24 02:48:27 by asettar          ###   ########.fr       */
+/*   Updated: 2023/07/24 05:06:49 by asettar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,10 @@ typedef struct s_glob
 	int		status;
 	int		her;
 	int		under_exec;
+	t_cmd	**cmd;
+	t_env	**env;
+	t_lex	**lex;
+	t_exec  **exec;
 	char	*pwd;
 }		t_glob;
 
@@ -166,5 +170,6 @@ bool	check_qutes(char *cmd);
 char	*ft_strrcat(char *s, char c);
 t_env	*ft_new_env(char *name, char *value);
 void	update_shell_level(t_env **env);
+void	exit_with_failure(void)
 
 #endif

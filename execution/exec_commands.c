@@ -3,15 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   exec_commands.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 22:15:47 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/21 03:55:52 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/24 05:00:31 by asettar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+void	exit_with_failure()
+{
+	if (g_glob.env)
+		free_env(g_glob.env);
+	if (g_glob.lex)
+		free_lex(g_glob.lex);
+	if (g_glob.cmd)
+		free_cmd(g_glob.cmd);
+	free(g_glob.pwd);
+	ft_putstr_fd("minishell: malloc: allocation error\n", 2);
+	exit(EXIT_FAILURE);
+}
 void	extract_args(t_cmd *cmd)
 {
 	t_list	*itr;
@@ -23,6 +35,8 @@ void	extract_args(t_cmd *cmd)
 		{
 			itr = cmd->args;
 			cmd->cmd = (char **)malloc(sizeof(char *) * (ft_lstsize(itr) + 1));
+			if (!cmd->cmd)
+				exit_with_failure("ALLOCTION_ERROR");
 			i = 0;
 			while (itr)
 			{
