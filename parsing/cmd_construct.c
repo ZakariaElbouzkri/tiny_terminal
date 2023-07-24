@@ -6,24 +6,11 @@
 /*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:43:05 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/24 04:58:37 by asettar          ###   ########.fr       */
+/*   Updated: 2023/07/24 07:23:39 by asettar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	create_new_cmd(t_cmd **cmd, t_cmd **last, bool *new_cmd)
-{
-	t_cmd	*new;
-
-	new = (t_cmd *)malloc(sizeof(t_cmd));
-	ft_memset(new, 0, sizeof(t_cmd));
-	new->inp = NO_INP;
-	new->out = NO_OUT;
-	*new_cmd = false;
-	ft_cmd_add_back(cmd, new);
-	*last = new;
-}
 
 void	change_last_args(t_lex *lex, t_cmd *last)
 {
@@ -60,7 +47,7 @@ void	change_last_redir(t_lex **lst, t_cmd *last)
 	{
 		red = (t_redir *)malloc(sizeof(t_redir));
 		if (!red)
-			exit_with_failure(env, lst, NULL, NULL)
+			exit_with_failure();
 		red->type = lex->tok;
 		red->file = ft_strdup(lex->next->data);
 		red->flag = (lex->next->tok == WRD);
@@ -86,6 +73,24 @@ void	change_env_last_cmd(t_env *env, t_cmd *cmd)
 	last_env->value = ft_strdup(last_arg->content);
 }
 
+void	check_first_arg(t_cmd *cmd)
+{
+	t_list	*node;
+
+	while (cmd)
+	{
+		if (cmd->args && !ft_strcmp(cmd->args->content, "env")
+			&& cmd->args->next)
+		{
+			node = cmd->args->next;
+			free(cmd->args->content);
+			free(cmd->args);
+			cmd->args = node;
+		}
+		cmd = cmd->next;
+	}
+}
+
 void	construct_cmds(t_cmd **cmd, t_lex **lst, t_env *env)
 {
 	t_lex	*lex;
@@ -94,7 +99,6 @@ void	construct_cmds(t_cmd **cmd, t_lex **lst, t_env *env)
 
 	lex = *lst;
 	new_cmd = true;
-	g_glob.cmd = cmd;
 	while (lex)
 	{
 		if (new_cmd)
@@ -108,4 +112,5 @@ void	construct_cmds(t_cmd **cmd, t_lex **lst, t_env *env)
 		lex = lex->next;
 	}
 	change_env_last_cmd(env, *cmd);
+	check_first_arg(*cmd);
 }

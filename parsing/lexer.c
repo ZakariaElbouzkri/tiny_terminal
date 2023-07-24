@@ -6,7 +6,7 @@
 /*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:31:55 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/24 04:58:11 by asettar          ###   ########.fr       */
+/*   Updated: 2023/07/24 05:31:19 by asettar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,70 +63,39 @@ void	check_token_type(char *cmd, int *idx, t_lex *tk)
 		get_data(cmd, idx, tk);
 }
 
-void	free_lex(t_lex	**lex)
-{
-	if (!lex || !*lex)
-		return ;
-	free_lex(&(*lex)->next);
-	if (is_word(*lex))
-		free((*lex)->data);
-	free(*lex);
-	*lex = NULL;
-}
-
-void	free_cmd(t_cmd	**cmd)
-{
-	t_redir	*red;
-	t_redir	*tmp;
-
-	if (!cmd || !*cmd)
-		return ;
-	free_cmd(&(*cmd)->next);
-	if ((*cmd)->args)
-	{
-		ft_lstclear(&(*cmd)->args, free);
-		free((*cmd)->cmd);
-	}
-	red = (*cmd)->redir;
-	if (red)
-	{
-		while (red)
-		{
-			tmp = red;
-			free(red->file);
-			free(red);
-			red = tmp->next;
-		}
-	}
-	free(*cmd);
-	*cmd = NULL;
-}
-
-bool	lexer(char *cmd, t_env **env)
+void	lexer_helper(char *cmd, t_lex **lex)
 {
 	int		i;
-	t_lex	*lex;
 	t_lex	*token;
-	t_cmd	*cmds;
 
 	i = -1;
-	lex = NULL;
 	while (cmd[++i])
 	{
 		token = (t_lex *)malloc(sizeof(t_lex));
 		if (!token)
-			exit_with_failure(env, lex, NULL, NULL);
+			exit_with_failure();
 		token->next = NULL;
 		token->tok = WRD;
 		token->expanded = false;
 		check_token_type(cmd, &i, token);
-		ft_lex_add_back(&lex, token);
+		ft_lex_add_back(lex, token);
 	}
+}
+
+bool	lexer(char *cmd, t_env **env)
+{
+	t_lex	*lex;
+	t_cmd	*cmds;
+
+	lex = NULL;
+	g_glob.lex = &lex;
+	lexer_helper(cmd, &lex);
 	ft_expander(lex, *env);
 	join_words(&lex);
 	if (check_errors(lex))
 		return (free_lex(&lex), 1);
 	cmds = NULL;
+	g_glob.cmd = &cmds;
 	construct_cmds(&cmds, &lex, *env);
 	free_lex(&lex);
 	execute(&cmds, env);
