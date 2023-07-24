@@ -6,7 +6,7 @@
 /*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 23:33:39 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/24 02:52:18 by asettar          ###   ########.fr       */
+/*   Updated: 2023/07/24 05:35:33 by asettar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_env	*ft_create_env_node(char *s, char *before, char *after)
 
 	env_node = (t_env *)malloc(sizeof(t_env));
 	if (!env_node)
-		return (NULL);
+		exit_with_failure();
 	if (ft_strchr(s, '='))
 	{
 		env_node->name = ft_strdup(before);

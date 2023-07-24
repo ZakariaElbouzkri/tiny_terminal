@@ -12,10 +12,10 @@ INC = minishell.h libft/libft.h
 
 SRC = parsing/check_errors.c parsing/cmd_construct.c parsing/expander.c  parsing/parsing_utils.c\
 	parsing/join_words.c parsing/lexer.c parsing/lexer_utils.c parsing/parse_env.c parsing/parsing_utils2.c\
-	execution/exec_commands.c execution/exec_utils.c execution/exec_utils3.c execution/execute.c \
+	parsing/garbage_collector.c execution/exec_commands.c execution/exec_utils.c execution/exec_utils3.c execution/execute.c \
 	execution/execute_pipes.c execution/open_herdocs.c execution/open_redirs.c execution/exec_utils4.c \
 	builtins/cd.c builtins/echo.c builtins/env.c builtins/exit.c builtins/export.c \
-	builtins/export2.c builtins/pwd.c builtins/unset.c  main.c 
+	builtins/export2.c builtins/pwd.c builtins/unset.c  builtins/cd_utils.c main.c 
 
 
 OBJ = $(SRC:.c=.o)

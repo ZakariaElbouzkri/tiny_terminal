@@ -6,7 +6,7 @@
 /*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:53:59 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/24 05:06:49 by asettar          ###   ########.fr       */
+/*   Updated: 2023/07/24 07:28:22 by asettar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,6 @@
 # define NO_INP -3
 # define NO_OUT -3
 # define FSIGNAL 128
-
-typedef struct s_glob
-{
-	int		status;
-	int		her;
-	int		under_exec;
-	t_cmd	**cmd;
-	t_env	**env;
-	t_lex	**lex;
-	t_exec  **exec;
-	char	*pwd;
-}		t_glob;
-
-t_glob	g_glob;
 
 typedef struct s_env
 {
@@ -102,6 +88,19 @@ typedef struct s_exec
 	t_env	**env;
 }			t_exec;
 
+typedef struct s_glob
+{
+	int		status;
+	int		her;
+	int		under_exec;
+	t_cmd	**cmd;
+	t_env	**env;
+	t_lex	**lex;
+	t_exec	**exec;
+	char	*pwd;
+}		t_glob;
+
+t_glob	g_glob;
 // builtins :
 int		ft_cd(t_exec *exec, t_cmd *cmd);
 int		ft_echo(t_exec *exec, t_cmd *cmd);
@@ -115,7 +114,7 @@ void	construct_cmds(t_cmd **cmd, t_lex **lst, t_env *env);
 // builtins -utils:
 void	export_args(t_list *args, t_env **env);
 bool	valid_identifer(char *s, int i);
-
+void	assign_new_content(t_list *args, char *new);
 // parsing :
 void	parse_env(char **envp, t_env **env);
 bool	lexer(char *cmd, t_env **env);
@@ -137,6 +136,8 @@ bool	is_word(t_lex	*node);
 bool	is_redir(t_lex *node);
 char	*replace_dolar(char *data, t_env *env);
 void	exec_builtins(t_exec *exec, t_cmd *node);
+void	lex_del_one(t_lex **lex, t_lex	*node);
+void	create_new_cmd(t_cmd **cmd, t_cmd **last, bool *new_cmd);
 
 // execution:
 void	execute(t_cmd	**cmd, t_env **env);
@@ -170,6 +171,7 @@ bool	check_qutes(char *cmd);
 char	*ft_strrcat(char *s, char c);
 t_env	*ft_new_env(char *name, char *value);
 void	update_shell_level(t_env **env);
-void	exit_with_failure(void)
+void	exit_with_failure(void);
+void	free_lex(t_lex	**lex);
 
 #endif

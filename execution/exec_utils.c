@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 03:50:27 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/20 05:11:37 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/24 05:38:27 by asettar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ char	**extract_envp(t_env *env)
 
 	len = t_env_size(env);
 	envp = ft_calloc(sizeof(char *), len + 1);
+	if (!env)
+		exit_with_failure();
 	idx = -1;
 	while (env)
 	{
