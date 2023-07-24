@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils4.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 05:12:18 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/23 20:08:08 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/24 07:36:30 by asettar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	clear_and_exit_with_status(t_exec *exec, int status)
 	free_env(exec->env);
 	free_dubptr(exec->envp);
 	free_dubptr(exec->path);
+	free(g_glob.pwd);
 	exit(status);
 }
 
