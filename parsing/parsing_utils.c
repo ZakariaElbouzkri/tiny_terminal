@@ -59,7 +59,7 @@ char	*ft_strrcat(char *s, char c)
 	int		i;
 
 	ret = malloc(ft_strlen(s) + 2);
-	if (ret)
+	if (!ret)
 		exit_with_failure();
 	i = -1;
 	while (s[++i])
