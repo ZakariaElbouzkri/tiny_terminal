@@ -6,20 +6,11 @@
 /*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 23:33:26 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/24 01:30:41 by asettar          ###   ########.fr       */
+/*   Updated: 2023/07/24 07:26:19 by asettar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-t_env	*env_find(char *s, t_env *env)
-{
-	if (!env || !s)
-		return (NULL);
-	if (!strcmp(s, env->name))
-		return (env);
-	return (env_find(s, env->next));
-}
 
 void	update_old_pwd(t_env **env, t_env *pwd, t_env *old_pwd)
 {
@@ -93,28 +84,41 @@ void	change_pwd_oldpwd(t_env **env, char *content)
 	update_pwd(env, new_path, content, getcwd_ret);
 }
 
+void	go_to_dir(t_env **env, char *content)
+{
+	if (chdir(content) == -1)
+	{
+		ft_put_error(3, "cd", content, strerror(errno));
+		g_glob.status = 1;
+	}
+	else
+		change_pwd_oldpwd(env, content);
+}
+
 int	ft_cd(t_exec *exec, t_cmd *cmd)
 {
 	t_env	*home;
+	t_env	*old_pwd;
 	t_list	*args;
 
 	args = cmd->args;
+	home = NULL;
 	if (!args->next)
 	{
 		home = env_find("HOME", *exec->env);
 		if (!home || !home->value)
-		{
-			ft_put_error(2, "cd", "HOME not set");
-			return (1);
-		}
-		ft_lstadd_back(&(*exec->cmd)->args, ft_lstnew(ft_strdup(home->value)));
+			return (ft_put_error(2, "cd", "HOME not set"), 1);
+		ft_lstadd_back(&args, ft_lstnew(ft_strdup(home->value)));
 	}
-	if (chdir(args->next->content) == -1)
+	else if (!ft_strcmp(args->next->content, "-"))
 	{
-		ft_put_error(3, "cd", args->next->content, strerror(errno));
-		g_glob.status = 1;
+		old_pwd = env_find("OLDPWD", *exec->env);
+		if (!old_pwd || !old_pwd->value)
+			return (ft_put_error(2, "cd", "OLDPWD not set"), 1);
+		assign_new_content(args->next, ft_strdup(old_pwd->value));
 	}
-	else
-		change_pwd_oldpwd(exec->env, args->next->content);
+	else if (!ft_strcmp(args->next->content, "~"))
+		assign_new_content(args->next, ft_strdup(getenv("HOME")));
+	go_to_dir(exec->env, args->next->content);
 	return (g_glob.status);
 }
