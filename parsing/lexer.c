@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:31:55 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/19 06:22:47 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/24 04:58:11 by asettar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,8 @@ bool	lexer(char *cmd, t_env **env)
 	while (cmd[++i])
 	{
 		token = (t_lex *)malloc(sizeof(t_lex));
+		if (!token)
+			exit_with_failure(env, lex, NULL, NULL);
 		token->next = NULL;
 		token->tok = WRD;
 		token->expanded = false;

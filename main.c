@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/09 11:53:40 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/21 22:09:22 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/24 05:03:24 by asettar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,13 @@ int	main(int ac, char **av, char **envp)
 		exit (127);
 	}
 	env = NULL;
-	g_glob.status = 0;
+	ft_memset(&g_glob, 0, sizeof(t_glob));
 	rl_catch_signals = 0;
+	g_glob.env = &env;
 	parse_env(envp, &env);
 	g_glob.pwd = ft_strdup(env_find("PWD", env)->value);
+	if (!g_glob.pwd)
+		exit_with_failure();
 	prompt(&env);
 	free_env(&env);
 	free(g_glob.pwd);

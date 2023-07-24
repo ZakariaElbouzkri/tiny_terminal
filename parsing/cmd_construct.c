@@ -6,7 +6,7 @@
 /*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:43:05 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/18 00:26:05 by asettar          ###   ########.fr       */
+/*   Updated: 2023/07/24 04:58:37 by asettar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ void	change_last_redir(t_lex **lst, t_cmd *last)
 	while (lex && is_redir(lex))
 	{
 		red = (t_redir *)malloc(sizeof(t_redir));
+		if (!red)
+			exit_with_failure(env, lst, NULL, NULL)
 		red->type = lex->tok;
 		red->file = ft_strdup(lex->next->data);
 		red->flag = (lex->next->tok == WRD);
@@ -92,6 +94,7 @@ void	construct_cmds(t_cmd **cmd, t_lex **lst, t_env *env)
 
 	lex = *lst;
 	new_cmd = true;
+	g_glob.cmd = cmd;
 	while (lex)
 	{
 		if (new_cmd)
