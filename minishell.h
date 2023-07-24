@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:53:59 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/21 21:54:24 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/24 02:48:27 by asettar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@
 # define NO_INP -3
 # define NO_OUT -3
 # define FSIGNAL 128
-# define DFPATH "/bin/"
 
 typedef struct s_glob
 {
@@ -119,7 +118,7 @@ bool	lexer(char *cmd, t_env **env);
 void	ft_expander(t_lex *lex, t_env *env);
 void	join_words(t_lex **lex);
 bool	check_errors(t_lex *lex);
-
+void	change_last_args(t_lex *lex, t_cmd *last);
 // parsing utils:
 void	ft_env_add_back(t_env **env, t_env *node);
 void	free_env(t_env	**env);
