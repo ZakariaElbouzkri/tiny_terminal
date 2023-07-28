@@ -6,7 +6,7 @@
 /*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 19:59:37 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/24 07:22:52 by asettar          ###   ########.fr       */
+/*   Updated: 2023/07/28 00:39:00 by asettar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_env	*ft_new_env(char *name, char *value)
 }
 
 void	ft_redir_add_back(t_redir **red, t_redir *new)
-{	
+{
 	if (!red || !new)
 		return ;
 	if (*red == NULL)

@@ -6,7 +6,7 @@
 /*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 22:15:47 by zel-bouz          #+#    #+#             */
-/*   Updated: 2023/07/24 05:40:19 by asettar          ###   ########.fr       */
+/*   Updated: 2023/07/28 01:32:04 by asettar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,7 @@ void	update_exit_status(int pid)
 
 	if (waitpid(pid, &status, 0) > 0)
 	{
-		if (WIFSTOPPED(status))
-			g_glob.status = FSIGNAL + WSTOPSIG(status);
-		else if (WIFSIGNALED(status))
+		if (WIFSIGNALED(status))
 		{
 			g_glob.status = FSIGNAL + WTERMSIG(status);
 			if (g_glob.status == 130)

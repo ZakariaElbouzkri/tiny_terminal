@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zel-bouz <zel-bouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:36:46 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/20 05:09:30 by zel-bouz         ###   ########.fr       */
+/*   Updated: 2023/07/28 00:39:11 by asettar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 void	ft_lex_add_back(t_lex **lex, t_lex *new)
-{	
+{
 	if (!lex || !new)
 		return ;
 	if (*lex == NULL)
@@ -25,7 +25,7 @@ void	ft_lex_add_back(t_lex **lex, t_lex *new)
 }
 
 void	ft_cmd_add_back(t_cmd **cmd, t_cmd *new)
-{	
+{
 	if (!cmd || !new)
 		return ;
 	if (*cmd == NULL)

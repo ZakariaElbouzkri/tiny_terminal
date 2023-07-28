@@ -24,7 +24,7 @@ LIBFT = libft/libft.a
 all : $(NAME)
 
 $(NAME): $(OBJ)
-	@make -C libft
+	make -C libft
 	@$(CC) $(CFLAGS) $(RDL) $(RDL_INC)  $^ $(LIBFT) -o $@
 	@echo "$@ created"
 

@@ -6,7 +6,7 @@
 /*   By: asettar <asettar@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 02:46:18 by asettar           #+#    #+#             */
-/*   Updated: 2023/07/21 01:05:35 by asettar          ###   ########.fr       */
+/*   Updated: 2023/07/28 00:39:48 by asettar          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	ft_join_value(char *data, char **s, int *i, t_env *env)
 	}
 	while (data[idx]
 		&& (ft_isalnum(data[idx]) || data[idx] == '_'))
-			idx++;
+		idx++;
 	if (idx == *i + 1 && data[idx] == '$')
 	{
 		*s = ft_strjoin(*s, "PID");
@@ -116,7 +116,7 @@ void	ft_expander(t_lex *lex, t_env *env)
 			if (lex->tok == WRD && *lex->data
 				&& lex->data[ft_strlen(lex->data) - 1] == '$'
 				&& lex->next && lex->next->tok == DQU)
-					lex->data = ft_strtrim(lex->data, "$");
+				lex->data = ft_strtrim(lex->data, "$");
 			lex = lex->next;
 		}
 		else
