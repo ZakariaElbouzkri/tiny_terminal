@@ -68,7 +68,7 @@ int	ft_exit(t_exec *exec, t_cmd *cmd)
 	if (ft_lstsize(args) >= 3)
 	{
 		ft_put_error(2, "exit", "too many arguments");
-		exit(1);
+		return (1);
 	}
 	exit(ft_atoi(args->next->content));
 }
