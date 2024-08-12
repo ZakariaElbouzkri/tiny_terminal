@@ -15,9 +15,14 @@ Minishell is a simple Unix shell implementation designed for educational purpose
 
 To build and run Minishell, follow these steps:
 
+* if want to test without reviewing the code try with docker:
+	```bash
+		docker run -it zelbouz/minishell
+	```
+
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/minishell.git
+   git clone https://github.com/zakariaelbouzkri/minishell.git
    cd minishell
    ```
 
