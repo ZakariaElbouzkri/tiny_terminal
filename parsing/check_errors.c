@@ -14,13 +14,10 @@
 
 bool	check_errors(t_lex *lex)
 {
-	t_lex	*last;
-
 	if (!lex)
 		return (0);
 	if (lex->tok == PIP)
 		return (1);
-	last = NULL;
 	while (lex)
 	{
 		if (is_redir(lex))
