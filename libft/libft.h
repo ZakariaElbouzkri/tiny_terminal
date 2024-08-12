@@ -20,6 +20,7 @@
 # include <string.h>
 # include <unistd.h>
 # include <fcntl.h>
+# include <stdint.h>
 
 typedef struct s_list
 {
