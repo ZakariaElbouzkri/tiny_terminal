@@ -12,6 +12,8 @@
 
 #include "minishell.h"
 
+t_glob	g_glob;
+
 bool	check_qutes(char *cmd)
 {
 	int		i;
