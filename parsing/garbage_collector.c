@@ -30,10 +30,10 @@ void	free_cmd(t_cmd	**cmd)
 	{
 		while (red)
 		{
-			tmp = red;
+			tmp = red->next;
 			free(red->file);
 			free(red);
-			red = tmp->next;
+			red = tmp;
 		}
 	}
 	free(*cmd);
