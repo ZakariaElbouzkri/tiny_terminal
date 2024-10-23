@@ -100,12 +100,9 @@ void	skip_herdoc_words(t_lex **lst)
 
 void	ft_expander(t_lex *lex, t_env *env)
 {
-	t_lex	*last;
-
-	last = NULL;
 	while (lex)
 	{
-		last = lex;
+		// last = lex;
 		if (lex->tok == HER)
 			skip_herdoc_words(&lex);
 		else if ((lex->tok == WRD || lex->tok == DQU)

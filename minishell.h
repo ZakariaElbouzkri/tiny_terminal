@@ -100,7 +100,7 @@ typedef struct s_glob
 	char	*pwd;
 }		t_glob;
 
-t_glob	g_glob;
+extern t_glob	g_glob;
 // builtins :
 int		ft_cd(t_exec *exec, t_cmd *cmd);
 int		ft_echo(t_exec *exec, t_cmd *cmd);
